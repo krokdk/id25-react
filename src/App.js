@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import SurveyPieChart from "./SurveyPieChart";
 
+const API_URL = "https://id25-backend-docker.onrender.com/api/survey/results";
+
 const App = () => {
     const [surveyData, setSurveyData] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/survey/results") // Opdater til din backend-URL
+        fetch(API_URL) // Opdater til din backend-URL
             .then((response) => response.json())
             .then((data) => setSurveyData(data))
             .catch((error) => console.error("Error fetching data:", error));
