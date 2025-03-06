@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import SurveyPieChart from "./SurveyPieChart";
+import colorScheme from "./colorScheme";
 
 const API_URL = "https://id25-backend-docker.onrender.com/api/survey/results";
+
 
 const App = () => {
     const [surveyData, setSurveyData] = useState([]);
@@ -16,7 +18,7 @@ const App = () => {
                 const response = await fetch(API_URL);
                 const result = await response.json();
                 setSurveyData(result);
-                setFilteredData(result); // Vis alle data initialt
+                setFilteredData(result);
             } catch (error) {
                 console.error("Fejl ved hentning af data:", error);
             } finally {
@@ -28,19 +30,17 @@ const App = () => {
     }, []);
 
     const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Æ", "Ø", "Å"];
-
-    // Find unikke storkredse fra dataene
     const regions = [...new Set(surveyData.map(item => item.storkreds))];
 
     const handlePartyFilter = (party) => {
         setSelectedParty(party);
-        setSelectedRegion(null); // Nulstil region-filtrering
+        setSelectedRegion(null);
         setFilteredData(party ? surveyData.filter((item) => item.parti === party) : surveyData);
     };
 
     const handleRegionFilter = (region) => {
         setSelectedRegion(region);
-        setSelectedParty(null); // Nulstil parti-filtrering
+        setSelectedParty(null);
         setFilteredData(region ? surveyData.filter((item) => item.storkreds === region) : surveyData);
     };
 
@@ -59,7 +59,7 @@ const App = () => {
                         filteredData.filter(item => item.svar1 === "nej").length,
                         filteredData.filter(item => item.svar1 === "Ingen kommentar").length
                     ],
-                    backgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"]
+                    backgroundColor: [colorScheme.primary, colorScheme.secondary, colorScheme.accent]
                 }]
             }} />
 
@@ -75,15 +75,12 @@ const App = () => {
                         onClick={() => handlePartyFilter(party)}
                         style={{
                             ...buttonStyle,
-                            backgroundColor: selectedParty === party ? "#888" : "#007bff",
+                            backgroundColor: selectedParty === party ? colorScheme.accent : colorScheme.primary,
                         }}
                     >
                         {party}
                     </button>
                 ))}
-                {/*<button onClick={() => handlePartyFilter(null)} style={buttonStyle}>*/}
-                {/*    Vis alle*/}
-                {/*</button>*/}
             </div>
 
             {/* Storkreds-filtrering */}
@@ -94,13 +91,19 @@ const App = () => {
                         onClick={() => handleRegionFilter(region)}
                         style={{
                             ...buttonStyle,
-                            backgroundColor: selectedRegion === region ? "#888" : "#28a745",
+                            backgroundColor: selectedRegion === region ? colorScheme.accent : colorScheme.secondary,
                         }}
                     >
                         {region}
                     </button>
                 ))}
-                <button onClick={() => handleRegionFilter(null)} style={buttonStyle}>
+                <button
+                    onClick={() => handleRegionFilter(null)}
+                    style={{
+                        ...buttonStyle,
+                        backgroundColor: colorScheme.primary
+                    }}
+                >
                     Vis alle
                 </button>
             </div>
@@ -109,9 +112,9 @@ const App = () => {
             {selectedParty && filteredData.length > 0 && (
                 <div style={{ marginTop: "20px", textAlign: "left", marginLeft: "20px" }}>
                     <h2>Resultater for parti {selectedParty}</h2>
-                    <table style={{ width: "100%", marginTop: "10px", borderCollapse: "collapse" }}>
+                    <table style={tableStyle}>
                         <thead>
-                        <tr style={{ backgroundColor: "#007bff", color: "white" }}>
+                        <tr style={{ backgroundColor: colorScheme.primary, color: colorScheme.text }}>
                             <th style={tableHeaderStyle}>Fornavn</th>
                             <th style={tableHeaderStyle}>Storkreds</th>
                             <th style={tableHeaderStyle}>For aldersgrænse</th>
@@ -120,7 +123,7 @@ const App = () => {
                         </thead>
                         <tbody>
                         {filteredData.map((item, index) => (
-                            <tr key={index} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white" }}>
+                            <tr key={index} style={{ backgroundColor: index % 2 === 0 ? colorScheme.background : "white" }}>
                                 <td style={tableCellStyle}>{item.fornavn}</td>
                                 <td style={tableCellStyle}>{item.storkreds}</td>
                                 <td style={tableCellStyle}>{item.svar1}</td>
@@ -136,9 +139,9 @@ const App = () => {
             {selectedRegion && filteredData.length > 0 && (
                 <div style={{ marginTop: "20px", textAlign: "left", marginLeft: "20px" }}>
                     <h2>Resultater for Storkreds {selectedRegion}</h2>
-                    <table style={{ width: "100%", marginTop: "10px", borderCollapse: "collapse" }}>
+                    <table style={tableStyle}>
                         <thead>
-                        <tr style={{ backgroundColor: "#28a745", color: "white" }}>
+                        <tr style={{ backgroundColor: colorScheme.secondary, color: colorScheme.text }}>
                             <th style={tableHeaderStyle}>Fornavn</th>
                             <th style={tableHeaderStyle}>Parti</th>
                             <th style={tableHeaderStyle}>For aldersgrænse</th>
@@ -147,7 +150,7 @@ const App = () => {
                         </thead>
                         <tbody>
                         {filteredData.map((item, index) => (
-                            <tr key={index} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white" }}>
+                            <tr key={index} style={{ backgroundColor: index % 2 === 0 ? colorScheme.background : "white" }}>
                                 <td style={tableCellStyle}>{item.fornavn}</td>
                                 <td style={tableCellStyle}>{item.parti}</td>
                                 <td style={tableCellStyle}>{item.svar1}</td>
@@ -160,6 +163,12 @@ const App = () => {
             )}
         </div>
     );
+};
+
+const tableStyle = {
+    width: "100%",
+    marginTop: "10px",
+    borderCollapse: "collapse",
 };
 
 const tableHeaderStyle = {
@@ -178,7 +187,6 @@ const buttonStyle = {
     padding: "10px",
     border: "none",
     borderRadius: "5px",
-    backgroundColor: "#007bff",
     color: "white",
     cursor: "pointer",
 };
