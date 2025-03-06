@@ -47,7 +47,7 @@ const App = () => {
     const commentCount = filteredData.filter((item) => item.svar1 === "Ingen kommentar").length;
 
     const chartData = {
-        labels: ["Ja", "Nej", "Ingen kommentar"],
+        labels: ["Ja", "Nej", "Ikke besvaret"],
         datasets: [
             {
                 data: [jaCount, nejCount, commentCount],
@@ -82,9 +82,48 @@ const App = () => {
                     Vis alle
                 </button>
             </div>
+
+            {/* Vis resultaterne som rækker under knapperne */}
+            {selectedParty && filteredData.length > 0 && (
+                <div style={{ marginTop: "20px", textAlign: "left", marginLeft: "20px" }}>
+                    <h2>Resultater for parti {selectedParty}</h2>
+                    <table style={{ width: "100%", marginTop: "10px", borderCollapse: "collapse" }}>
+                        <thead>
+                        <tr style={{ backgroundColor: "#007bff", color: "white" }}>
+                            <th style={tableHeaderStyle}>Fornavn</th>
+                            <th style={tableHeaderStyle}>Storkreds</th>
+                            <th style={tableHeaderStyle}>For aldersgrænse</th>
+                            <th style={tableHeaderStyle}>Kommentar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {filteredData.map((item, index) => (
+                            <tr key={index} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white" }}>
+                                <td style={tableCellStyle}>{item.fornavn}</td>
+                                <td style={tableCellStyle}>{item.storkreds}</td>
+                                <td style={tableCellStyle}>{item.svar1}</td>
+                                <td style={tableCellStyle}>{item.svar5}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 };
+
+const tableHeaderStyle = {
+    padding: "10px",
+    borderBottom: "2px solid #ddd",
+    textAlign: "left",
+};
+
+const tableCellStyle = {
+    padding: "8px",
+    borderBottom: "1px solid #ddd",
+};
+
 
 const buttonStyle = {
     margin: "5px",
