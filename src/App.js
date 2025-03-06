@@ -8,6 +8,7 @@ const App = () => {
     const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedParty, setSelectedParty] = useState(null);
+    const [selectedRegion, setSelectedRegion] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,48 +29,50 @@ const App = () => {
 
     const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Æ", "Ø", "Å"];
 
-    const handleFilter = (party) => {
-        if (party === null) {
-            setFilteredData(surveyData); // Vis alle data
-        } else {
-            setFilteredData(surveyData.filter((item) => item.parti === party));
-        }
+    // Find unikke storkredse fra dataene
+    const regions = [...new Set(surveyData.map(item => item.storkreds))];
+
+    const handlePartyFilter = (party) => {
         setSelectedParty(party);
+        setSelectedRegion(null); // Nulstil region-filtrering
+        setFilteredData(party ? surveyData.filter((item) => item.parti === party) : surveyData);
+    };
+
+    const handleRegionFilter = (region) => {
+        setSelectedRegion(region);
+        setSelectedParty(null); // Nulstil parti-filtrering
+        setFilteredData(region ? surveyData.filter((item) => item.storkreds === region) : surveyData);
     };
 
     if (loading) {
         return <p>Indlæser data...</p>;
     }
 
-    // Beregn tællinger for svar
-    const jaCount = filteredData.filter((item) => item.svar1 === "ja").length;
-    const nejCount = filteredData.filter((item) => item.svar1 === "nej").length;
-    const commentCount = filteredData.filter((item) => item.svar1 === "Ingen kommentar").length;
-
-    const chartData = {
-        labels: ["Ja", "Nej", "Ikke besvaret"],
-        datasets: [
-            {
-                data: [jaCount, nejCount, commentCount],
-                backgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"],
-            },
-        ],
-    };
-
     return (
         <div style={{ textAlign: "center" }}>
-            <h1>Spørgsmål</h1>
-            <SurveyPieChart chartData={chartData} />
+            <h1>Går du ind for en aldersgrænse for omskæring?</h1>
+            <SurveyPieChart chartData={{
+                labels: ["Ja", "Nej", "Ikke besvaret"],
+                datasets: [{
+                    data: [
+                        filteredData.filter(item => item.svar1 === "ja").length,
+                        filteredData.filter(item => item.svar1 === "nej").length,
+                        filteredData.filter(item => item.svar1 === "Ingen kommentar").length
+                    ],
+                    backgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"]
+                }]
+            }} />
 
-            {filteredData.length === 0 && selectedParty !== null && (
-                <p>Ingen data tilgængelig for parti {selectedParty}.</p>
+            {filteredData.length === 0 && (selectedParty || selectedRegion) && (
+                <p>Ingen data tilgængelig for valget.</p>
             )}
 
+            {/* Parti-filtrering */}
             <div style={{ marginTop: "20px" }}>
                 {parties.map((party) => (
                     <button
                         key={party}
-                        onClick={() => handleFilter(party)}
+                        onClick={() => handlePartyFilter(party)}
                         style={{
                             ...buttonStyle,
                             backgroundColor: selectedParty === party ? "#888" : "#007bff",
@@ -78,12 +81,31 @@ const App = () => {
                         {party}
                     </button>
                 ))}
-                <button onClick={() => handleFilter(null)} style={buttonStyle}>
+                {/*<button onClick={() => handlePartyFilter(null)} style={buttonStyle}>*/}
+                {/*    Vis alle*/}
+                {/*</button>*/}
+            </div>
+
+            {/* Storkreds-filtrering */}
+            <div style={{ marginTop: "20px" }}>
+                {regions.map((region) => (
+                    <button
+                        key={region}
+                        onClick={() => handleRegionFilter(region)}
+                        style={{
+                            ...buttonStyle,
+                            backgroundColor: selectedRegion === region ? "#888" : "#28a745",
+                        }}
+                    >
+                        {region}
+                    </button>
+                ))}
+                <button onClick={() => handleRegionFilter(null)} style={buttonStyle}>
                     Vis alle
                 </button>
             </div>
 
-            {/* Vis resultaterne som rækker under knapperne */}
+            {/* Resultater for valgte parti */}
             {selectedParty && filteredData.length > 0 && (
                 <div style={{ marginTop: "20px", textAlign: "left", marginLeft: "20px" }}>
                     <h2>Resultater for parti {selectedParty}</h2>
@@ -109,6 +131,33 @@ const App = () => {
                     </table>
                 </div>
             )}
+
+            {/* Resultater for valgte storkreds */}
+            {selectedRegion && filteredData.length > 0 && (
+                <div style={{ marginTop: "20px", textAlign: "left", marginLeft: "20px" }}>
+                    <h2>Resultater for Storkreds {selectedRegion}</h2>
+                    <table style={{ width: "100%", marginTop: "10px", borderCollapse: "collapse" }}>
+                        <thead>
+                        <tr style={{ backgroundColor: "#28a745", color: "white" }}>
+                            <th style={tableHeaderStyle}>Fornavn</th>
+                            <th style={tableHeaderStyle}>Parti</th>
+                            <th style={tableHeaderStyle}>For aldersgrænse</th>
+                            <th style={tableHeaderStyle}>Kommentar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {filteredData.map((item, index) => (
+                            <tr key={index} style={{ backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white" }}>
+                                <td style={tableCellStyle}>{item.fornavn}</td>
+                                <td style={tableCellStyle}>{item.parti}</td>
+                                <td style={tableCellStyle}>{item.svar1}</td>
+                                <td style={tableCellStyle}>{item.svar5}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 };
@@ -123,7 +172,6 @@ const tableCellStyle = {
     padding: "8px",
     borderBottom: "1px solid #ddd",
 };
-
 
 const buttonStyle = {
     margin: "5px",
