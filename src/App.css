@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.app-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333; /* Mørkere farve for bedre læsbarhed */
+}
