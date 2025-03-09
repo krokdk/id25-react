@@ -30,7 +30,7 @@ const App = () => {
     }, []);
 
     const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Æ", "Ø", "Å"];
-    const regions = [...new Set(surveyData.map(item => item.storkreds))];
+    // const regions = [...new Set(surveyData.map(item => item.storkreds))];
 
     const handleSearchChange = (event) => {
         const query = event.target.value.toLowerCase();
@@ -71,9 +71,13 @@ const App = () => {
                     labels: ["Ja", "Nej", "Ikke besvaret"],
                     datasets: [{
                         data: [
-                            filteredData.filter(item => item.svar1 === "ja").length,
-                            filteredData.filter(item => item.svar1 === "nej").length,
-                            filteredData.filter(item => item.svar1 === "Ingen kommentar").length
+                            filteredData.filter(item => item.svar2 === "Ja").length,
+                            filteredData.filter(item => item.svar2 === "Nej").length,
+                            filteredData.filter(item =>
+                                item.svar2.toLowerCase() === "ingen kommentar" ||
+                                item.svar2.toLowerCase() === "ved ikke" ||
+                                item.svar2.trim() === ""
+                            ).length // Treat "Ved ikke" and blank as same
                         ],
                         backgroundColor: [colorScheme.primary, colorScheme.secondary, colorScheme.background]
                     }]
@@ -113,29 +117,29 @@ const App = () => {
                 ))}
             </div>
 
-            <div style={{ marginTop: "20px" }}>
-                {regions.map((region) => (
-                    <button
-                        key={region}
-                        onClick={() => handleRegionFilter(region)}
-                        style={{
-                            ...buttonStyle,
-                            backgroundColor: selectedRegion === region ? colorScheme.accent : colorScheme.secondary,
-                        }}
-                    >
-                        {region}
-                    </button>
-                ))}
-                <button
-                    onClick={() => handleRegionFilter(null)}
-                    style={{
-                        ...buttonStyle,
-                        backgroundColor: colorScheme.primary
-                    }}
-                >
-                    Vis alle
-                </button>
-            </div>
+            {/*<div style={{ marginTop: "20px" }}>*/}
+            {/*    {regions.map((region) => (*/}
+            {/*        <button*/}
+            {/*            key={region}*/}
+            {/*            onClick={() => handleRegionFilter(region)}*/}
+            {/*            style={{*/}
+            {/*                ...buttonStyle,*/}
+            {/*                backgroundColor: selectedRegion === region ? colorScheme.accent : colorScheme.secondary,*/}
+            {/*            }}*/}
+            {/*        >*/}
+            {/*            {region}*/}
+            {/*        </button>*/}
+            {/*    ))}*/}
+            {/*    <button*/}
+            {/*        onClick={() => handleRegionFilter(null)}*/}
+            {/*        style={{*/}
+            {/*            ...buttonStyle,*/}
+            {/*            backgroundColor: colorScheme.primary*/}
+            {/*        }}*/}
+            {/*    >*/}
+            {/*        Vis alle*/}
+            {/*    </button>*/}
+            {/*</div>*/}
 
             {filteredData.length > 0 && (
                 <div style={{ marginTop: "20px", textAlign: "left", marginLeft: "20px" }}>
@@ -145,7 +149,7 @@ const App = () => {
                         <tr style={{ backgroundColor: colorScheme.primary, color: colorScheme.text }}>
                             <th style={tableHeaderStyle}>Fornavn</th>
                             <th style={tableHeaderStyle}>Parti</th>
-                            <th style={tableHeaderStyle}>Storkreds</th>
+                            {/*<th style={tableHeaderStyle}>Storkreds</th>*/}
                             <th style={tableHeaderStyle}>For aldersgrænse</th>
                             <th style={tableHeaderStyle}>Kommentar</th>
                         </tr>
@@ -155,7 +159,7 @@ const App = () => {
                             <tr key={index} style={{ backgroundColor: index % 2 === 0 ? colorScheme.background : "white" }}>
                                 <td style={tableCellStyle}>{item.fornavn}</td>
                                 <td style={tableCellStyle}>{item.parti}</td>
-                                <td style={tableCellStyle}>{item.storkreds}</td>
+                                {/*<td style={tableCellStyle}>{item.storkreds}</td>*/}
                                 <td style={tableCellStyle}>{item.svar1}</td>
                                 <td style={tableCellStyle}>{item.svar5}</td>
                             </tr>
