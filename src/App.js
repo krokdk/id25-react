@@ -160,7 +160,7 @@ const App = () => {
                                 <td style={tableCellStyle}>{item.fornavn}</td>
                                 <td style={tableCellStyle}>{item.parti}</td>
                                 {/*<td style={tableCellStyle}>{item.storkreds}</td>*/}
-                                <td style={tableCellStyle}>{item.svar1}</td>
+                                <td style={tableCellStyle}>{item.svar2}</td>
                                 <td style={tableCellStyle}>{item.svar5}</td>
                             </tr>
                         ))}
@@ -176,12 +176,17 @@ const tableStyle = {
     width: "100%",
     marginTop: "10px",
     borderCollapse: "collapse",
+    tableLayout: "fixed", // 🔹 Sørger for at alle kolonner har samme bredde
 };
 
 const tableHeaderStyle = {
     padding: "10px",
     borderBottom: "2px solid #ddd",
     textAlign: "left",
+    width: "25%", // 🔹 Giver hver kolonne lige meget plads (100% / 4 kolonner)
+    whiteSpace: "nowrap", // Forhindrer linjeskift i overskrifterne
+    overflow: "hidden",
+    textOverflow: "ellipsis", // Afkorter tekst, hvis den er for lang
 };
 
 const tableCellStyle = {
@@ -199,3 +204,8 @@ const buttonStyle = {
 };
 
 export default App;
+
+
+// jeg vil gerne blot have vist svaret på smp 2 vedr. aldersgrænse i overblikket og et klik på rækken, skal så vise en tabel med alle svar + kommentar
+
+// knapper til at vise forskellilge års resultater?
