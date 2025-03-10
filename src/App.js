@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import SurveyPieChart from "./SurveyPieChart";
 import colorScheme from "./colorScheme";
-
-const API_URL = "https://id25-backend-docker.onrender.com/api/survey/results";
+import questions from "./questions";
 
 const App = () => {
+    const [year, setYear] = useState("2023");
     const [surveyData, setSurveyData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,7 +14,9 @@ const App = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
+                const API_URL = `https://id25-backend-docker.onrender.com/api/survey/results?year=${year}`;
                 const response = await fetch(API_URL);
                 const result = await response.json();
                 setSurveyData(result);
@@ -27,9 +29,16 @@ const App = () => {
         };
 
         fetchData();
-    }, []);
+    }, [year]); // 🔹 Genindlæs data, når `year` ændres
 
     const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Æ", "Ø", "Å"];
+
+    const handleYearChange = (event) => {
+        setYear(event.target.value); // 🔹 Opdater år og API-url
+        setSelectedParty(null);
+        setSearchQuery("");
+        setSelectedPerson(null);
+    };
 
     const handleSearchChange = (event) => {
         const query = event.target.value.toLowerCase();
@@ -74,40 +83,35 @@ const App = () => {
         <div style={{ textAlign: "center" }}>
             <h1>Går du ind for en aldersgrænse for omskæring?</h1>
 
+            {/* 🔹 Drop-down til at vælge årstal */}
+            <div style={{ marginBottom: "20px" }}>
+                <label htmlFor="yearSelect">Vælg valg:</label>
+                <select
+                    id="yearSelect"
+                    value={year}
+                    onChange={handleYearChange}
+                    style={dropdownStyle}
+                >
+                    <option value="2024">Europaparlamentsvalg 2024</option>
+                    <option value="2023">Folketingsvalg 2022</option>
+                </select>
+            </div>
+
             {!selectedPerson && (
                 <div style={{ marginBottom: "30px" }}>
                     <SurveyPieChart chartData={{
-                        labels: ["Ja", "Nej", "Ikke besvaret"],
+                        labels: ["Ja", "Nej", "Ved ikke", "Ikke besvaret"],
                         datasets: [{
                             data: [
                                 filteredData.filter(item => item.svar2 === "Ja").length,
                                 filteredData.filter(item => item.svar2 === "Nej").length,
-                                filteredData.filter(item =>
-                                    item.svar2.toLowerCase() === "ingen kommentar" ||
-                                    item.svar2.toLowerCase() === "ved ikke" ||
-                                    item.svar2.trim() === ""
-                                ).length
+                                filteredData.filter(item => item.svar2 === "").length,
+                                filteredData.filter(item => item.svar2.toLowerCase() === "ved ikke").length
                             ],
-                            backgroundColor: [colorScheme.primary, colorScheme.secondary, colorScheme.background]
+                            backgroundColor: [colorScheme.primary, colorScheme.secondary, colorScheme.accent, colorScheme.background]
                         }]
                     }} />
                 </div>
-            )}
-
-            {selectedParty && (
-                <input
-                    type="text"
-                    placeholder="Søg efter navn..."
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                    style={{
-                        marginBottom: "10px",
-                        padding: "8px",
-                        width: "300px",
-                        border: "1px solid #ccc",
-                        borderRadius: "5px",
-                    }}
-                />
             )}
 
             <div style={{ marginTop: "20px" }}>
@@ -124,6 +128,24 @@ const App = () => {
                     </button>
                 ))}
             </div>
+
+
+            {(
+                <input
+                    type="text"
+                    placeholder="Søg efter navn..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    style={{
+                        marginTop: "10px",
+                        padding: "8px",
+                        width: "300px",
+                        border: "1px solid #ccc",
+                        borderRadius: "5px",
+                    }}
+                />
+            )}
+
 
             {selectedParty && filteredData.length > 0 && !selectedPerson && (
                 <div style={{ marginTop: "20px" }}>
@@ -158,11 +180,11 @@ const App = () => {
                         <tbody>
                         <tr><td style={tableHeaderStyle}>Fornavn:</td><td style={tableCellStyle}>{selectedPerson.fornavn}</td></tr>
                         <tr><td style={tableHeaderStyle}>Parti:</td><td style={tableCellStyle}>{selectedPerson.parti}</td></tr>
-                        <tr><td style={tableHeaderStyle}>Svar 1:</td><td style={tableCellStyle}>{selectedPerson.svar1}</td></tr>
-                        <tr><td style={tableHeaderStyle}>Svar 2:</td><td style={tableCellStyle}>{selectedPerson.svar2}</td></tr>
-                        <tr><td style={tableHeaderStyle}>Svar 3:</td><td style={tableCellStyle}>{selectedPerson.svar3}</td></tr>
-                        <tr><td style={tableHeaderStyle}>Svar 4:</td><td style={tableCellStyle}>{selectedPerson.svar4}</td></tr>
-                        <tr><td style={tableHeaderStyle}>Svar 5:</td><td style={tableCellStyle}>{selectedPerson.svar5}</td></tr>
+                        <tr><td style={tableHeaderStyle}>{questions.SPM1}</td><td style={tableCellStyle}>{selectedPerson.svar1}</td></tr>
+                        <tr><td style={tableHeaderStyle}>{questions.SPM2}</td><td style={tableCellStyle}>{selectedPerson.svar2}</td></tr>
+                        <tr><td style={tableHeaderStyle}>{questions.SPM3}</td><td style={tableCellStyle}>{selectedPerson.svar3}</td></tr>
+                        <tr><td style={tableHeaderStyle}>{questions.SPM4}</td><td style={tableCellStyle}>{selectedPerson.svar4}</td></tr>
+                        <tr><td style={tableHeaderStyle}>{questions.SPM5}</td><td style={tableCellStyle}>{selectedPerson.svar5}</td></tr>
                         </tbody>
                     </table>
                     <button onClick={handleReset} style={buttonStyle}>Tilbage</button>
@@ -179,13 +201,21 @@ const tableStyle = {
     margin: "auto", // 🔹 Centrerer tabellen
     borderCollapse: "collapse",
     tableLayout: "fixed",
+    whiteSpace: "pre-wrap", // 🔹 Bevarer linjeskift og bryder lange ord
+    wordBreak: "break-word", // 🔹 Sikrer ord brydes korrekt
+    overflowWrap: "break-word", // 🔹 Ekstra sikkerhed for lange ord
+    padding: "8px",
+    borderBottom: "1px solid #ddd",
 };
 
 const tableHeaderStyle = {
     padding: "10px",
     borderBottom: "2px solid #ddd",
     textAlign: "left",
-    width: "50%",
+    width: "50%", // 🔹 Giver lige meget plads til hver kolonne
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
 };
 
 const tableCellStyle = {
@@ -199,7 +229,14 @@ const buttonStyle = {
     borderRadius: "5px",
     color: "white",
     cursor: "pointer",
-    backgroundColor: colorScheme.primary,
+    backgroundColor: colorScheme.primary
+};
+
+// 🔹 Dropdown styling
+const dropdownStyle = {
+    marginLeft: "10px",
+    padding: "5px",
+    fontSize: "16px",
 };
 
 export default App;
