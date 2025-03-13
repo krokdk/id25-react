@@ -2,21 +2,24 @@ import React, { useState, useEffect } from "react";
 import SurveyPieChart from "./SurveyPieChart";
 import colorScheme from "./colorScheme";
 import questions from "./questions";
+import partyMapper, { getPartiNavn } from "./partyMapper";
 
 const App = () => {
-    const [year, setYear] = useState("2022");
+    const [selectedYear, setSelectedYear] = useState("2022");
     const [surveyData, setSurveyData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedParty, setSelectedParty] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedPerson, setSelectedPerson] = useState(null);
+    const [selectedPersonHistory, setSelectedPersonHistory] = useState({});
+
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const API_URL = `https://id25-backend-docker.onrender.com/api/survey/results?year=${year}`;
+                const API_URL = `https://id25-backend-docker.onrender.com/api/survey/results?year=${selectedYear}`;
                 const response = await fetch(API_URL);
                 const result = await response.json();
                 setSurveyData(result);
@@ -29,12 +32,12 @@ const App = () => {
         };
 
         fetchData();
-    }, [year]); // 🔹 Genindlæs data, når `year` ændres
+    }, [selectedYear]); // 🔹 Genindlæs data, når `year` ændres
 
     const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Æ", "Ø", "Å"];
 
     const handleYearChange = (event) => {
-        setYear(event.target.value); // 🔹 Opdater år og API-url
+        setSelectedYear(event.target.value); // 🔹 Opdater år og API-url
         setSelectedParty(null);
         setSearchQuery("");
         setSelectedPerson(null);
@@ -69,11 +72,61 @@ const App = () => {
 
     const handleRowClick = (person) => {
         setSelectedPerson(person);
+        fetchPersonHistory(person.fornavn); // Hent tidligere svar
     };
+
 
     const handleReset = () => {
         setSelectedPerson(null);
     };
+
+    const fetchPersonHistory = async (fornavn) => {
+        const years = ["2019", "2022", "2024"]; // Define years to check
+        const history = {};
+
+        try {
+            for (const year of years) {
+                const response = await fetch(
+                    `https://id25-backend-docker.onrender.com/api/survey/results?year=${year}&fornavn=${encodeURIComponent(fornavn)}`
+                );
+
+                if (!response.ok) {
+                    console.error(`Fejl ved hentning af ${year}:`, response.statusText);
+                    continue; // Skip this year if fetch fails
+                }
+
+                const data = await response.json();
+
+                if (data.length > 0) {
+                    history[year] = data; // Only store non-empty responses
+                }
+            }
+
+            setSelectedPersonHistory(history); // Update only with valid data
+        } catch (error) {
+            console.error("Fejl ved hentning af historiske data:", error);
+        }
+    };
+
+
+
+    const renderPersonResult = (title, person) => (
+        <div style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
+            <h2>{title}</h2>
+            <table style={tableStyle}>
+                <tbody>
+                <tr><td style={tableHeaderStyle}>Fornavn:</td><td style={tableCellStyle}>{person.fornavn}</td></tr>
+                <tr><td style={tableHeaderStyle}>Parti:</td><td style={tableCellStyle}>{getPartiNavn(person.parti)}</td></tr>
+                <tr><td style={tableHeaderStyle}>{questions.SPM1}</td><td style={tableCellStyle}>{person.svar1}</td></tr>
+                <tr><td style={tableHeaderStyle}>{questions.SPM2}</td><td style={tableCellStyle}>{person.svar2}</td></tr>
+                <tr><td style={tableHeaderStyle}>{questions.SPM3}</td><td style={tableCellStyle}>{person.svar3}</td></tr>
+                <tr><td style={tableHeaderStyle}>{questions.SPM4}</td><td style={tableCellStyle}>{person.svar4}</td></tr>
+                <tr><td style={tableHeaderStyle}>{questions.SPM5}</td><td style={tableCellStyle}>{person.svar5}</td></tr>
+                </tbody>
+            </table>
+        </div>
+    );
+
 
     if (loading) {
         return <p>Indlæser data...</p>;
@@ -88,7 +141,7 @@ const App = () => {
                 <label htmlFor="yearSelect">Vælg valg:</label>
                 <select
                     id="yearSelect"
-                    value={year}
+                    value={selectedYear}
                     onChange={handleYearChange}
                     style={dropdownStyle}
                 >
@@ -98,7 +151,8 @@ const App = () => {
                 </select>
             </div>
 
-            {!selectedPerson && (
+            {/* 🔹 Pie chart */
+                !selectedPerson && (
                 <div style={{ marginBottom: "30px" }}>
                     <SurveyPieChart chartData={{
                         labels: ["Ja", "Nej", "Ved ikke", "Ikke besvaret"],
@@ -150,7 +204,7 @@ const App = () => {
 
             {selectedParty && filteredData.length > 0 && !selectedPerson && (
                 <div style={{ marginTop: "20px" }}>
-                    <h2>Resultater for parti {selectedParty}</h2>
+                    <h2>Resultater for {getPartiNavn(selectedParty)}</h2>
                     <table style={tableStyle}>
                         <thead>
                         <tr style={{ backgroundColor: colorScheme.primary, color: colorScheme.text }}>
@@ -175,22 +229,36 @@ const App = () => {
             )}
 
             {selectedPerson && (
-                <div style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
-                    <h2>Detaljer</h2>
-                    <table style={tableStyle}>
-                        <tbody>
-                        <tr><td style={tableHeaderStyle}>Fornavn:</td><td style={tableCellStyle}>{selectedPerson.fornavn}</td></tr>
-                        <tr><td style={tableHeaderStyle}>Parti:</td><td style={tableCellStyle}>{selectedPerson.parti}</td></tr>
-                        <tr><td style={tableHeaderStyle}>{questions.SPM1}</td><td style={tableCellStyle}>{selectedPerson.svar1}</td></tr>
-                        <tr><td style={tableHeaderStyle}>{questions.SPM2}</td><td style={tableCellStyle}>{selectedPerson.svar2}</td></tr>
-                        <tr><td style={tableHeaderStyle}>{questions.SPM3}</td><td style={tableCellStyle}>{selectedPerson.svar3}</td></tr>
-                        <tr><td style={tableHeaderStyle}>{questions.SPM4}</td><td style={tableCellStyle}>{selectedPerson.svar4}</td></tr>
-                        <tr><td style={tableHeaderStyle}>{questions.SPM5}</td><td style={tableCellStyle}>{selectedPerson.svar5}</td></tr>
-                        </tbody>
-                    </table>
+                <div>
+                    {/* Display the selected person's result for the selectedYear */}
+                    {renderPersonResult("Resultat for valgte", selectedPerson)}
+
+                    {/* Tidligere resultater */}
+                    {Object.keys(selectedPersonHistory).length > 0 && (
+                        <div style={{ marginTop: "30px" }}>
+                            <h2>Tidligere resultater</h2>
+                            {Object.entries(selectedPersonHistory)
+                                .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
+                                .map(([year, results]) => (
+                                    <div key={year} style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
+
+                                        {results.map((entry, index) => (
+                                            <React.Fragment key={index}>
+                                                {renderPersonResult(`Valg: ${year}`, entry)}
+                                            </React.Fragment>
+                                        ))}
+                                    </div>
+                                ))}
+                        </div>
+                    )}
+
                     <button onClick={handleReset} style={buttonStyle}>Tilbage</button>
                 </div>
             )}
+
+
+
+
         </div>
     );
 };
