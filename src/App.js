@@ -4,7 +4,7 @@ import colorScheme from "./colorScheme";
 import questions from "./questions";
 
 const App = () => {
-    const [year, setYear] = useState("2023");
+    const [year, setYear] = useState("2022");
     const [surveyData, setSurveyData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -93,7 +93,8 @@ const App = () => {
                     style={dropdownStyle}
                 >
                     <option value="2024">Europaparlamentsvalg 2024</option>
-                    <option value="2023">Folketingsvalg 2022</option>
+                    <option value="2022">Folketingsvalg 2022</option>
+                    <option value="2019">Folketingsvalg 2019</option>
                 </select>
             </div>
 
