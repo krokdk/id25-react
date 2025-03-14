@@ -1,0 +1,64 @@
+/* 🔹 Table Styles */
+.table {
+    width: 100%;
+    max-width: 500px; /* Matches Pie-chart width */
+    margin: auto; /* Centers the table */
+    border-collapse: collapse;
+    table-layout: fixed;
+    white-space: pre-wrap; /* Preserves line breaks */
+    word-break: break-word; /* Ensures proper word wrapping */
+    overflow-wrap: break-word;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 🔹 Table Header */
+.table-header {
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+    text-align: left;
+    width: 50%; /* Ensures equal column spacing */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 🔹 Table Cell */
+.table-cell {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 🔹 Button */
+.button {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    background-color: var(--primary-color); /* Will be replaced with JS variable */
+}
+
+/* 🔹 Dropdown */
+.dropdown {
+    margin-left: 10px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.party-button {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.party-button.selected {
+    background-color: var(--accent-color);
+}
+
+

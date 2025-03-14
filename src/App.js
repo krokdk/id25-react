@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-import SurveyPieChart from "./SurveyPieChart";
-import colorScheme from "./colorScheme";
-import questions from "./questions";
-import partyMapper, { getPartiNavn } from "./partyMapper";
+import SurveyPieChart2019 from "./pieChart2019";
+import SurveyPieChartDefault from "./pieChartDefault";
+import { getPartiNavn } from "./partyMapper";
+import "./styles.css";
+import ResultsTable from "./resultsTable";
+import PersonDetailsTable from "./personDetailsTable";
+import PersonDetailsTable2019 from "./personDetailsTable2019";
+
 
 const App = () => {
     const [selectedYear, setSelectedYear] = useState("2022");
@@ -108,25 +112,18 @@ const App = () => {
         }
     };
 
+    const renderPersonResult = (title, person) => {
+        if (!person || !person.fornavn) return null; // Ensure person exists
 
+        const TableComponent = selectedYear === "2019" ? PersonDetailsTable2019 : PersonDetailsTable;
 
-    const renderPersonResult = (title, person) => (
-        <div style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
-            <h2>{title}</h2>
-            <table style={tableStyle}>
-                <tbody>
-                <tr><td style={tableHeaderStyle}>Fornavn:</td><td style={tableCellStyle}>{person.fornavn}</td></tr>
-                <tr><td style={tableHeaderStyle}>Parti:</td><td style={tableCellStyle}>{getPartiNavn(person.parti)}</td></tr>
-                <tr><td style={tableHeaderStyle}>{questions.SPM1}</td><td style={tableCellStyle}>{person.svar1}</td></tr>
-                <tr><td style={tableHeaderStyle}>{questions.SPM2}</td><td style={tableCellStyle}>{person.svar2}</td></tr>
-                <tr><td style={tableHeaderStyle}>{questions.SPM3}</td><td style={tableCellStyle}>{person.svar3}</td></tr>
-                <tr><td style={tableHeaderStyle}>{questions.SPM4}</td><td style={tableCellStyle}>{person.svar4}</td></tr>
-                <tr><td style={tableHeaderStyle}>{questions.SPM5}</td><td style={tableCellStyle}>{person.svar5}</td></tr>
-                </tbody>
-            </table>
-        </div>
-    );
-
+        return (
+            <div style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
+                <h2>{title}</h2>
+                <TableComponent person={person} />
+            </div>
+        );
+    };
 
     if (loading) {
         return <p>Indlæser data...</p>;
@@ -143,7 +140,7 @@ const App = () => {
                     id="yearSelect"
                     value={selectedYear}
                     onChange={handleYearChange}
-                    style={dropdownStyle}
+                    className="dropdown"
                 >
                     <option value="2024">Europaparlamentsvalg 2024</option>
                     <option value="2022">Folketingsvalg 2022</option>
@@ -153,31 +150,21 @@ const App = () => {
 
             {/* 🔹 Pie chart */
                 !selectedPerson && (
-                <div style={{ marginBottom: "30px" }}>
-                    <SurveyPieChart chartData={{
-                        labels: ["Ja", "Nej", "Ved ikke", "Ikke besvaret"],
-                        datasets: [{
-                            data: [
-                                filteredData.filter(item => item.svar2 === "Ja").length,
-                                filteredData.filter(item => item.svar2 === "Nej").length,
-                                filteredData.filter(item => item.svar2.toLowerCase() === "ved ikke").length,
-                                filteredData.filter(item => item.svar2 === "").length
-                            ],
-                            backgroundColor: [colorScheme.secondary, colorScheme.primary, colorScheme.accent, colorScheme.background]
-                        }]
-                    }} />
-                </div>
-            )}
+                    <div style={{marginBottom: "30px"}}>
+                        {selectedYear === "2019" ? (
+                            <SurveyPieChart2019 filteredData={filteredData}/>
+                        ) : (
+                            <SurveyPieChartDefault filteredData={filteredData}/>
+                        )}
+                    </div>
+                )}
 
-            <div style={{ marginTop: "20px" }}>
+            <div style={{marginTop: "20px"}}>
                 {parties.map((party) => (
                     <button
                         key={party}
                         onClick={() => handlePartyFilter(party)}
-                        style={{
-                            ...buttonStyle,
-                            backgroundColor: selectedParty === party ? colorScheme.accent : colorScheme.primary,
-                        }}
+                        className={`party-button ${selectedParty === party ? "selected" : ""}`}
                     >
                         {party}
                     </button>
@@ -201,30 +188,14 @@ const App = () => {
                 />
             )}
 
-
             {selectedParty && filteredData.length > 0 && !selectedPerson && (
                 <div style={{ marginTop: "20px" }}>
-                    <h2>Resultater for {getPartiNavn(selectedParty)}</h2>
-                    <table style={tableStyle}>
-                        <thead>
-                        <tr style={{ backgroundColor: colorScheme.primary, color: colorScheme.text }}>
-                            <th style={tableHeaderStyle}>Fornavn</th>
-                            <th style={tableHeaderStyle}>For aldersgrænse</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {filteredData.map((item, index) => (
-                            <tr
-                                key={index}
-                                style={{ backgroundColor: index % 2 === 0 ? colorScheme.background : "white", cursor: "pointer" }}
-                                onClick={() => handleRowClick(item)}
-                            >
-                                <td style={tableCellStyle}>{item.fornavn}</td>
-                                <td style={tableCellStyle}>{item.svar2}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <ResultsTable
+                        selectedParty={selectedParty}
+                        filteredData={filteredData}
+                        handleRowClick={handleRowClick}
+                        getPartiNavn={getPartiNavn}
+                    />
                 </div>
             )}
 
@@ -252,60 +223,13 @@ const App = () => {
                         </div>
                     )}
 
-                    <button onClick={handleReset} style={buttonStyle}>Tilbage</button>
+                    <button onClick={handleReset} className="button">Tilbage</button>
                 </div>
             )}
-
-
-
 
         </div>
     );
 };
 
-// CSS styles
-const tableStyle = {
-    width: "100%",
-    maxWidth: "500px", // 🔹 Sætter tabellens bredde til max 500px (samme som Pie-chart)
-    margin: "auto", // 🔹 Centrerer tabellen
-    borderCollapse: "collapse",
-    tableLayout: "fixed",
-    whiteSpace: "pre-wrap", // 🔹 Bevarer linjeskift og bryder lange ord
-    wordBreak: "break-word", // 🔹 Sikrer ord brydes korrekt
-    overflowWrap: "break-word", // 🔹 Ekstra sikkerhed for lange ord
-    padding: "8px",
-    borderBottom: "1px solid #ddd",
-};
-
-const tableHeaderStyle = {
-    padding: "10px",
-    borderBottom: "2px solid #ddd",
-    textAlign: "left",
-    width: "50%", // 🔹 Giver lige meget plads til hver kolonne
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-};
-
-const tableCellStyle = {
-    padding: "8px",
-    borderBottom: "1px solid #ddd",
-};
-
-const buttonStyle = {
-    margin: "5px",
-    padding: "10px",
-    borderRadius: "5px",
-    color: "white",
-    cursor: "pointer",
-    backgroundColor: colorScheme.primary
-};
-
-// 🔹 Dropdown styling
-const dropdownStyle = {
-    marginLeft: "10px",
-    padding: "5px",
-    fontSize: "16px",
-};
 
 export default App;

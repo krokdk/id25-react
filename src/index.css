@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #007bff; /* Change this dynamically in JS if needed */
+  --accent-color: #74a7ea; /* Change this dynamically in JS if needed */
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
