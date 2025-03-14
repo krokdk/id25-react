@@ -1,6 +1,7 @@
 import React from "react";
 import questions from "./questions";
-import "./styles.css"; // Import global styles
+import "./styles.css";
+import {getPartiNavn} from "./partyMapper"; // Import global styles
 
 const PersonDetailsTable = ({ person }) => {
     // If no person is selected, return null

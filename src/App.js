@@ -112,14 +112,14 @@ const App = () => {
         }
     };
 
-    const renderPersonResult = (title, person) => {
+    const renderPersonResult = (title, person, year) => {
         if (!person || !person.fornavn) return null; // Ensure person exists
 
-        const TableComponent = selectedYear === "2019" ? PersonDetailsTable2019 : PersonDetailsTable;
+        const TableComponent = year === "2019" ? PersonDetailsTable2019 : PersonDetailsTable;
 
         return (
             <div style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
-                <h2>{title}</h2>
+                <h2 style={{textAlign: "center"}}>{title}</h2>
                 <TableComponent person={person} />
             </div>
         );
@@ -202,12 +202,12 @@ const App = () => {
             {selectedPerson && (
                 <div>
                     {/* Display the selected person's result for the selectedYear */}
-                    {renderPersonResult("Resultat for valgte", selectedPerson)}
+                    {renderPersonResult(`Besvarelse for ${selectedYear}`, selectedPerson, selectedYear)}
 
-                    {/* Tidligere resultater */}
+                    {/* Andre resultater */}
                     {Object.keys(selectedPersonHistory).length > 0 && (
                         <div style={{ marginTop: "30px" }}>
-                            <h2>Tidligere resultater</h2>
+                            <h2>Besvarelser for andre år</h2>
                             {Object.entries(selectedPersonHistory)
                                 .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
                                 .map(([year, results]) => (
@@ -215,7 +215,7 @@ const App = () => {
 
                                         {results.map((entry, index) => (
                                             <React.Fragment key={index}>
-                                                {renderPersonResult(`Valg: ${year}`, entry)}
+                                                {renderPersonResult(`Valg: ${year}`, entry, year)}
                                             </React.Fragment>
                                         ))}
                                     </div>
