@@ -160,10 +160,10 @@ const App = () => {
                             data: [
                                 filteredData.filter(item => item.svar2 === "Ja").length,
                                 filteredData.filter(item => item.svar2 === "Nej").length,
-                                filteredData.filter(item => item.svar2 === "").length,
-                                filteredData.filter(item => item.svar2.toLowerCase() === "ved ikke").length
+                                filteredData.filter(item => item.svar2.toLowerCase() === "ved ikke").length,
+                                filteredData.filter(item => item.svar2 === "").length
                             ],
-                            backgroundColor: [colorScheme.primary, colorScheme.secondary, colorScheme.accent, colorScheme.background]
+                            backgroundColor: [colorScheme.secondary, colorScheme.primary, colorScheme.accent, colorScheme.background]
                         }]
                     }} />
                 </div>
