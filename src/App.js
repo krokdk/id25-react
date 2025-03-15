@@ -38,7 +38,7 @@ const App = () => {
         fetchData();
     }, [selectedYear]); // 🔹 Genindlæs data, når `year` ændres
 
-    const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Æ", "Ø", "Å"];
+    const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Ø", "Å"];
 
     const handleYearChange = (event) => {
         setSelectedYear(event.target.value); // 🔹 Opdater år og API-url
