@@ -18,7 +18,7 @@ const SurveyPieChart2019 = ({ filteredData }) => {
                     backgroundColor: [
                         colorScheme.secondary,
                         colorScheme.primary,
-                        colorScheme.accent,
+                        colorScheme.tertiary,
                         colorScheme.background
                     ]
                 }]
