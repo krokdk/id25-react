@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import SurveyPieChart2019 from "./pieChart2019";
+import SurveyPieChart2020 from "./pieChart2020";
 import SurveyPieChartDefault from "./pieChartDefault";
 import { getPartiNavn } from "./partyMapper";
 import "./styles.css";
 import ResultsTable from "./resultsTable";
 import PersonDetailsTable from "./personDetailsTable";
 import PersonDetailsTable2019 from "./personDetailsTable2019";
+import PersonDetailsTable2020 from "./personDetailsTable2020";
 
 
 const App = () => {
@@ -85,7 +87,7 @@ const App = () => {
     };
 
     const fetchPersonHistory = async (fornavn) => {
-        const years = ["2019", "2022", "2024"]; // Define years to check
+        const years = ["2019", "2020", "2022", "2024"]; // Define years to check
         const history = {};
 
         try {
@@ -115,7 +117,11 @@ const App = () => {
     const renderPersonResult = (title, person, year) => {
         if (!person || !person.fornavn) return null; // Ensure person exists
 
-        const TableComponent = year === "2019" ? PersonDetailsTable2019 : PersonDetailsTable;
+        const TableComponent = year === "2019"
+            ? PersonDetailsTable2019
+            : year === "2020"
+                ? PersonDetailsTable2020
+                : PersonDetailsTable;
 
         return (
             <div style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
@@ -144,20 +150,24 @@ const App = () => {
                 >
                     <option value="2024">Europaparlamentsvalg 2024</option>
                     <option value="2022">Folketingsvalg 2022</option>
+                    <option value="2020">Borgerforslag 2020</option>
                     <option value="2019">Folketingsvalg 2019</option>
                 </select>
             </div>
 
             {/* 🔹 Pie chart */
                 !selectedPerson && (
-                    <div style={{marginBottom: "30px"}}>
+                    <div style={{ marginBottom: "30px" }}>
                         {selectedYear === "2019" ? (
-                            <SurveyPieChart2019 filteredData={filteredData}/>
+                            <SurveyPieChart2019 filteredData={filteredData} />
+                        ) : selectedYear === "2020" ? (
+                            <SurveyPieChart2020 filteredData={filteredData} />
                         ) : (
-                            <SurveyPieChartDefault filteredData={filteredData}/>
+                            <SurveyPieChartDefault filteredData={filteredData} />
                         )}
                     </div>
-                )}
+                )
+            }
 
             <div style={{marginTop: "20px"}}>
                 {parties.map((party) => (
