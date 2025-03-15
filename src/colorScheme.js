@@ -1,9 +1,10 @@
 const colorScheme = {
-    primary: "#4586dd",
-    secondary: "#de5735",
+    primary: "#de5735",
+    secondary: "#4586dd",
     tertiary: "#f5ce20",
     background: "#b0ccf2",
-    accent: "#74a7ea",
+    lenasExtra: "#18375d",
+    //accent: "#74a7ea",
     text: "#ffffff",
 };
 
