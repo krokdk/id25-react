@@ -17,6 +17,7 @@ const App = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [selectedPersonHistory, setSelectedPersonHistory] = useState({});
+    const [selectedFilter, setSelectedFilter] = useState(null); // State for filtering
 
 
     useEffect(() => {
@@ -37,6 +38,17 @@ const App = () => {
 
         fetchData();
     }, [selectedYear]); // 🔹 Genindlæs data, når `year` ændres
+
+    // Handle clicks on pie chart (filters table, but keeps chart unchanged)
+    const handleSliceClick = (selectedAnswer) => {
+        if (selectedFilter === selectedAnswer) {
+            setFilteredData(surveyData); // Reset filter if clicking the same slice again
+            setSelectedFilter(null);
+        } else {
+            setFilteredData(surveyData.filter(item => item.svar2.toLowerCase() === selectedAnswer.toLowerCase()));
+            setSelectedFilter(selectedAnswer);
+        }
+    };
 
     const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Ø", "Å"];
 
@@ -162,6 +174,7 @@ const App = () => {
                                 "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
                                 "2020": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
                             }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
+                            onSliceClick={handleSliceClick} // Handle clicks on chart
                         />
                     </div>
                 )

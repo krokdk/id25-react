@@ -2,8 +2,7 @@ import React from "react";
 import SurveyPieChart from "./SurveyPieChart";
 import colorScheme from "./colorScheme";
 
-const SurveyPieChartDefault = ({ filteredData, labels }) => {
-
+const SurveyPieChartDefault = ({ filteredData, labels, onSliceClick }) => {
     return (
         <SurveyPieChart
             chartData={{
@@ -22,6 +21,8 @@ const SurveyPieChartDefault = ({ filteredData, labels }) => {
                     ]
                 }]
             }}
+            labels={labels}
+            onSliceClick={onSliceClick} // Handle click events
         />
     );
 };

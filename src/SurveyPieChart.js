@@ -1,12 +1,30 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
-import "chart.js/auto";
+import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 
-const SurveyPieChart = ({ chartData }) => {
+Chart.register(ArcElement, Tooltip, Legend);
+
+const SurveyPieChart = ({ chartData, labels, onSliceClick }) => {
+
+    const handleClick = (event, elements) => {
+        if (elements.length > 0) {
+            const clickedIndex = elements[0].index;
+            const selectedAnswer = labels[clickedIndex];
+            onSliceClick(selectedAnswer); // Pass the selected label to parent component
+        }
+    };
+
     return (
-        <div style={{ textAlign: "center", maxWidth: "500px", margin: "auto" }}>
-            <Pie data={chartData} />
-        </div>
+        <Pie
+            data={chartData}
+            options={{
+                onClick: handleClick, // Handle slice clicks
+                responsive: true,
+                plugins: {
+                    legend: { position: "top" }
+                }
+            }}
+        />
     );
 };
 
