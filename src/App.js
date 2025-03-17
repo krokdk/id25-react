@@ -231,12 +231,13 @@ const App = () => {
                             <h2>Besvarelser for andre år</h2>
                             {Object.entries(selectedPersonHistory)
                                 .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
+                                .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA)) // Sort descending (newest first)
                                 .map(([year, results]) => (
                                     <div key={year} style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
 
                                         {results.map((entry, index) => (
                                             <React.Fragment key={index}>
-                                                {renderPersonResult(`Valg: ${year}`, entry, year)}
+                                                {renderPersonResult(`${year}`, entry, year)}
                                             </React.Fragment>
                                         ))}
                                     </div>
