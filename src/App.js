@@ -39,15 +39,18 @@ const App = () => {
         fetchData();
     }, [selectedYear]); // 🔹 Genindlæs data, når `year` ændres
 
-    // Handle clicks on pie chart (filters table, but keeps chart unchanged)
     const handleSliceClick = (selectedAnswer) => {
-        if (selectedFilter === selectedAnswer) {
-            setFilteredData(surveyData); // Reset filter if clicking the same slice again
-            setSelectedFilter(null);
-        } else {
-            setFilteredData(surveyData.filter(item => item.svar2.toLowerCase() === selectedAnswer.toLowerCase()));
-            setSelectedFilter(selectedAnswer);
-        }
+        let newSelectedFilter = selectedFilter === selectedAnswer ? null : selectedAnswer;
+        setSelectedFilter(newSelectedFilter);
+        applyFilters(newSelectedFilter, selectedParty);
+    };
+
+    // Function to apply the filters
+    const applyFilters = (svar2Filter, partyFilter) => {
+        setFilteredData(surveyData.filter(item =>
+            (!svar2Filter || item.svar2.toLowerCase() === svar2Filter.toLowerCase()) &&
+            (!partyFilter || item.parti.toLowerCase() === partyFilter.toLowerCase())
+        ));
     };
 
     const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Ø", "Å"];
@@ -84,13 +87,13 @@ const App = () => {
             setSelectedPerson(null);
             setFilteredData(surveyData.filter((item) => item.parti === party));
         }
+        applyFilters(selectedFilter, party);
     };
 
     const handleRowClick = (person) => {
         setSelectedPerson(person);
         fetchPersonHistory(person.fornavn); // Hent tidligere svar
     };
-
 
     const handleReset = () => {
         setSelectedPerson(null);
