@@ -1,20 +1,19 @@
-// src/SurveyPieChartDefault.js
 import React from "react";
 import SurveyPieChart from "./SurveyPieChart";
 import colorScheme from "./colorScheme";
 
-const SurveyPieChartDefault = ({ filteredData }) => {
+const SurveyPieChartDefault = ({ filteredData, labels }) => {
+
     return (
         <SurveyPieChart
             chartData={{
-                labels: ["Ja", "Nej", "Ved ikke", "Ikke besvaret"],
+                labels: labels,
                 datasets: [{
-                    data: [
-                        filteredData.filter(item => item.svar2.toLowerCase() === "ja").length,
-                        filteredData.filter(item => item.svar2.toLowerCase() === "nej").length,
-                        filteredData.filter(item => item.svar2.toLowerCase() === "ved ikke").length,
-                        filteredData.filter(item => item.svar2.trim() === "").length
-                    ],
+                    data: labels.map(label =>
+                        filteredData.filter(item =>
+                            item.svar2 && item.svar2.toLowerCase() === label.toLowerCase()
+                        ).length
+                    ),
                     backgroundColor: [
                         colorScheme.secondary,
                         colorScheme.primary,

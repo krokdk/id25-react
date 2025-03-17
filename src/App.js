@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import SurveyPieChart2019 from "./pieChart2019";
-import SurveyPieChart2020 from "./pieChart2020";
 import SurveyPieChartDefault from "./pieChartDefault";
 import { getPartiNavn } from "./partyMapper";
 import "./styles.css";
@@ -157,14 +155,14 @@ const App = () => {
 
             {/* 🔹 Pie chart */
                 !selectedPerson && (
-                    <div style={{ marginBottom: "30px" }}>
-                        {selectedYear === "2019" ? (
-                            <SurveyPieChart2019 filteredData={filteredData} />
-                        ) : selectedYear === "2020" ? (
-                            <SurveyPieChart2020 filteredData={filteredData} />
-                        ) : (
-                            <SurveyPieChartDefault filteredData={filteredData} />
-                        )}
+                    <div style={{marginBottom: "30px"}}>
+                        <SurveyPieChartDefault
+                            filteredData={filteredData}
+                            labels={{
+                                "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
+                                "2020": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
+                            }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
+                        />
                     </div>
                 )
             }
