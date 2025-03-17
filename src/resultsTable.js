@@ -2,10 +2,9 @@ import React from "react";
 import colorScheme from "./colorScheme"; // Import color scheme
 import "./styles.css"; // Ensure styles are applied
 
-const ResultsTable = ({ selectedParty, filteredData, handleRowClick, getPartiNavn }) => {
+const ResultsTable = ({ filteredData, handleRowClick }) => {
     return (
         <div>
-            <h2>Resultater for {getPartiNavn(selectedParty)}</h2>
             <table className="table">
                 <thead>
                 <tr style={{ backgroundColor: colorScheme.primary, color: colorScheme.text }}>

@@ -40,18 +40,24 @@ const App = () => {
     }, [selectedYear]); // 🔹 Genindlæs data, når `year` ændres
 
     const handleSliceClick = (selectedAnswer) => {
-        let newSelectedFilter = selectedFilter === selectedAnswer ? null : selectedAnswer;
-        setSelectedFilter(newSelectedFilter);
-        applyFilters(newSelectedFilter, selectedParty);
+        if (selectedFilter === selectedAnswer) {
+            // Reset filtering
+            setSelectedFilter(null);
+            setFilteredData(surveyData.filter(item =>
+                (!selectedParty || item.parti === selectedParty) &&
+                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
+            ));
+        } else {
+            // Filter based on selected answer + any active party filter
+            setSelectedFilter(selectedAnswer);
+            setFilteredData(surveyData.filter(item =>
+                item.svar2.toLowerCase() === selectedAnswer.toLowerCase() &&
+                (!selectedParty || item.parti === selectedParty) &&
+                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
+            ));
+        }
     };
 
-    // Function to apply the filters
-    const applyFilters = (svar2Filter, partyFilter) => {
-        setFilteredData(surveyData.filter(item =>
-            (!svar2Filter || item.svar2.toLowerCase() === svar2Filter.toLowerCase()) &&
-            (!partyFilter || item.parti.toLowerCase() === partyFilter.toLowerCase())
-        ));
-    };
 
     const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Ø", "Å"];
 
@@ -77,18 +83,23 @@ const App = () => {
 
     const handlePartyFilter = (party) => {
         if (selectedParty === party) {
+            // Reset visning til alle data og fjern parti-valg
             setSelectedParty(null);
-            setSearchQuery("");
-            setSelectedPerson(null);
-            setFilteredData(surveyData);
+            setSelectedFilter(null); // Nulstil Pie Chart
+            setFilteredData(surveyData.filter(item =>
+                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
+            ));
         } else {
+            // Filtrer kun på parti + eventuelt svar2 filter
             setSelectedParty(party);
-            setSearchQuery("");
-            setSelectedPerson(null);
-            setFilteredData(surveyData.filter((item) => item.parti === party));
+            setFilteredData(surveyData.filter(item =>
+                item.parti === party &&
+                (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase()) &&
+                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
+            ));
         }
-        applyFilters(selectedFilter, party);
     };
+
 
     const handleRowClick = (person) => {
         setSelectedPerson(person);
@@ -172,7 +183,7 @@ const App = () => {
                 !selectedPerson && (
                     <div style={{marginBottom: "30px"}}>
                         <SurveyPieChartDefault
-                            filteredData={filteredData}
+                            filteredData={selectedParty ? filteredData : surveyData}
                             labels={{
                                 "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
                                 "2020": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
@@ -212,16 +223,22 @@ const App = () => {
                 />
             )}
 
-            {selectedParty && filteredData.length > 0 && !selectedPerson && (
-                <div style={{ marginTop: "20px" }}>
+            {filteredData.length > 0 && !selectedPerson && (
+                <div style={{marginTop: "20px"}}>
+                    <h2>
+                        {selectedParty
+                            ? `Resultater for ${getPartiNavn(selectedParty)}`
+                            : selectedFilter
+                                ? `Resultater for: ${selectedFilter}`
+                                : "Alle besvarelser"}
+                    </h2>
                     <ResultsTable
-                        selectedParty={selectedParty}
                         filteredData={filteredData}
                         handleRowClick={handleRowClick}
-                        getPartiNavn={getPartiNavn}
                     />
                 </div>
             )}
+
 
             {selectedPerson && (
                 <div>
