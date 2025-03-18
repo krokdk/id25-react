@@ -1,16 +1,22 @@
 const partyMapper = [
-    { bogstav: "A", navn: "Socialdemokratiet" },
-    { bogstav: "B", navn: "Radikale Venstre" },
-    { bogstav: "C", navn: "Konservative Folkeparti" },
-    { bogstav: "F", navn: "Socialistisk Folkeparti" },
-    { bogstav: "I", navn: "Liberal Alliance" },
-    { bogstav: "M", navn: "Moderaterne" },
-    { bogstav: "O", navn: "Dansk Folkeparti" },
-    { bogstav: "V", navn: "Venstre" },
-    { bogstav: "Æ", navn: "Danmarksdemokraterne" },
-    { bogstav: "Ø", navn: "Enhedslisten" },
-    { bogstav: "Å", navn: "Alternativet" }
+    { bogstav: "A", navn: "Socialdemokratiet", farve: "#E2001A" },
+    { bogstav: "B", navn: "Radikale Venstre", farve: "#0066CC" },
+    { bogstav: "C", navn: "Konservative Folkeparti", farve: "#008000" },
+    { bogstav: "F", navn: "Socialistisk Folkeparti", farve: "#C8102E" },
+    { bogstav: "I", navn: "Liberal Alliance", farve: "#FF8000" },
+    { bogstav: "M", navn: "Moderaterne", farve: "#772583" },
+    { bogstav: "O", navn: "Dansk Folkeparti", farve: "#003399" },
+    { bogstav: "V", navn: "Venstre", farve: "#1E90FF" },
+    { bogstav: "Æ", navn: "Danmarksdemokraterne", farve: "#9A76F8" },
+    { bogstav: "Ø", navn: "Enhedslisten", farve: "#A10022" },
+    { bogstav: "Å", navn: "Alternativet", farve: "#00AA00" }
 ];
+
+// Function to get party color by letter
+export const getPartiFarve = (bogstav) => {
+    const party = partyMapper.find(p => p.bogstav === bogstav);
+    return party ? party.farve : "#CCCCCC"; // Default gray
+};
 
 // **Hjælpefunktion til opslag af partinavn givet et bogstav**
 export const getPartiNavn = (bogstav) => {

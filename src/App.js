@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SurveyPieChartDefault from "./pieChartDefault";
-import { getPartiNavn } from "./partyMapper";
+import partyMapper, { getPartiNavn, getPartiFarve } from "./partyMapper";
 import "./styles.css";
 import ResultsTable from "./resultsTable";
 import PersonDetailsTable from "./personDetailsTable";
@@ -59,9 +59,6 @@ const App = () => {
         }
     };
 
-
-    const parties = ["A", "B", "C", "F", "I", "M", "O", "V", "Ø", "Å"];
-
     const handleYearChange = (event) => {
         setSelectedYear(event.target.value); // 🔹 Opdater år og API-url
         setSelectedParty(null);
@@ -88,6 +85,13 @@ const App = () => {
             setSelectedParty(null);
             setSelectedFilter(null); // Nulstil Pie Chart
             setFilteredData(surveyData.filter(item =>
+                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
+            ));
+        } else if (party === "?") {
+            // Filter for those who DO NOT belong to any listed party
+            setSelectedParty("?");
+            setFilteredData(surveyData.filter(item =>
+                !partyMapper.some(p => p.bogstav === item.parti) &&
                 item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
             ));
         } else {
@@ -195,16 +199,32 @@ const App = () => {
                 )
             }
 
-            <div style={{marginTop: "20px"}}>
-                {parties.map((party) => (
+            <div className="party-buttons">
+                {partyMapper.map((party) => (
                     <button
-                        key={party}
-                        onClick={() => handlePartyFilter(party)}
-                        className={`party-button ${selectedParty === party ? "selected" : ""}`}
+                        key={party.bogstav}
+                        onClick={() => handlePartyFilter(party.bogstav)}
+                        className={`party-button ${selectedParty === party.bogstav ? "selected" : ""}`}
+                        style={{
+                            backgroundColor: party.farve
+                        }}
+                        title={party.navn}
                     >
-                        {party}
+                        {party.bogstav}
                     </button>
                 ))}
+
+                {/* Add the "?" Button */}
+                <button
+                    onClick={() => handlePartyFilter("?")}
+                    className={`party-button ${selectedParty === "?" ? "selected" : ""}`}
+                    style={{
+                        backgroundColor: "#888", // Neutral gray color for non-party
+                    }}
+                    title={"Øvrige"}
+                >
+                    ?
+                </button>
             </div>
 
 

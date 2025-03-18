@@ -7,7 +7,7 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
         <div>
             <table className="table">
                 <thead>
-                <tr style={{ backgroundColor: colorScheme.primary, color: colorScheme.text }}>
+                <tr style={{ backgroundColor: colorScheme.secondary, color: colorScheme.text }}>
                     <th className="table-header">Fornavn</th>
                     <th className="table-header">For aldersgrænse</th>
                 </tr>

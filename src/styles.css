@@ -8,8 +8,8 @@
 
 /* 🔹 Pie chart style */
 .pie-chart-container {
-    width: 80%;
-    max-width: 600px;
+    width: 75%;
+    max-width: 500px;
     margin: 0 auto;
 }
 
@@ -61,19 +61,31 @@
     font-size: 16px;
 }
 
+.party-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Allow multiple rows */
+    justify-content: center; /* Center buttons */
+    gap: 1px; /* Reduce spacing */
+    margin-top: 1px;
+}
+
 .party-button {
-    margin: 5px;
-    padding: 10px;
-    border-radius: 5px;
-    color: white;
+    padding: 8px 8px; /* Smaller buttons */
+    border-radius: 1px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white; /* White text for contrast */
     cursor: pointer;
-    background-color: var(--primary-color);
-    border: none;
-    transition: background-color 0.3s;
+    transition: transform 0.2s ease-in-out;
+    min-width: 40px;
+}
+
+.party-button:hover {
+    transform: scale(1.1);
 }
 
 .party-button.selected {
-    background-color: var(--accent-color);
+    opacity: 0.2; /* Reduce opacity to 70% */
+    /*filter: brightness(90%); !* Optional: Slightly darken the color *!*/
 }
-
 
