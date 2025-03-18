@@ -3,7 +3,7 @@ import questions from "./questions";
 import { getPartiNavn } from "./partyMapper";
 import "./styles.css"; // Import global styles
 
-const PersonDetailsTable2020 = ({ person }) => {
+const PersonDetailsTable2021 = ({ person }) => {
     // If no person is selected, return null
     if (!person || !person.fornavn) return null;
 
@@ -18,4 +18,4 @@ const PersonDetailsTable2020 = ({ person }) => {
     );
 };
 
-export default PersonDetailsTable2020;
+export default PersonDetailsTable2021;

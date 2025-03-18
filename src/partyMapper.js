@@ -12,11 +12,6 @@ const partyMapper = [
     { bogstav: "Å", navn: "Alternativet", farve: "#00AA00" }
 ];
 
-// Function to get party color by letter
-export const getPartiFarve = (bogstav) => {
-    const party = partyMapper.find(p => p.bogstav === bogstav);
-    return party ? party.farve : "#CCCCCC"; // Default gray
-};
 
 // **Hjælpefunktion til opslag af partinavn givet et bogstav**
 export const getPartiNavn = (bogstav) => {

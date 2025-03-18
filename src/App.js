@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import SurveyPieChartDefault from "./pieChartDefault";
-import partyMapper, { getPartiNavn, getPartiFarve } from "./partyMapper";
+import partyMapper, { getPartiNavn } from "./partyMapper";
 import "./styles.css";
 import ResultsTable from "./resultsTable";
 import PersonDetailsTable from "./personDetailsTable";
 import PersonDetailsTable2019 from "./personDetailsTable2019";
-import PersonDetailsTable2020 from "./personDetailsTable2020";
+import PersonDetailsTable2021 from "./personDetailsTable2021";
 import LoadingSpinner from "./loadingSpinner";
 
 
@@ -116,7 +116,7 @@ const App = () => {
     };
 
     const fetchPersonHistory = async (fornavn) => {
-        const years = ["2019", "2020", "2022", "2024"]; // Define years to check
+        const years = ["2019", "2021", "2022", "2024"]; // Define years to check
         const history = {};
 
         try {
@@ -148,8 +148,8 @@ const App = () => {
 
         const TableComponent = year === "2019"
             ? PersonDetailsTable2019
-            : year === "2020"
-                ? PersonDetailsTable2020
+            : year === "2021"
+                ? PersonDetailsTable2021
                 : PersonDetailsTable;
 
         return (
@@ -179,7 +179,7 @@ const App = () => {
                 >
                     <option value="2024">Europaparlamentsvalg 2024</option>
                     <option value="2022">Folketingsvalg 2022</option>
-                    <option value="2020">Borgerforslag 2020</option>
+                    <option value="2021">Borgerforslag 2021</option>
                     <option value="2019">Folketingsvalg 2019</option>
                 </select>
             </div>
@@ -191,7 +191,7 @@ const App = () => {
                             filteredData={selectedParty ? filteredData : surveyData}
                             labels={{
                                 "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
-                                "2020": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
+                                "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
                             }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
                             onSliceClick={handleSliceClick} // Handle clicks on chart
                         />
