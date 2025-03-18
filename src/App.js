@@ -6,6 +6,7 @@ import ResultsTable from "./resultsTable";
 import PersonDetailsTable from "./personDetailsTable";
 import PersonDetailsTable2019 from "./personDetailsTable2019";
 import PersonDetailsTable2020 from "./personDetailsTable2020";
+import LoadingSpinner from "./loadingSpinner";
 
 
 const App = () => {
@@ -156,7 +157,7 @@ const App = () => {
     };
 
     if (loading) {
-        return <p>Indlæser data...</p>;
+        return <LoadingSpinner />;
     }
 
     return (
