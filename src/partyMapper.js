@@ -2,6 +2,7 @@ const partyMapper = [
     { bogstav: "A", navn: "Socialdemokratiet", farve: "#E2001A" },
     { bogstav: "B", navn: "Radikale Venstre", farve: "#0066CC" },
     { bogstav: "C", navn: "Konservative Folkeparti", farve: "#008000" },
+    { bogstav: "D", navn: "De Nye Borgerlige", farve: "#FEDF55" },
     { bogstav: "F", navn: "Socialistisk Folkeparti", farve: "#C8102E" },
     { bogstav: "I", navn: "Liberal Alliance", farve: "#FF8000" },
     { bogstav: "M", navn: "Moderaterne", farve: "#772583" },

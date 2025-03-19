@@ -8,8 +8,8 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
             <table className="table">
                 <thead>
                 <tr style={{ backgroundColor: colorScheme.secondary, color: colorScheme.text }}>
-                    <th className="table-header">Fornavn</th>
-                    <th className="table-header">For aldersgrænse</th>
+                    <th className="table-header">Kandidatens navn</th>
+                    <th className="table-header">Er for aldersgrænse?</th>
                 </tr>
                 </thead>
                 <tbody>
