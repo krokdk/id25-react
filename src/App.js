@@ -18,7 +18,9 @@ const App = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [selectedPersonHistory, setSelectedPersonHistory] = useState({});
-    const [selectedFilter, setSelectedFilter] = useState(null); // State for filtering
+    const [selectedFilter, setSelectedFilter] = useState(null); // Valgt svar fra Pie Chart
+    const [pieChartData, setPieChartData] = useState([]); // Data til Pie Chart
+    const [tableData, setTableData] = useState([]); // Data til Tabel
 
 
     useEffect(() => {
@@ -29,6 +31,8 @@ const App = () => {
                 const response = await fetch(API_URL);
                 const result = await response.json();
                 setSurveyData(result);
+                setPieChartData(result);
+                setTableData(result)
                 setFilteredData(result);
             } catch (error) {
                 console.error("Fejl ved hentning af data:", error);
@@ -40,27 +44,54 @@ const App = () => {
         fetchData();
     }, [selectedYear]); // 🔹 Genindlæs data, når `year` ændres
 
+    const updatePieChartData = (party) => {
+        if (party) {
+            if (party === "?") {
+                setPieChartData(surveyData.filter(item =>
+                    !partyMapper.some(p => p.bogstav === item.parti) &&
+                    item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
+                ));
+            } else {
+                setPieChartData(surveyData.filter(item => item.parti === party));
+            }
+        } else {
+            setPieChartData(surveyData); // Hvis intet parti er valgt, vis alle
+        }
+    };
+
+
     const handleSliceClick = (selectedAnswer) => {
         if (selectedFilter === selectedAnswer) {
             // Reset filtering
             setSelectedFilter(null);
-            setFilteredData(surveyData.filter(item =>
+            setTableData(surveyData.filter(item =>
                 (!selectedParty || item.parti === selectedParty) &&
                 item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
             ));
+            setTableData(surveyData.filter(item => item.parti === selectedParty));
         } else {
-            // Filter based on selected answer + any active party filter
+            // Filtrér tabellen (parti + valgt svar2)
             setSelectedFilter(selectedAnswer);
-            setFilteredData(surveyData.filter(item =>
-                item.svar2.toLowerCase() === selectedAnswer.toLowerCase() &&
-                (!selectedParty || item.parti === selectedParty) &&
-                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
+            if (selectedParty === "?")
+            {
+                setTableData(surveyData.filter(item =>
+                    item.svar2.toLowerCase() === selectedAnswer.toLowerCase()
+                    && !partyMapper.some(p => p.bogstav === item.parti)
+                    && item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
+                ));
+            }
+            else{
+            setTableData(surveyData.filter(item =>
+                item.svar2.toLowerCase() === selectedAnswer.toLowerCase()
+                && (!selectedParty || item.parti === selectedParty)
+                && item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
             ));
+            }
         }
     };
 
     const handleYearChange = (event) => {
-        setSelectedYear(event.target.value); // 🔹 Opdater år og API-url
+        setSelectedYear(event.target.value);
         setSelectedParty(null);
         setSearchQuery("");
         setSelectedPerson(null);
@@ -70,38 +101,36 @@ const App = () => {
         const query = event.target.value.toLowerCase();
         setSearchQuery(query);
 
-        const filtered = surveyData.filter(
-            (item) =>
-                item.fornavn.toLowerCase().includes(query) &&
-                (!selectedParty || item.parti === selectedParty)
+        const filtered = surveyData.filter(item =>
+            item.fornavn.toLowerCase().includes(query) &&
+            (!selectedParty || item.parti === selectedParty) &&
+            (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase())
         );
 
-        setFilteredData(filtered);
+        setTableData(filtered);
     };
+
 
     const handlePartyFilter = (party) => {
         if (selectedParty === party) {
-            // Reset visning til alle data og fjern parti-valg
+            // Nulstil til standardvisning
             setSelectedParty(null);
-            setSelectedFilter(null); // Nulstil Pie Chart
-            setFilteredData(surveyData.filter(item =>
-                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
-            ));
+            setSelectedFilter(null);
+            setPieChartData(surveyData);
+            setTableData(surveyData);
         } else if (party === "?") {
             // Filter for those who DO NOT belong to any listed party
             setSelectedParty("?");
-            setFilteredData(surveyData.filter(item =>
+            updatePieChartData("?");
+            setTableData(surveyData.filter(item =>
                 !partyMapper.some(p => p.bogstav === item.parti) &&
                 item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
             ));
         } else {
-            // Filtrer kun på parti + eventuelt svar2 filter
+            // Filtrér Pie Chart data (kun på parti)
             setSelectedParty(party);
-            setFilteredData(surveyData.filter(item =>
-                item.parti === party &&
-                (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase()) &&
-                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
-            ));
+            updatePieChartData(party);
+            setTableData(surveyData.filter(item => item.parti === party));
         }
     };
 
@@ -188,7 +217,7 @@ const App = () => {
                 !selectedPerson && (
                     <div style={{marginBottom: "30px"}}>
                         <SurveyPieChartDefault
-                            filteredData={selectedParty ? filteredData : surveyData}
+                            filteredData={pieChartData}
                             labels={{
                                 "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
                                 "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
@@ -254,7 +283,7 @@ const App = () => {
                                 : "Alle besvarelser"}
                     </h2>
                     <ResultsTable
-                        filteredData={filteredData}
+                        filteredData={tableData}
                         handleRowClick={handleRowClick}
                     />
                 </div>
