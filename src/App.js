@@ -30,10 +30,13 @@ const App = () => {
                 const API_URL = `https://id25-backend-docker.onrender.com/api/survey/results?year=${selectedYear}`;
                 const response = await fetch(API_URL);
                 const result = await response.json();
-                setSurveyData(result);
-                setPieChartData(result);
-                setTableData(result)
-                setFilteredData(result);
+
+                const sorted = result.sort((a, b) => a.fornavn.localeCompare(b.fornavn));
+
+                setSurveyData(sorted);
+                setPieChartData(sorted);
+                setTableData(sorted)
+                setFilteredData(sorted);
             } catch (error) {
                 console.error("Fejl ved hentning af data:", error);
             } finally {
@@ -105,7 +108,7 @@ const App = () => {
             item.fornavn.toLowerCase().includes(query) &&
             (!selectedParty || item.parti === selectedParty) &&
             (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase())
-        );
+        ).sort((a, b) => a.fornavn.localeCompare(b.fornavn)); // 🔹 Sortér alfabetisk
 
         setTableData(filtered);
     };
@@ -193,134 +196,407 @@ const App = () => {
         return <LoadingSpinner />;
     }
 
-    return (
-        <div style={{ textAlign: "center" }}>
-            <h1>Går du ind for en aldersgrænse for omskæring?</h1>
+    if (selectedFilter) {
+        if (selectedParty) {
+            return (
+                <div style={{textAlign: "center"}}>
+                    <h1>Går du ind for en aldersgrænse for omskæring?</h1>
 
-            {/* 🔹 Drop-down til at vælge årstal */}
-            <div style={{ marginBottom: "20px" }}>
-                <label htmlFor="yearSelect">Vælg valg:</label>
-                <select
-                    id="yearSelect"
-                    value={selectedYear}
-                    onChange={handleYearChange}
-                    className="dropdown"
-                >
-                    <option value="2024">Europaparlamentsvalg 2024</option>
-                    <option value="2022">Folketingsvalg 2022</option>
-                    <option value="2021">Borgerforslag 2021</option>
-                    <option value="2019">Folketingsvalg 2019</option>
-                </select>
-            </div>
-
-            {/* 🔹 Pie chart */
-                !selectedPerson && (
-                    <div style={{marginBottom: "30px"}}>
-                        <SurveyPieChartDefault
-                            filteredData={pieChartData}
-                            labels={{
-                                "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
-                                "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
-                            }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
-                            onSliceClick={handleSliceClick} // Handle clicks on chart
-                        />
+                    {/* 🔹 Drop-down til at vælge årstal */}
+                    <div style={{marginBottom: "20px"}}>
+                        <label htmlFor="yearSelect">Vælg valg:</label>
+                        <select
+                            id="yearSelect"
+                            value={selectedYear}
+                            onChange={handleYearChange}
+                            className="dropdown"
+                        >
+                            <option value="2024">Europaparlamentsvalg 2024</option>
+                            <option value="2022">Folketingsvalg 2022</option>
+                            <option value="2021">Borgerforslag 2021</option>
+                            <option value="2019">Folketingsvalg 2019</option>
+                        </select>
                     </div>
-                )
-            }
 
-            <div className="party-buttons">
-                {partyMapper.map((party) => (
-                    <button
-                        key={party.bogstav}
-                        onClick={() => handlePartyFilter(party.bogstav)}
-                        className={`party-button ${selectedParty === party.bogstav ? "selected" : ""}`}
-                        style={{
-                            backgroundColor: party.farve
-                        }}
-                        title={party.navn}
-                    >
-                        {party.bogstav}
-                    </button>
-                ))}
+                    {/* 🔹 Pie chart */
+                        !selectedPerson && (
+                            <div style={{marginBottom: "30px"}}>
+                                <SurveyPieChartDefault
+                                    filteredData={pieChartData}
+                                    labels={{
+                                        "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
+                                        "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
+                                    }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
+                                    onSliceClick={handleSliceClick} // Handle clicks on chart
+                                />
+                            </div>
+                        )
+                    }
 
-                {/* Add the "?" Button */}
-                <button
-                    onClick={() => handlePartyFilter("?")}
-                    className={`party-button ${selectedParty === "?" ? "selected" : ""}`}
-                    style={{
-                        backgroundColor: "#888", // Neutral gray color for non-party
-                    }}
-                    title={"Øvrige"}
-                >
-                    ?
-                </button>
-            </div>
+                    <div className="party-buttons">
+                        {partyMapper.map((party) => (
+                            <button
+                                key={party.bogstav}
+                                onClick={() => handlePartyFilter(party.bogstav)}
+                                className={`party-button ${selectedParty === party.bogstav ? "selected" : ""}`}
+                                style={{
+                                    backgroundColor: party.farve
+                                }}
+                                title={party.navn}
+                            >
+                                {party.bogstav}
+                            </button>
+                        ))}
 
-
-            {(
-                <input
-                    type="text"
-                    placeholder="Søg efter navn..."
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                    style={{
-                        marginTop: "10px",
-                        padding: "8px",
-                        width: "300px",
-                        border: "1px solid #ccc",
-                        borderRadius: "5px",
-                    }}
-                />
-            )}
-
-            {filteredData.length > 0 && !selectedPerson && (
-                <div style={{marginTop: "20px"}}>
-                    <h2>
-                        {selectedParty
-                            ? `Resultater for ${getPartiNavn(selectedParty)}`
-                            : selectedFilter
-                                ? `Resultater for: ${selectedFilter}`
-                                : "Alle besvarelser"}
-                    </h2>
-                    <ResultsTable
-                        filteredData={tableData}
-                        handleRowClick={handleRowClick}
-                    />
-                </div>
-            )}
+                        {/* Add the "?" Button */}
+                        <button
+                            onClick={() => handlePartyFilter("?")}
+                            className={`party-button ${selectedParty === "?" ? "selected" : ""}`}
+                            style={{
+                                backgroundColor: "#888", // Neutral gray color for non-party
+                            }}
+                            title={"Øvrige"}
+                        >
+                            ?
+                        </button>
+                    </div>
 
 
-            {selectedPerson && (
-                <div>
-                    {/* Display the selected person's result for the selectedYear */}
-                    {renderPersonResult(`Besvarelse for ${selectedYear}`, selectedPerson, selectedYear)}
+                    {(
+                        <input
+                            type="text"
+                            placeholder="Søg efter navn..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            style={{
+                                marginTop: "10px",
+                                padding: "8px",
+                                width: "300px",
+                                border: "1px solid #ccc",
+                                borderRadius: "5px",
+                            }}
+                        />
+                    )}
 
-                    {/* Andre resultater */}
-                    {Object.keys(selectedPersonHistory).length > 0 && (
-                        <div style={{ marginTop: "30px" }}>
-                            <h2>Besvarelser for andre år</h2>
-                            {Object.entries(selectedPersonHistory)
-                                .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
-                                .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA)) // Sort descending (newest first)
-                                .map(([year, results]) => (
-                                    <div key={year} style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
-
-                                        {results.map((entry, index) => (
-                                            <React.Fragment key={index}>
-                                                {renderPersonResult(`${year}`, entry, year)}
-                                            </React.Fragment>
-                                        ))}
-                                    </div>
-                                ))}
+                    {filteredData.length > 0 && !selectedPerson && (
+                        <div style={{marginTop: "20px"}}>
+                            <h2>
+                                {selectedParty === "?"
+                                    ? "Resultater for øvrige"
+                                    : `Resultater for ${getPartiNavn(selectedParty)}`}
+                            </h2>
+                            <ResultsTable
+                                filteredData={tableData}
+                                handleRowClick={handleRowClick}
+                            />
                         </div>
                     )}
 
-                    <button onClick={handleReset} className="button">Tilbage</button>
-                </div>
-            )}
 
-        </div>
-    );
+                    {selectedPerson && (
+                        <div>
+                            {/* Display the selected person's result for the selectedYear */}
+                            {renderPersonResult(`Besvarelse for ${selectedYear}`, selectedPerson, selectedYear)}
+
+                            {/* Andre resultater */}
+                            {Object.keys(selectedPersonHistory).length > 0 && (
+                                <div style={{marginTop: "30px"}}>
+                                    <h2>Besvarelser for andre år</h2>
+                                    {Object.entries(selectedPersonHistory)
+                                        .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
+                                        .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA)) // Sort descending (newest first)
+                                        .map(([year, results]) => (
+                                            <div key={year} style={{
+                                                marginTop: "20px",
+                                                textAlign: "left",
+                                                margin: "auto",
+                                                maxWidth: "500px"
+                                            }}>
+
+                                                {results.map((entry, index) => (
+                                                    <React.Fragment key={index}>
+                                                        {renderPersonResult(`${year}`, entry, year)}
+                                                    </React.Fragment>
+                                                ))}
+                                            </div>
+                                        ))}
+                                </div>
+                            )}
+
+                            <button onClick={handleReset} className="button">Tilbage</button>
+                        </div>
+                    )}
+
+                </div>
+            );
+        } else {
+            return (
+                <div style={{textAlign: "center"}}>
+                    <h1>Går du ind for en aldersgrænse for omskæring?</h1>
+
+                    {/* 🔹 Drop-down til at vælge årstal */}
+                    <div style={{marginBottom: "20px"}}>
+                        <label htmlFor="yearSelect">Vælg valg:</label>
+                        <select
+                            id="yearSelect"
+                            value={selectedYear}
+                            onChange={handleYearChange}
+                            className="dropdown"
+                        >
+                            <option value="2024">Europaparlamentsvalg 2024</option>
+                            <option value="2022">Folketingsvalg 2022</option>
+                            <option value="2021">Borgerforslag 2021</option>
+                            <option value="2019">Folketingsvalg 2019</option>
+                        </select>
+                    </div>
+
+                    {/* 🔹 Pie chart */
+                        !selectedPerson && (
+                            <div style={{marginBottom: "30px"}}>
+                                <SurveyPieChartDefault
+                                    filteredData={pieChartData}
+                                    labels={{
+                                        "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
+                                        "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
+                                    }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
+                                    onSliceClick={handleSliceClick} // Handle clicks on chart
+                                />
+                            </div>
+                        )
+                    }
+
+                    <div className="party-buttons">
+                        {partyMapper.map((party) => (
+                            <button
+                                key={party.bogstav}
+                                onClick={() => handlePartyFilter(party.bogstav)}
+                                className={`party-button ${selectedParty === party.bogstav ? "selected" : ""}`}
+                                style={{
+                                    backgroundColor: party.farve
+                                }}
+                                title={party.navn}
+                            >
+                                {party.bogstav}
+                            </button>
+                        ))}
+
+                        {/* Add the "?" Button */}
+                        <button
+                            onClick={() => handlePartyFilter("?")}
+                            className={`party-button ${selectedParty === "?" ? "selected" : ""}`}
+                            style={{
+                                backgroundColor: "#888", // Neutral gray color for non-party
+                            }}
+                            title={"Øvrige"}
+                        >
+                            ?
+                        </button>
+                    </div>
+
+
+                    {(
+                        <input
+                            type="text"
+                            placeholder="Søg efter navn..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            style={{
+                                marginTop: "10px",
+                                padding: "8px",
+                                width: "300px",
+                                border: "1px solid #ccc",
+                                borderRadius: "5px",
+                            }}
+                        />
+                    )}
+
+                    {filteredData.length > 0 && !selectedPerson && (
+                        <div style={{marginTop: "20px"}}>
+                            <h2>
+                                {selectedParty === "?"
+                                    ? "Resultater for øvrige"
+                                    : `Resultater for: ${selectedFilter}`}
+                            </h2>
+                            <ResultsTable
+                                filteredData={tableData}
+                                handleRowClick={handleRowClick}
+                            />
+                        </div>
+                    )}
+
+
+                    {selectedPerson && (
+                        <div>
+                            {/* Display the selected person's result for the selectedYear */}
+                            {renderPersonResult(`Besvarelse for ${selectedYear}`, selectedPerson, selectedYear)}
+
+                            {/* Andre resultater */}
+                            {Object.keys(selectedPersonHistory).length > 0 && (
+                                <div style={{marginTop: "30px"}}>
+                                    <h2>Besvarelser for andre år</h2>
+                                    {Object.entries(selectedPersonHistory)
+                                        .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
+                                        .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA)) // Sort descending (newest first)
+                                        .map(([year, results]) => (
+                                            <div key={year} style={{
+                                                marginTop: "20px",
+                                                textAlign: "left",
+                                                margin: "auto",
+                                                maxWidth: "500px"
+                                            }}>
+
+                                                {results.map((entry, index) => (
+                                                    <React.Fragment key={index}>
+                                                        {renderPersonResult(`${year}`, entry, year)}
+                                                    </React.Fragment>
+                                                ))}
+                                            </div>
+                                        ))}
+                                </div>
+                            )}
+
+                            <button onClick={handleReset} className="button">Tilbage</button>
+                        </div>
+                    )}
+
+                </div>
+            );
+        }
+    } else {
+        return (
+            <div style={{textAlign: "center"}}>
+                <h1>Går du ind for en aldersgrænse for omskæring?</h1>
+
+                {/* 🔹 Drop-down til at vælge årstal */}
+                <div style={{marginBottom: "20px"}}>
+                    <label htmlFor="yearSelect">Vælg valg:</label>
+                    <select
+                        id="yearSelect"
+                        value={selectedYear}
+                        onChange={handleYearChange}
+                        className="dropdown"
+                    >
+                        <option value="2024">Europaparlamentsvalg 2024</option>
+                        <option value="2022">Folketingsvalg 2022</option>
+                        <option value="2021">Borgerforslag 2021</option>
+                        <option value="2019">Folketingsvalg 2019</option>
+                    </select>
+                </div>
+
+                {/* 🔹 Pie chart */
+                    !selectedPerson && (
+                        <div style={{marginBottom: "30px"}}>
+                            <SurveyPieChartDefault
+                                filteredData={pieChartData}
+                                labels={{
+                                    "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
+                                    "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
+                                }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
+                                onSliceClick={handleSliceClick} // Handle clicks on chart
+                            />
+                        </div>
+                    )
+                }
+
+                <div className="party-buttons">
+                    {partyMapper.map((party) => (
+                        <button
+                            key={party.bogstav}
+                            onClick={() => handlePartyFilter(party.bogstav)}
+                            className={`party-button ${selectedParty === party.bogstav ? "selected" : ""}`}
+                            style={{
+                                backgroundColor: party.farve
+                            }}
+                            title={party.navn}
+                        >
+                            {party.bogstav}
+                        </button>
+                    ))}
+
+                    {/* Add the "?" Button */}
+                    <button
+                        onClick={() => handlePartyFilter("?")}
+                        className={`party-button ${selectedParty === "?" ? "selected" : ""}`}
+                        style={{
+                            backgroundColor: "#888", // Neutral gray color for non-party
+                        }}
+                        title={"Øvrige"}
+                    >
+                        ?
+                    </button>
+                </div>
+
+
+                {(
+                    <input
+                        type="text"
+                        placeholder="Søg efter navn..."
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        style={{
+                            marginTop: "10px",
+                            padding: "8px",
+                            width: "300px",
+                            border: "1px solid #ccc",
+                            borderRadius: "5px",
+                        }}
+                    />
+                )}
+
+                {filteredData.length > 0 && !selectedPerson && (
+                    <div style={{marginTop: "20px"}}>
+                        <h2>
+                            {selectedParty === "?"
+                                ? "Resultater for øvrige"
+                                : selectedParty
+                                    ? `Resultater for ${getPartiNavn(selectedParty)}`
+                                    : "Alle besvarelser"}
+                        </h2>
+                        <ResultsTable
+                            filteredData={tableData}
+                            handleRowClick={handleRowClick}
+                        />
+                    </div>
+                )}
+
+
+                {selectedPerson && (
+                    <div>
+                        {/* Display the selected person's result for the selectedYear */}
+                        {renderPersonResult(`Besvarelse for ${selectedYear}`, selectedPerson, selectedYear)}
+
+                        {/* Andre resultater */}
+                        {Object.keys(selectedPersonHistory).length > 0 && (
+                            <div style={{marginTop: "30px"}}>
+                                <h2>Besvarelser for andre år</h2>
+                                {Object.entries(selectedPersonHistory)
+                                    .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
+                                    .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA)) // Sort descending (newest first)
+                                    .map(([year, results]) => (
+                                        <div key={year} style={{
+                                            marginTop: "20px",
+                                            textAlign: "left",
+                                            margin: "auto",
+                                            maxWidth: "500px"
+                                        }}>
+
+                                            {results.map((entry, index) => (
+                                                <React.Fragment key={index}>
+                                                    {renderPersonResult(`${year}`, entry, year)}
+                                                </React.Fragment>
+                                            ))}
+                                        </div>
+                                    ))}
+                            </div>
+                        )}
+
+                        <button onClick={handleReset} className="button">Tilbage</button>
+                    </div>
+                )}
+
+            </div>
+        );
+    }
 };
 
 
