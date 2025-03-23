@@ -75,20 +75,18 @@ const App = () => {
         } else {
             // Filtrér tabellen (parti + valgt svar2)
             setSelectedFilter(selectedAnswer);
-            if (selectedParty === "?")
-            {
+            if (selectedParty === "?") {
                 setTableData(surveyData.filter(item =>
                     item.svar2.toLowerCase() === selectedAnswer.toLowerCase()
                     && !partyMapper.some(p => p.bogstav === item.parti)
                     && item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
                 ));
-            }
-            else{
-            setTableData(surveyData.filter(item =>
-                item.svar2.toLowerCase() === selectedAnswer.toLowerCase()
-                && (!selectedParty || item.parti === selectedParty)
-                && item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
-            ));
+            } else {
+                setTableData(surveyData.filter(item =>
+                    item.svar2.toLowerCase() === selectedAnswer.toLowerCase()
+                    && (!selectedParty || item.parti === selectedParty)
+                    && item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
+                ));
             }
         }
     };
@@ -185,15 +183,15 @@ const App = () => {
                 : PersonDetailsTable;
 
         return (
-            <div style={{ marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px" }}>
+            <div style={{marginTop: "20px", textAlign: "left", margin: "auto", maxWidth: "500px"}}>
                 <h2 style={{textAlign: "center"}}>{title}</h2>
-                <TableComponent person={person} />
+                <TableComponent person={person}/>
             </div>
         );
     };
 
     if (loading) {
-        return <LoadingSpinner />;
+        return <LoadingSpinner/>;
     }
 
     if (selectedFilter) {
@@ -204,7 +202,6 @@ const App = () => {
 
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <div style={{marginBottom: "20px"}}>
-                        <label htmlFor="yearSelect">Vælg valg:</label>
                         <select
                             id="yearSelect"
                             value={selectedYear}
@@ -336,7 +333,6 @@ const App = () => {
 
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <div style={{marginBottom: "20px"}}>
-                        <label htmlFor="yearSelect">Vælg valg:</label>
                         <select
                             id="yearSelect"
                             value={selectedYear}
@@ -469,7 +465,7 @@ const App = () => {
 
                 {/* 🔹 Drop-down til at vælge årstal */}
                 <div style={{marginBottom: "20px"}}>
-                    <label htmlFor="yearSelect">Vælg valg:</label>
+                    <label htmlFor="yearSelect">Vælg kandidattest:</label>
                     <select
                         id="yearSelect"
                         value={selectedYear}
@@ -562,6 +558,7 @@ const App = () => {
 
                 {selectedPerson && (
                     <div>
+                        <button onClick={handleReset} className="button">Tilbage</button>
                         {/* Display the selected person's result for the selectedYear */}
                         {renderPersonResult(`Besvarelse for ${selectedYear}`, selectedPerson, selectedYear)}
 
@@ -589,8 +586,6 @@ const App = () => {
                                     ))}
                             </div>
                         )}
-
-                        <button onClick={handleReset} className="button">Tilbage</button>
                     </div>
                 )}
 
