@@ -146,7 +146,7 @@ const App = () => {
     };
 
     const fetchPersonHistory = async (fornavn) => {
-        const years = ["2019", "2021", "2022", "2024"]; // Define years to check
+        const years = ["2019", "2021", "2022", "2024", "2025"]; // Define years to check
         const history = {};
 
         try {
@@ -208,6 +208,7 @@ const App = () => {
                             onChange={handleYearChange}
                             className="dropdown"
                         >
+                            <option value="2025">Folketingsvalg 2025</option>
                             <option value="2024">Europaparlamentsvalg 2024</option>
                             <option value="2022">Folketingsvalg 2022</option>
                             <option value="2021">Borgerforslag 2021</option>
@@ -339,6 +340,7 @@ const App = () => {
                             onChange={handleYearChange}
                             className="dropdown"
                         >
+                            <option value="2025">Folketingsvalg 2025</option>
                             <option value="2024">Europaparlamentsvalg 2024</option>
                             <option value="2022">Folketingsvalg 2022</option>
                             <option value="2021">Borgerforslag 2021</option>
@@ -472,6 +474,7 @@ const App = () => {
                         onChange={handleYearChange}
                         className="dropdown"
                     >
+                        <option value="2025">Folketingsvalg 2025</option>
                         <option value="2024">Europaparlamentsvalg 2024</option>
                         <option value="2022">Folketingsvalg 2022</option>
                         <option value="2021">Borgerforslag 2021</option>
