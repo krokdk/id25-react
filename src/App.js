@@ -10,7 +10,7 @@ import LoadingSpinner from "./loadingSpinner";
 
 
 const App = () => {
-    const [selectedYear, setSelectedYear] = useState("2022");
+    const [selectedYear, setSelectedYear] = useState("2025");
     const [surveyData, setSurveyData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -198,8 +198,6 @@ const App = () => {
         if (selectedParty) {
             return (
                 <div style={{textAlign: "center"}}>
-                    <h1>Går du ind for en aldersgrænse for omskæring?</h1>
-
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <div style={{marginBottom: "20px"}}>
                         <select
@@ -330,8 +328,6 @@ const App = () => {
         } else {
             return (
                 <div style={{textAlign: "center"}}>
-                    <h1>Går du ind for en aldersgrænse for omskæring?</h1>
-
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <div style={{marginBottom: "20px"}}>
                         <select
@@ -463,8 +459,6 @@ const App = () => {
     } else {
         return (
             <div style={{textAlign: "center"}}>
-                <h1>Går du ind for en aldersgrænse for omskæring?</h1>
-
                 {/* 🔹 Drop-down til at vælge årstal */}
                 <div style={{marginBottom: "20px"}}>
                     <label htmlFor="yearSelect">Vælg kandidattest:</label>
