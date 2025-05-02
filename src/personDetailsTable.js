@@ -1,12 +1,37 @@
 import React from "react";
 import questions from "./questions";
 import "./styles.css";
-import {getPartiNavn} from "./partyMapper"; // Import global styles
+import { getPartiNavn } from "./partyMapper";
 
 const PersonDetailsTable = ({ person }) => {
-    // If no person is selected, return null
+    // Hvis ingen person er valgt
     if (!person || !person.fornavn) return null;
 
+    // Hvis kandidaten ikke har svaret
+    if (!person.svar1 || person.svar1 === "Ikke besvaret") {
+
+        if (!person.url ||  person.url === "")
+        {
+           <div className="missing-response1">
+               <p> {person.fornavn} har endnu ikke besvaret vores spørgeskema.</p>
+           </div>
+
+        }
+        else
+          return (
+            <div className="missing-response2">
+                <p> {person.fornavn} har endnu ikke besvaret vores spørgeskema.</p>
+                <p>
+                    Skriv og spørg hvorfor – du finder kandidatens kontakt-informationer her  {" "}
+                    <a href={person.url} target="_blank" rel="noopener noreferrer">
+                        {person.url}
+                    </a>
+                </p>
+            </div>
+                );
+            };
+
+    // Ellers vis tabel med data
     return (
         <table className="table">
             <tbody>
