@@ -22,7 +22,10 @@ const PersonDetailsTable = ({ person }) => {
             <div className="missing-response2">
                 <p> {person.fornavn} har endnu ikke besvaret vores spørgeskema.</p>
                 <p>
-                    Skriv og spørg hvorfor – du finder kandidatens kontakt-informationer her  {" "}
+                    Hvad med at skrive og spørge {person.fornavn} hvorfor? Du finder kontakt-informationer her:
+                    <p>
+                    </p>
+                    {" "}
                     <a href={person.url} target="_blank" rel="noopener noreferrer">
                         {person.url}
                     </a>

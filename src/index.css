@@ -1,6 +1,10 @@
 :root {
-  --primary-color: #007bff; /* Change this dynamically in JS if needed */
+
+  --primary-color: #de5735;
+  --secondary-color: #4586dd;
   --accent-color: #74a7ea; /* Change this dynamically in JS if needed */
+  --background-color: #b0ccf2,
+
 }
 
 body {

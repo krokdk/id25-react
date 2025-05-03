@@ -12,7 +12,7 @@ const PersonDetailsTable2021 = ({ person }) => {
             <tbody>
             <tr><td className="table-header">Fornavn:</td><td className="table-cell">{person.fornavn}</td></tr>
             <tr><td className="table-header">Parti:</td><td className="table-cell">{getPartiNavn(person.parti)}</td></tr>
-            <tr><td className="table-header">Hvordan stemte dette medlem af folketinget</td><td className="table-cell">{person.svar2}</td></tr>
+            <tr><td className="table-header">Hvordan stemte vedkommene da Intact Denmarks borgerforslag var til afstemning i Folketinget?</td><td className="table-cell">{person.svar2}</td></tr>
             </tbody>
         </table>
     );
