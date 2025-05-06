@@ -1,19 +1,19 @@
 .loading-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 100vh; /* Full screen height */
 }
 
 .loading-logo {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     animation: pulse 1.5s infinite ease-in-out;
 }
 
 /* Keyframe animation */
 @keyframes pulse {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.6; }
-    100% { transform: scale(1); opacity: 1; }
+    0% { transform: scale(0.6); opacity: 0.6; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.6); opacity: 0.6; }
 }
