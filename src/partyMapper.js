@@ -26,4 +26,9 @@ export const getPartiBogstav = (navn) => {
     return parti ? parti.bogstav : navn; // Hvis ikke fundet, returner navn
 };
 
+export const getPartyColor = (bogstav) => {
+    const party = partyMapper.find((p) => p.bogstav === bogstav);
+    return party ? party.farve : "#888";
+};
+
 export default partyMapper;

@@ -50,7 +50,7 @@
     margin: 5px;
     padding: 10px;
     border-radius: 5px;
-    color: white;
+    color: var(--white-color);
     cursor: pointer;
     background-color: var(--secondary-color); /* Will be replaced with JS variable */
 }
@@ -75,7 +75,7 @@
     border-radius: 1px;
     font-size: 16px;
     font-weight: bold;
-    color: white; /* White text for contrast */
+    color: var(--white-color); /* White text for contrast */
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
     min-width: 40px;
@@ -90,22 +90,61 @@
     /*filter: brightness(90%); !* Optional: Slightly darken the color *!*/
 }
 
-.missing-response2 {
-    margin-top: 1rem;
-    padding: 1rem;
-    background-color: var(--background-color);
-    border: 4px solid var(--accent-color);
-    border-radius: 6px;
-    font-family: sans-serif;
-    text-align: center;
-}
-
 .missing-response2 p {
     margin: 0.5rem 0;
     line-height: 1.6;
 }
 
-.missing-response2 a {
-    color: var(--accent-color);
-    text-decoration: underline;
+.card {
+    border: 1px solid var(--secondary-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: var(--background-color);
 }
+
+.missing-response {
+    background-color: var(--accent-color);
+    padding: 20px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.person-header {
+    margin-bottom: 16px;
+}
+
+.party-label {
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 0;
+}
+
+.qa-block {
+    margin-bottom: 12px;
+}
+
+.qa-question {
+    background-color: var(--secondary-color);
+    padding: 8px 12px;
+    border-radius: 6px 6px 0 0;
+    font-weight: bold;
+    color: var(--white-color);
+}
+
+.qa-answer {
+    background-color: var(--accent-color);
+    padding: 8px 12px;
+    border-radius: 0 0 6px 6px;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+}
+

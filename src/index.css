@@ -3,8 +3,8 @@
   --primary-color: #de5735;
   --secondary-color: #4586dd;
   --accent-color: #74a7ea; /* Change this dynamically in JS if needed */
-  --background-color: #b0ccf2,
-
+  --background-color: #b0ccf2;
+  --white-color: #ffffff;
 }
 
 body {
