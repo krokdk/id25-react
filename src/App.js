@@ -124,7 +124,7 @@ const App = () => {
 
     const handleRowClick = (person) => {
         setSelectedPerson(person);
-        fetchPersonHistory(person.fornavn); // Hent tidligere svar
+        fetchPersonHistory(person.fornavn);
     };
 
     const handleReset = () => {
@@ -207,7 +207,14 @@ const App = () => {
                     {selectedPerson && (
                         <div>
                             {/* Display the selected person's result for the selectedYear */}
-                            <PersonResult title={`Besvarelse for ${selectedYear}`} person={selectedPerson} year={selectedYear} />
+                            <PersonResult title={`Besvarelse for ${selectedYear}`}
+                                          person={selectedPerson}
+                                          year={selectedYear}
+                                          onPartyClick={(party) => {
+                                              handleReset();
+                                              !selectedParty && setSelectedParty(party);
+                                          }}
+                            />
 
                             {/* Andre resultater */}
                             {Object.keys(selectedPersonHistory).length > 0 && (
@@ -283,7 +290,15 @@ const App = () => {
                     {selectedPerson && (
                         <div>
                             {/* Display the selected person's result for the selectedYear */}
-                            <PersonResult title={`Besvarelse for ${selectedYear}`} person={selectedPerson} year={selectedYear} />
+                            <PersonResult
+                                title={`Besvarelse for ${selectedYear}`}
+                                person={selectedPerson}
+                                year={selectedYear}
+                                onPartyClick={(party) => {
+                                    handleReset();
+                                    !selectedParty && setSelectedParty(party);
+                                }}
+                            />
 
                             {/* Andre resultater */}
                             {Object.keys(selectedPersonHistory).length > 0 && (
@@ -364,7 +379,14 @@ const App = () => {
                     <div>
                         <button onClick={handleReset} className="button">Tilbage</button>
                         {/* Display the selected person's result for the selectedYear */}
-                        <PersonResult title={`Besvarelse for ${selectedYear}`} person={selectedPerson} year={selectedYear} />
+                        <PersonResult title={`Besvarelse for ${selectedYear}`}
+                                      person={selectedPerson}
+                                      year={selectedYear}
+                                      onPartyClick={(party) => {
+                                          handleReset();
+                                          !selectedParty && setSelectedParty(party);
+                                      }}
+                        />
 
                         {/* Andre resultater */}
                         {Object.keys(selectedPersonHistory).length > 0 && (

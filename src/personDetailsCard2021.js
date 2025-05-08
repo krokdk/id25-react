@@ -1,14 +1,10 @@
 import React from "react";
-import questions from "./questions";
-import {getPartiNavn, getPartyColor} from "./partyMapper";
 import "./styles.css";
-import Questions from "./questions"; // Import global styles
+import PartyButton from "./PartyButton";
 
-const PersonDetailsCard2021 = ({ person }) => {
+const PersonDetailsCard2021 = ({ person, onPartyClick }) => {
     // If no person is selected, return null
     if (!person || !person.fornavn) return null;
-
-
 
     const questionAnswerPairs = [
         { question: "Hvordan stemte vedkommene da Intact Denmarks borgerforslag var til afstemning i Folketinget?", answer: person.svar2 },
@@ -18,12 +14,7 @@ const PersonDetailsCard2021 = ({ person }) => {
         <div className="card person-card">
             <div className="person-header">
                 <h2>{person.fornavn}</h2>
-                <p
-                    className="party-label"
-                    style={{ backgroundColor: getPartyColor(person.parti) }}
-                >
-                    {getPartiNavn(person.parti) || "Øvrige"}
-                </p>
+                <PartyButton party={person.parti} onClick={onPartyClick} />
             </div>
 
             {questionAnswerPairs.map(({ question, answer }, index) => (

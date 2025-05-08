@@ -1,9 +1,9 @@
 import React from "react";
-import partyMapper, { getPartyColor, getPartiNavn } from "./partyMapper";
 import Questions from "./questions";
-import "./styles.css"; // Sørg for at denne linje findes
+import PartyButton from "./PartyButton";
+import "./styles.css";
 
-const PersonDetailsCard = ({ person }) => {
+const PersonDetailsCard = ({ person, onPartyClick }) => {
     if (!person || !person.fornavn) return null;
 
     const hasNoAnswers =
@@ -14,18 +14,13 @@ const PersonDetailsCard = ({ person }) => {
             <div className="card person-card">
                 <div className="person-header">
                     <h2>{person.fornavn}</h2>
-                    <p
-                        className="party-label"
-                        style={{backgroundColor: getPartyColor(person.parti)}}
-                    >
-                        {getPartiNavn(person.parti) || "Øvrige"}
-                    </p>
+                    <PartyButton party={person.parti} onClick={onPartyClick} />
                 </div>
 
                 <div className="qa-block">
                     <div className="qa-question">
                         <p>
-                            <strong>{person.fornavn}</strong> har endnu ikke besvaret vores spørgeskema endnu.
+                            <strong>{person.fornavn}</strong> har desværre ikke besvaret vores spørgeskema.
                         </p>
                         { person.url && person.url.trim() !== "" && (
                             <p>
@@ -57,12 +52,7 @@ const PersonDetailsCard = ({ person }) => {
         <div className="card person-card">
             <div className="person-header">
                 <h2>{person.fornavn}</h2>
-                <p
-                    className="party-label"
-                    style={{ backgroundColor: getPartyColor(person.parti) }}
-                >
-                    {getPartiNavn(person.parti) || "Øvrige"}
-                </p>
+                <PartyButton party={person.parti} onClick={onPartyClick} />
             </div>
 
             {questionAnswerPairs.map(({ question, answer }, index) => (

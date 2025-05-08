@@ -148,3 +148,18 @@
     border-top: 1px solid #ccc;
 }
 
+.party-button-link {
+    border: none;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 4px;
+    display: inline-block;
+}
+.party-button-link:hover {
+    opacity: 0.9;
+}
+
+
