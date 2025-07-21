@@ -86,8 +86,7 @@
 }
 
 .party-button.selected {
-    opacity: 0.2; /* Reduce opacity to 70% */
-    /*filter: brightness(90%); !* Optional: Slightly darken the color *!*/
+    opacity: 0.2;
 }
 
 .missing-response2 p {
@@ -141,7 +140,7 @@
 }
 
 .qa-answer {
-    background-color: var(--accent-color);
+    background-color: var(--background-color);
     padding: 8px 12px;
     border-radius: 0 0 6px 6px;
     font-weight: bold;
@@ -158,6 +157,7 @@
     margin-top: 4px;
     display: inline-block;
 }
+
 .party-button-link:hover {
     opacity: 0.9;
 }

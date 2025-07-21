@@ -1,11 +1,12 @@
-const colorScheme = {
-    primary: "#de5735",
-    secondary: "#4586dd",
-    tertiary: "#f5ce20",
-    background: "#b0ccf2",
-    lenasExtra: "#18375d",
-    //accent: "#74a7ea",
-    text: "#ffffff",
-};
+import { getCssColor } from './utils/getColorVar';
 
-export default colorScheme;
+export function getColorScheme() {
+  return {
+    primary: getCssColor('primary-color'),
+    secondary: getCssColor('secondary-color'),
+    accent: getCssColor('accent-color'),//'#f5ce20',
+    background: getCssColor('background-color'),
+    lenasExtra: getCssColor('lenas-color'),
+    white: getCssColor('white-color'),
+  };
+}

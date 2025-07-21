@@ -1,34 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getColorScheme } from "./colorScheme";
 import SurveyPieChart from "./SurveyPieChart";
-import colorScheme from "./colorScheme";
+
 
 const SurveyPieChartDefault = ({ filteredData, labels, onSliceClick }) => {
-    return (
-        <div className="pie-chart-wrapper">
-            <div className="pie-chart-container">
-                <SurveyPieChart
-                    chartData={{
-                        labels: labels,
-                        datasets: [{
-                            data: labels.map(label =>
-                                filteredData.filter(item =>
-                                    item.svar2 && item.svar2.toLowerCase() === label.toLowerCase()
-                                ).length
-                            ),
-                            backgroundColor: [
-                                colorScheme.secondary,
-                                colorScheme.primary,
-                                colorScheme.tertiary,
-                                colorScheme.background
-                            ]
-                        }]
-                    }}
-                    labels={labels}
-                    onSliceClick={onSliceClick} // Handle click events
-                />
-            </div>
-        </div>
-    );
+  const [colors, setColors] = useState(null);
+
+  useEffect(() => {
+    const scheme = getColorScheme();
+    setColors([
+      scheme.secondary,
+      scheme.primary,
+      scheme.accent,
+      scheme.background
+    ]);
+  }, []);
+
+  if (!colors) return null;
+
+  const chartData = {
+    labels: labels,
+    datasets: [{
+      data: labels.map(label =>
+        filteredData.filter(item =>
+          item.svar2 && item.svar2.toLowerCase() === label.toLowerCase()
+        ).length
+      ),
+      backgroundColor: colors
+    }]
+  };
+
+  return (
+    <div className="pie-chart-wrapper">
+      <div className="pie-chart-container">
+        <SurveyPieChart
+          chartData={chartData}
+          labels={labels}
+          onSliceClick={onSliceClick}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default SurveyPieChartDefault;

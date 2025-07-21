@@ -1,8 +1,19 @@
-import React from "react";
-import colorScheme from "./colorScheme"; // Import color scheme
+import React, { useEffect, useState } from "react";
+import { getColorScheme } from "./colorScheme";
 import "./styles.css"; // Ensure styles are applied
 
 const ResultsTable = ({ filteredData, handleRowClick }) => {
+  const [colorScheme, setColorScheme] = useState(null);
+
+  useEffect(() => {
+    const scheme = getColorScheme();
+    setColorScheme(scheme);
+  }, []);
+
+  // Vent til farver er klar
+  if (!colorScheme) return null;
+
+
     return (
         <div>
             <table className="table">

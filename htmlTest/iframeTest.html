@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Iframe Theme Test</title>
+</head>
+<body>
+<h1>Parent-siden</h1>
+
+<iframe id="my-iframe" src="http://localhost:3000" width="100%" height="600"></iframe>
+
+<script>
+  const theme = {
+    'primary-color': '#de5735',
+    'secondary-color': '#4586dd',
+    'accent-color': '#74a7ea',
+    'background-color': '#b0ccf2',
+    'white-color': '#ffffff'
+  };
+
+  const iframe = document.getElementById('my-iframe');
+
+  window.addEventListener('message', (event) => {
+    if (event.data?.type === 'iframe-ready') {
+      console.log("Iframe siger den er klar");
+      iframe.contentWindow.postMessage({ type: 'set-colors', colors: theme }, 'http://localhost:3000');
+    }
+  });
+</script>
+
+</body>
+</html>

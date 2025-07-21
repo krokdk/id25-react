@@ -4,7 +4,7 @@ import partyMapper, { getPartiNavn } from "./partyMapper";
 import "./styles.css";
 import ResultsTable from "./resultsTable";
 import LoadingSpinner from "./loadingSpinner";
-import useSurveyData from "./useSurveyData"; // Sørg for at stien passer
+import useSurveyData from "./useSurveyData";
 import PartySelector from "./partySelector";
 import SearchInput from "./searchInput";
 import PersonResult from "./personResult";
@@ -12,6 +12,28 @@ import YearSelector from "./yearSelector";
 
 
 const App = () => {
+  console.log("ID25 is running");
+
+   window.parent.postMessage({ type: 'iframe-ready' }, '*');
+
+   const handleMessage = (event) => {
+      if (event.data?.type === 'set-colors') {
+        const colors = event.data.colors;
+        if (colors && typeof colors === 'object') {
+           for (const [key, value] of Object.entries(colors)) {
+             document.documentElement.style.setProperty(`--${key}`, value);
+             console.log(`Satte --${key} til ${value}`);
+          }
+        }
+     }
+   };
+
+   useEffect(() => {
+     window.addEventListener('message', handleMessage);
+     return () => window.removeEventListener('message', handleMessage);
+   }, []);
+
+
     const [selectedYear, setSelectedYear] = useState("2025");
     const [filteredData, setFilteredData] = useState([]);
     const [selectedParty, setSelectedParty] = useState(null);
