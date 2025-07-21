@@ -1,6 +1,6 @@
 import React from "react";
 import { getPartiNavn, getPartyColor } from "./partyMapper";
-import "./styles.css";
+import "../styles.css";
 
 const PartyButton = ({ party, onClick }) => {
     if (!party) return null;

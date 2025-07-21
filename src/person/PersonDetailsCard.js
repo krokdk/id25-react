@@ -1,7 +1,7 @@
 import React from "react";
-import Questions from "./questions";
-import PartyButton from "./PartyButton";
-import "./styles.css";
+import Questions from "../questions";
+import PartyButton from "../party/PartyButton";
+import "../styles.css";
 
 const PersonDetailsCard = ({ person, onPartyClick }) => {
     if (!person || !person.fornavn) return null;

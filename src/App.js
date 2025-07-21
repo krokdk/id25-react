@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import SurveyPieChartDefault from "./pieChartDefault";
-import partyMapper, { getPartiNavn } from "./partyMapper";
+import SurveyPieChartDefault from "./piechart/pieChartDefault";
+import partyMapper, { getPartiNavn } from "./party/partyMapper";
 import "./styles.css";
 import ResultsTable from "./resultsTable";
-import LoadingSpinner from "./loadingSpinner";
+import LoadingSpinner from "./spinner/loadingSpinner";
 import useSurveyData from "./useSurveyData";
-import PartySelector from "./partySelector";
+import PartySelector from "./party/partySelector";
 import SearchInput from "./searchInput";
-import PersonResult from "./personResult";
+import PersonResult from "./person/personResult";
 import YearSelector from "./yearSelector";
 
 

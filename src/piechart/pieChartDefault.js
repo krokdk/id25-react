@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getColorScheme } from "./colorScheme";
+import { getColorScheme } from "../colorScheme";
 import SurveyPieChart from "./SurveyPieChart";
 
 

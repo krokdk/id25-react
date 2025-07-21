@@ -1,15 +1,13 @@
 import React from "react";
-import "./styles.css";
-import PartyButton from "./PartyButton";
-import Questions from "./questions"; // Import global styles
+import "../styles.css";
+import PartyButton from "../party/PartyButton";
 
-const PersonDetailsCard2019 = ({ person, onPartyClick }) => {
+const PersonDetailsCard2021 = ({ person, onPartyClick }) => {
     // If no person is selected, return null
     if (!person || !person.fornavn) return null;
 
-
     const questionAnswerPairs = [
-        { question: Questions.SPM2, answer: person.svar2 },
+        { question: "Hvordan stemte vedkommene da Intact Denmarks borgerforslag var til afstemning i Folketinget?", answer: person.svar2 },
     ].filter(qa => qa.answer && qa.answer !== "");
 
     return (
@@ -29,4 +27,4 @@ const PersonDetailsCard2019 = ({ person, onPartyClick }) => {
     );
 };
 
-export default PersonDetailsCard2019;
+export default PersonDetailsCard2021;
