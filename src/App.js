@@ -34,7 +34,8 @@ const App = () => {
    }, []);
 
 
-    const [selectedYear, setSelectedYear] = useState("2025");
+    //const [selectedYear, setSelectedYear] = useState("2025");
+    const [selectedYear, setSelectedYear] = useState("9999");
     const [filteredData, setFilteredData] = useState([]);
     const [selectedParty, setSelectedParty] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
