@@ -1,6 +1,7 @@
 import React from "react";
 import PersonDetailsCard2019 from "./personDetailsCard2019";
 import PersonDetailsCard2021 from "./personDetailsCard2021";
+import PersonDetailsCard2025 from "./personDetailsCard2025";
 import PersonDetailsCard from "./PersonDetailsCard";
 
 const PersonResult = ({ title, person, year, onPartyClick }) => {
@@ -10,7 +11,9 @@ const PersonResult = ({ title, person, year, onPartyClick }) => {
         ? PersonDetailsCard2019
         : year === "2021"
             ? PersonDetailsCard2021
-            : PersonDetailsCard;
+            :  year === "9999" || year === "8888"
+                ? PersonDetailsCard2025
+                : PersonDetailsCard;
 
     return (
         <div style={{ marginTop: "20px", marginBottom: "30px", textAlign: "center" }}>

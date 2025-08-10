@@ -230,7 +230,7 @@ const App = () => {
                     {selectedPerson && (
                         <div>
                             {/* Display the selected person's result for the selectedYear */}
-                            <PersonResult title={`Besvarelse for ${selectedYear}`}
+                            <PersonResult //title={`Besvarelse for ${selectedYear}`}
                                           person={selectedPerson}
                                           year={selectedYear}
                                           onPartyClick={(party) => {
@@ -314,7 +314,7 @@ const App = () => {
                         <div>
                             {/* Display the selected person's result for the selectedYear */}
                             <PersonResult
-                                title={`Besvarelse for ${selectedYear}`}
+                                //title={`Besvarelse for ${selectedYear}`}
                                 person={selectedPerson}
                                 year={selectedYear}
                                 onPartyClick={(party) => {
@@ -402,7 +402,7 @@ const App = () => {
                     <div>
                         <button onClick={handleReset} className="button">Tilbage</button>
                         {/* Display the selected person's result for the selectedYear */}
-                        <PersonResult title={`Besvarelse for ${selectedYear}`}
+                        <PersonResult //title={`Besvarelse for ${selectedYear}`}
                                       person={selectedPerson}
                                       year={selectedYear}
                                       onPartyClick={(party) => {
