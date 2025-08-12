@@ -11,6 +11,8 @@ export default class DenmarkMap extends React.Component {
     };
     this.wrapperRef = React.createRef();
     this.selectedEl = null;
+
+    // Bind background click handler to a stable reference
     this.svgBackgroundClickBound = (e) => this.svgBackgroundClick(e);
   }
 
@@ -56,9 +58,11 @@ export default class DenmarkMap extends React.Component {
     this.setState({ svgLoaded: true, error: null });
   }
 
+  // Remove all listeners to avoid leaks / duplicate bindings
   teardownListeners() {
     const root = this.wrapperRef.current;
     if (!root) return;
+
     const selector = this.props.pathSelector || "path, polygon";
     root.querySelectorAll(selector).forEach((el) => {
       el.removeEventListener("mouseenter", this.dom_onEnter);
@@ -66,15 +70,18 @@ export default class DenmarkMap extends React.Component {
       el.removeEventListener("click", this.dom_onClick);
       el.removeEventListener("keydown", this.dom_onKeyDown);
     });
+
     const svg = root.querySelector("svg");
     if (svg) {
       svg.removeEventListener("click", this.svgBackgroundClickBound, true);
     }
   }
 
+  // Apply base styles and wire interactions to all municipalities
   wireUpPaths() {
     const root = this.wrapperRef.current;
     if (!root) return;
+
     this.teardownListeners();
 
     const svg = root.querySelector("svg");
@@ -85,9 +92,32 @@ export default class DenmarkMap extends React.Component {
     }
 
     const selector = this.props.pathSelector || "path, polygon";
-    root.querySelectorAll(selector).forEach((el) => {
+    const shapes = root.querySelectorAll(selector);
+
+    const {
+      baseFill = undefined,
+      baseStroke = undefined,
+      baseStrokeWidth = undefined,
+      baseFillOpacity = undefined,
+      baseStrokeOpacity = undefined,
+      baseFillRule = "evenodd",
+    } = this.props;
+
+    shapes.forEach((el) => {
+      // Base visuals (only set when provided)
+      if (baseFill !== undefined) el.style.fill = baseFill;
+      if (baseStroke !== undefined) el.style.stroke = baseStroke;
+      if (baseStrokeWidth !== undefined) el.style.strokeWidth = String(baseStrokeWidth);
+      if (baseFillOpacity !== undefined) el.style.fillOpacity = String(baseFillOpacity);
+      if (baseStrokeOpacity !== undefined) el.style.strokeOpacity = String(baseStrokeOpacity);
+      if (baseFillRule) el.setAttribute("fill-rule", baseFillRule);
+
+      // Accessibility / interactivity
+      el.setAttribute("role", "button");
+      el.setAttribute("tabindex", "0");
       el.style.cursor = "pointer";
       el.style.outline = "none";
+
       el.addEventListener("mouseenter", this.dom_onEnter);
       el.addEventListener("mouseleave", this.dom_onLeave);
       el.addEventListener("click", this.dom_onClick);
@@ -95,6 +125,7 @@ export default class DenmarkMap extends React.Component {
     });
   }
 
+  // --- Event handlers ---
   dom_onEnter = (e) => {
     const name = this.getElementName(e.currentTarget);
     this.setState({ hoverName: name });
@@ -107,8 +138,11 @@ export default class DenmarkMap extends React.Component {
     const el = e.currentTarget;
     const id = el.getAttribute("id") || "";
     const name = this.getElementName(el);
+
     this.selectElement(el);
-    this.props.onSelectMunicipality?.(id, name);
+    if (this.props.onSelectMunicipality) {
+      this.props.onSelectMunicipality(id, name);
+    }
   };
 
   dom_onKeyDown = (e) => {
@@ -127,11 +161,14 @@ export default class DenmarkMap extends React.Component {
     if (typeof getName === "function") {
       try {
         return getName(el) || id;
-      } catch {}
+      } catch {
+        // ignore
+      }
     }
     return id;
   }
 
+  // Selection visuals
   selectElement(el) {
     if (this.selectedEl === el) return;
     this.clearSelection();
