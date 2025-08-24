@@ -12,7 +12,7 @@ return (
           svgUrl="/Map_DK_Simple.svg"
           baseFill="#4586dd"
           baseStroke="#4586dd"
-          baseStrokeWidth={1.25}
+          baseStrokeWidth={0.25}
           activeFill="#de5735"
           activeStroke="#de5735"
           onSelectMunicipality={handleSelectMunicipality}
