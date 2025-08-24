@@ -24,14 +24,13 @@ const PersonDetailsCard = ({ person, onPartyClick }) => {
                         </p>
                         { person.url && person.url.trim() !== "" && (
                             <p>
-                                Hvorfor ikke skrive og spørge hvorfor? Du finder kontakt-informationer her:
+                                Hvorfor ikke skrive og spørge hvorfor?
+
+                                <a href={person.url} target="_blank" rel="noopener noreferrer">
+                                                            kontaktinfo
+                                                        </a>
                             </p>
                         )}
-                    </div>
-                    <div className="qa-answer">
-                        <a href={person.url} target="_blank" rel="noopener noreferrer">
-                            {person.url}
-                        </a>
                     </div>
                 </div>
 

@@ -2,17 +2,10 @@ import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DenmarkMap from "./DenmarkMap";
 
-/**
- * MapContainer (animated)
- * -----------------------
- * - Renders the map card in-flow when expanded
- * - Moves it to a fixed top-right slot when minimized
- * - Uses Framer Motion shared layout (layoutId) to animate between the two
- */
 export default function MapContainer({
   onMunicipalitySelected,
   minimizedWidth = 120,
-  position = { top: 16, left: 16 },
+  position = { top: 16, right: 16 },
   mapProps = {},
 }) {
   const [minimized, setMinimized] = useState(false);
@@ -38,7 +31,6 @@ export default function MapContainer({
 
   return (
     <>
-      {/* Expanded slot (in document flow) */}
       <AnimatePresence initial={false}>
         {!minimized && (
           <motion.div
@@ -54,7 +46,6 @@ export default function MapContainer({
         )}
       </AnimatePresence>
 
-      {/* Minimized slot (fixed, top-right) */}
       <AnimatePresence initial={false}>
         {minimized && (
           <motion.div
@@ -62,8 +53,19 @@ export default function MapContainer({
             layoutId={CARD_ID}
             initial={false}
             onClick={() => setMinimized(false)}
-            style={{ position: "fixed", top: position.top ?? 16, left: position.left ?? 16 }}
-            animate={{ width: minimizedWidth, borderRadius: 16, boxShadow: "0 10px 20px rgba(0,0,0,0.08), 0 6px 6px rgba(0,0,0,0.06)" }}
+            style={{
+              position: "fixed",
+              top: position.top ?? 16,
+              right: position.right ?? 16,
+              zIndex: 50,
+              overflow: "hidden",
+            }}
+            animate={{
+              width: minimizedWidth,
+              borderRadius: 16,
+              boxShadow:
+                "0 10px 20px rgba(0,0,0,0.08), 0 6px 6px rgba(0,0,0,0.06)",
+            }}
             exit={{ opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 24 }}
             whileHover={{ scale: 1.03 }}

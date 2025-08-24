@@ -9,7 +9,7 @@ import PartySelector from "./party/partySelector";
 import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
 import YearSelector from "./yearSelector";
-
+import MapAnimation from "./map/MapAnimation";
 
 const App = () => {
   console.log("ID25 is running");
@@ -34,7 +34,7 @@ const App = () => {
    }, []);
 
 
-    //const [selectedYear, setSelectedYear] = useState("2025");
+   //const [selectedYear, setSelectedYear] = useState("2025");
     const [selectedYear, setSelectedYear] = useState("9999");
     const [filteredData, setFilteredData] = useState([]);
     const [selectedParty, setSelectedParty] = useState(null);
@@ -44,6 +44,8 @@ const App = () => {
     const [selectedFilter, setSelectedFilter] = useState(null); // Valgt svar fra Pie Chart
     const [pieChartData, setPieChartData] = useState([]); // Data til Pie Chart
     const [tableData, setTableData] = useState([]); // Data til Tabel
+    const [selectedMunicipality, setSelectedMunicipality] = useState(null);
+
 
 
     const { surveyData, loading } = useSurveyData(selectedYear);
@@ -56,6 +58,28 @@ const App = () => {
     }, [surveyData]);
 
 
+  useEffect(() => {
+    if (selectedMunicipality) {
+
+      console.log("Valgt kommune:", selectedMunicipality.id);
+
+        setPieChartData(surveyData.filter(item =>
+                     item.storkreds === selectedMunicipality.id
+                     ))
+        setTableData(surveyData.filter(item =>
+                     item.storkreds === selectedMunicipality.id
+                     )
+                  );
+    }
+    else
+    {
+        console.log("Ingen kommune valgt");
+        setSelectedFilter(null);
+    }
+
+  }, [selectedMunicipality]);
+
+
     const updatePieChartData = (party) => {
         if (party) {
             if (party === "?") {
@@ -64,13 +88,16 @@ const App = () => {
                     item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
                 ));
             } else {
-                setPieChartData(surveyData.filter(item => item.parti === party));
+                setPieChartData(surveyData.filter(item => 
+                    item.parti === party
+                ));
             }
         } else {
-            setPieChartData(surveyData); // Hvis intet parti er valgt, vis alle
+            setPieChartData(surveyData.filter(item => 
+                    item.storkreds === selectedMunicipality.id)); // Hvis intet parti er valgt, vis alle
         }
-    };
 
+    };
 
     const handleSliceClick = (selectedAnswer) => {
         if (selectedFilter === selectedAnswer) {
@@ -140,7 +167,7 @@ const App = () => {
             // Filtrér Pie Chart data (kun på parti)
             setSelectedParty(party);
             updatePieChartData(party);
-            setTableData(surveyData.filter(item => item.parti === party));
+            setTableData(surveyData.filter(item => item.parti === party && item.kreds === selectedMunicipality));
         }
     };
 
@@ -155,7 +182,7 @@ const App = () => {
     };
 
     const fetchPersonHistory = async (fornavn) => {
-        const years = ["2019", "2021", "2022", "2024", "2025"]; // Define years to check
+        const years = ["2019", "2021", "2022", "2024"];//, "2025"]; // Define years to check
         const history = {};
 
         try {
@@ -190,6 +217,7 @@ const App = () => {
         if (selectedParty) {
             return (
                 <div style={{textAlign: "center"}}>
+
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
 
@@ -357,8 +385,18 @@ const App = () => {
         }
     } else {
         return (
+
+            <div className="relative min-h-screen">
+              <MapAnimation
+                selectedMunicipality={selectedMunicipality}
+                setSelectedMunicipality={setSelectedMunicipality}
+              />
+
+
             <div style={{textAlign: "center"}}>
                 {/* 🔹 Drop-down til at vælge årstal */}
+
+
                 <YearSelector value={selectedYear} onChange={handleYearChange} />
 
                 {/* 🔹 Pie chart */
@@ -437,7 +475,7 @@ const App = () => {
                         )}
                     </div>
                 )}
-
+              </div>
             </div>
         );
     }
