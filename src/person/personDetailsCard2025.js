@@ -1,5 +1,5 @@
 import React from "react";
-import Questions from "../questions";
+import Questions from "../Questions2025";
 import PartyButton from "../party/PartyButton";
 import "../styles.css";
 
@@ -44,8 +44,7 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
         { question: Questions.SPM1, answer: person.svar1 },
         { question: Questions.SPM2, answer: person.svar2 },
         { question: Questions.SPM3, answer: person.svar3 },
-        { question: Questions.SPM4, answer: person.svar4 },
-        { question: Questions.SPM5, answer: person.svar5 },
+        { question: Questions.Comment, answer: person.svar4 },
     ].filter(qa => qa.answer && qa.answer !== "");
 
     return (

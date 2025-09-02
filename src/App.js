@@ -59,7 +59,7 @@ const App = () => {
 
                     && (!searchQuery || item.fornavn.toLowerCase().includes(searchQuery))
 
-                    //&& (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase())
+                    && (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase())
 
                     )
                     .sort((a, b) => a.fornavn.localeCompare(b.fornavn))
@@ -97,7 +97,14 @@ const App = () => {
     };
 
     const handleMunicipalityChange = (municipality) => {
-        setSelectedMunicipality(municipality.target.value);
+        
+        if (municipality.target.value === "Alle")
+        {
+            setSelectedMunicipality(null);
+        }
+        else{
+            setSelectedMunicipality(municipality.target.value);
+        }
 
     };
 
