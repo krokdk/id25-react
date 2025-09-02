@@ -9,7 +9,8 @@ import PartySelector from "./party/partySelector";
 import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
 import YearSelector from "./yearSelector";
-import MapAnimation from "./map/MapAnimation";
+import MunicipalitySelector from "./MunicipalitySelector";
+//import MapAnimation from "./map/MapAnimation";
 
 const App = () => {
   console.log("ID25 is running");
@@ -45,85 +46,40 @@ const App = () => {
     const [pieChartData, setPieChartData] = useState([]); // Data til Pie Chart
     const [tableData, setTableData] = useState([]); // Data til Tabel
     const [selectedMunicipality, setSelectedMunicipality] = useState(null);
+    const {surveyData, loading} = useSurveyData(selectedYear);
 
-
-
-    const { surveyData, loading } = useSurveyData(selectedYear);
     useEffect(() => {
-        if (surveyData.length > 0) {
-            setFilteredData(surveyData);
-            setTableData(surveyData);
-            setPieChartData(surveyData);
+        
+        if (surveyData.length > 0) {            
+            let filter = surveyData.filter(item =>
+                    
+                    (!selectedMunicipality || item.storkreds === selectedMunicipality)
+                     
+                    && (!selectedParty || item.parti === selectedParty)
+
+                    && (!searchQuery || item.fornavn.toLowerCase().includes(searchQuery))
+
+                    //&& (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase())
+
+                    )
+                    .sort((a, b) => a.fornavn.localeCompare(b.fornavn))
+                    ;
+            
+            setFilteredData(filter);
+            setTableData(filter);
+            setPieChartData(filter);
         }
-    }, [surveyData]);
+    }, [surveyData, selectedMunicipality, selectedParty, searchQuery, selectedFilter]);
 
-
-  useEffect(() => {
-    if (selectedMunicipality) {
-
-      console.log("Valgt kommune:", selectedMunicipality.id);
-
-        setPieChartData(surveyData.filter(item =>
-                     item.storkreds === selectedMunicipality.id
-                     ))
-        setTableData(surveyData.filter(item =>
-                     item.storkreds === selectedMunicipality.id
-                     )
-                  );
-    }
-    else
-    {
-        console.log("Ingen kommune valgt");
-        setSelectedFilter(null);
-    }
-
-  }, [selectedMunicipality]);
-
-
-    const updatePieChartData = (party) => {
-        if (party) {
-            if (party === "?") {
-                setPieChartData(surveyData.filter(item =>
-                    !partyMapper.some(p => p.bogstav === item.parti) &&
-                    item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
-                ));
-            } else {
-                setPieChartData(surveyData.filter(item => 
-                    item.parti === party
-                ));
-            }
-        } else {
-            setPieChartData(surveyData.filter(item => 
-                    item.storkreds === selectedMunicipality.id)); // Hvis intet parti er valgt, vis alle
-        }
-
-    };
 
     const handleSliceClick = (selectedAnswer) => {
         if (selectedFilter === selectedAnswer) {
             // Reset filtering
             setSelectedFilter(null);
-            setTableData(surveyData.filter(item =>
-                (!selectedParty || item.parti === selectedParty) &&
-                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
-            ));
-            setTableData(surveyData.filter(item => item.parti === selectedParty));
+          
         } else {
             // Filtrér tabellen (parti + valgt svar2)
             setSelectedFilter(selectedAnswer);
-            if (selectedParty === "?") {
-                setTableData(surveyData.filter(item =>
-                    item.svar2.toLowerCase() === selectedAnswer.toLowerCase()
-                    && !partyMapper.some(p => p.bogstav === item.parti)
-                    && item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
-                ));
-            } else {
-                setTableData(surveyData.filter(item =>
-                    item.svar2.toLowerCase() === selectedAnswer.toLowerCase()
-                    && (!selectedParty || item.parti === selectedParty)
-                    && item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
-                ));
-            }
         }
     };
 
@@ -132,42 +88,25 @@ const App = () => {
         setSelectedParty(null);
         setSearchQuery("");
         setSelectedPerson(null);
+        setSelectedMunicipality(null);
     };
 
     const handleSearchChange = (event) => {
         const query = event.target.value.toLowerCase();
         setSearchQuery(query);
-
-        const filtered = surveyData.filter(item =>
-            item.fornavn.toLowerCase().includes(query) &&
-            (!selectedParty || item.parti === selectedParty) &&
-            (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase())
-        ).sort((a, b) => a.fornavn.localeCompare(b.fornavn)); // 🔹 Sortér alfabetisk
-
-        setTableData(filtered);
     };
 
+    const handleMunicipalityChange = (municipality) => {
+        setSelectedMunicipality(municipality.target.value);
+
+    };
 
     const handlePartyFilter = (party) => {
         if (selectedParty === party) {
-            // Nulstil til standardvisning
             setSelectedParty(null);
-            setSelectedFilter(null);
-            setPieChartData(surveyData);
-            setTableData(surveyData);
-        } else if (party === "?") {
-            // Filter for those who DO NOT belong to any listed party
-            setSelectedParty("?");
-            updatePieChartData("?");
-            setTableData(surveyData.filter(item =>
-                !partyMapper.some(p => p.bogstav === item.parti) &&
-                item.fornavn.toLowerCase().includes(searchQuery.toLowerCase())
-            ));
-        } else {
-            // Filtrér Pie Chart data (kun på parti)
+        } 
+        else {
             setSelectedParty(party);
-            updatePieChartData(party);
-            setTableData(surveyData.filter(item => item.parti === party && item.kreds === selectedMunicipality));
         }
     };
 
@@ -220,6 +159,7 @@ const App = () => {
 
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
+                    <MunicipalitySelector value={selectedMunicipality} onChange={handleMunicipalityChange} />
 
                     {/* 🔹 Pie chart */
                         !selectedPerson && (
@@ -303,6 +243,7 @@ const App = () => {
                 <div style={{textAlign: "center"}}>
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
+                    <MunicipalitySelector value={selectedMunicipality} onChange={handleMunicipalityChange} />
 
                     {/* 🔹 Pie chart */
                         !selectedPerson && (
@@ -387,17 +328,13 @@ const App = () => {
         return (
 
             <div className="relative min-h-screen">
-              <MapAnimation
-                selectedMunicipality={selectedMunicipality}
-                setSelectedMunicipality={setSelectedMunicipality}
-              />
-
-
+            
             <div style={{textAlign: "center"}}>
                 {/* 🔹 Drop-down til at vælge årstal */}
 
 
                 <YearSelector value={selectedYear} onChange={handleYearChange} />
+                <MunicipalitySelector value={selectedMunicipality} onChange={handleMunicipalityChange} />
 
                 {/* 🔹 Pie chart */
                     !selectedPerson && (

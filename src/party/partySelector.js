@@ -15,16 +15,6 @@ const PartySelector = ({ selectedParty, onSelect }) => {
                     {party.bogstav}
                 </button>
             ))}
-
-            {/* "?" knap for "øvrige" */}
-            <button
-                onClick={() => onSelect("?")}
-                className={`party-button ${selectedParty === "?" ? "selected" : ""}`}
-                style={{ backgroundColor: "#888" }}
-                title={"Øvrige"}
-            >
-                ?
-            </button>
         </div>
     );
 };

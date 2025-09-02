@@ -8,7 +8,8 @@ function MapAnimation({ selectedMunicipality, setSelectedMunicipality }) {
   const handleSelectMunicipality = useCallback((id) => {
     if (selectedMunicipality && selectedMunicipality.id === id)
     {
-      setMinimized(false);
+      setSelectedMunicipality(null);
+      setMinimized(true);
     }
     else
     {
@@ -16,7 +17,7 @@ function MapAnimation({ selectedMunicipality, setSelectedMunicipality }) {
       setMinimized(true);
     }
     
-  }, [setSelectedMunicipality]);
+  }, [selectedMunicipality]);
 
   // Klik på containeren når den er minimeret -> maksimer
   const handleMapContainerClick = useCallback(() => {
@@ -52,11 +53,10 @@ function MapAnimation({ selectedMunicipality, setSelectedMunicipality }) {
         }
         transition={{ type: "spring", stiffness: 260, damping: 24 }}
       >
-        {/* Halvgennemsigtig baggrund i overlay-tilstand */}
         {!minimized && (
           <div
             className="absolute inset-0"
-            style={{ background: "rgba(0,0,0,0.15)" }}
+            //style={{ background: "rgba(0,0,0,0.00)" }}
           />
         )}
 
@@ -64,11 +64,9 @@ function MapAnimation({ selectedMunicipality, setSelectedMunicipality }) {
           className={`relative ${
             minimized ? "cursor-zoom-in" : "cursor-default"
           } bg-white/80 backdrop-blur rounded-2xl p-3 h-full`}
-          // Stop klik på kortet fra at boble op og trigge container-click utilsigtet
-          onClick={(e) => e.stopPropagation()}
         >
         <MapSelector onSelectMunicipality={handleSelectMunicipality} />
-</div>
+        </div>
       </motion.div>
     </div>
   );

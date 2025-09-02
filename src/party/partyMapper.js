@@ -10,20 +10,21 @@ const partyMapper = [
     { bogstav: "V", navn: "Venstre", farve: "#1E90FF" },
     { bogstav: "Æ", navn: "Danmarksdemokraterne", farve: "#9A76F8" },
     { bogstav: "Ø", navn: "Enhedslisten", farve: "#A10022" },
-    { bogstav: "Å", navn: "Alternativet", farve: "#00AA00" }
+    { bogstav: "Å", navn: "Alternativet", farve: "#00AA00" },
+    { bogstav: "?", navn: "Øvrige", farve: "#888" }
 ];
 
 
 // **Hjælpefunktion til opslag af partinavn givet et bogstav**
 export const getPartiNavn = (bogstav) => {
     const parti = partyMapper.find(p => p.bogstav === bogstav);
-    return parti ? parti.navn : bogstav; // Hvis ikke fundet, returner bogstav
+    return parti ? parti.navn : "Øvrige"; // Hvis ikke fundet, returner bogstav
 };
 
 // **Hjælpefunktion til opslag af bogstav givet et navn**
 export const getPartiBogstav = (navn) => {
     const parti = partyMapper.find(p => p.navn === navn);
-    return parti ? parti.bogstav : navn; // Hvis ikke fundet, returner navn
+    return parti ? parti.bogstav : "?";
 };
 
 export const getPartyColor = (bogstav) => {
