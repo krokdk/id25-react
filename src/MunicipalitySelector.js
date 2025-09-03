@@ -1,7 +1,7 @@
 import React from "react";
 
-const MunicipalitySelector = ({ value, onChange }) => {
-    const options = [
+const MunicipalitySelector = ({ value, year, onChange }) => {
+    const kommuner = [
         { value: "Alle", label: "Alle" },
         { value: "Albertslund Kommune", label: "Albertslund" },
         { value: "Allerød Kommune", label: "Allerød" },
@@ -97,23 +97,59 @@ const MunicipalitySelector = ({ value, onChange }) => {
         { value: "Aarhus Kommune", label: "Aarhus" }
     ];
 
-    return (
-        <div style={{ marginBottom: "20px" }}>
-            <label htmlFor="municipalitySelect">Vælg kommune:</label>
-            <select
-                id="municipalitySelect"
-                value={value}
-                onChange={onChange}
-                className="dropdown"
-            >
-                {options.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                    </option>
-                ))}
-            </select>
-        </div>
-    );
-};
+
+    /* Region Østdanmark 
+    Region Syddanmark
+    Region Midtjylland
+    Region Nordjylland  */
+
+    const regioner = [
+        { value: "Alle", label: "Alle" },
+        { value: "Region Østdanmark", label: "Region Østdanmark" },
+        { value: "Region Syddanmark", label: "Region Syddanmark" },
+        { value: "Region Midtjylland", label: "Region Midtjylland", },
+        { value: "Region Nordjylland", label: "Region Nordjylland" },
+        { value: "Region Hovedstaden", label: "Region Hovedstaden" }
+    ];
+
+    if (year === "9999") {
+        return (
+            <div style={{ marginBottom: "20px" }}>
+                <label htmlFor="municipalitySelect">Vælg kommune:</label>
+                <select
+                    id="municipalitySelect"
+                    value={value}
+                    onChange={onChange}
+                    className="dropdown"
+                >
+                    {kommuner.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        );
+
+    } else {
+        return (
+            <div style={{ marginBottom: "20px" }}>
+                <label htmlFor="municipalitySelect">Vælg region:</label>
+                <select
+                    id="municipalitySelect"
+                    value={value}
+                    onChange={onChange}
+                    className="dropdown"
+                >
+                    {regioner.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        );
+    };
+}
 
 export default MunicipalitySelector;

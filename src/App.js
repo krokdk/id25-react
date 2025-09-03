@@ -166,7 +166,7 @@ const App = () => {
 
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
-                    <MunicipalitySelector value={selectedMunicipality} onChange={handleMunicipalityChange} />
+                    <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
 
                     {/* 🔹 Pie chart */
                         !selectedPerson && (
@@ -250,7 +250,7 @@ const App = () => {
                 <div style={{textAlign: "center"}}>
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
-                    <MunicipalitySelector value={selectedMunicipality} onChange={handleMunicipalityChange} />
+                    <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
 
                     {/* 🔹 Pie chart */
                         !selectedPerson && (
@@ -341,7 +341,7 @@ const App = () => {
 
 
                 <YearSelector value={selectedYear} onChange={handleYearChange} />
-                <MunicipalitySelector value={selectedMunicipality} onChange={handleMunicipalityChange} />
+                <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
 
                 {/* 🔹 Pie chart */
                     !selectedPerson && (
