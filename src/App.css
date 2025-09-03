@@ -47,3 +47,11 @@
   margin-bottom: 20px;
   color: #333; /* Mørkere farve for bedre læsbarhed */
 }
+
+.cell-center {
+  text-align: center;
+}
+
+.cell-left {
+  text-align: left;
+}
