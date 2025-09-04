@@ -131,7 +131,7 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
             </div>
         );
 
-    } else {
+    } else if (year === "8888") {
         return (
             <div style={{ marginBottom: "20px" }}>
                 <label htmlFor="municipalitySelect">Vælg region:</label>
@@ -150,6 +150,7 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
             </div>
         );
     };
+
 }
 
 export default MunicipalitySelector;

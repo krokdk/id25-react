@@ -13,29 +13,29 @@ import MunicipalitySelector from "./MunicipalitySelector";
 //import MapAnimation from "./map/MapAnimation";
 
 const App = () => {
-  console.log("ID25 is running");
+    console.log("ID25 is running");
 
-   window.parent.postMessage({ type: 'iframe-ready' }, '*');
+    window.parent.postMessage({ type: 'iframe-ready' }, '*');
 
-   const handleMessage = (event) => {
-      if (event.data?.type === 'set-colors') {
-        const colors = event.data.colors;
-        if (colors && typeof colors === 'object') {
-           for (const [key, value] of Object.entries(colors)) {
-             document.documentElement.style.setProperty(`--${key}`, value);
-             console.log(`Satte --${key} til ${value}`);
-          }
+    const handleMessage = (event) => {
+        if (event.data?.type === 'set-colors') {
+            const colors = event.data.colors;
+            if (colors && typeof colors === 'object') {
+                for (const [key, value] of Object.entries(colors)) {
+                    document.documentElement.style.setProperty(`--${key}`, value);
+                    console.log(`Satte --${key} til ${value}`);
+                }
+            }
         }
-     }
-   };
+    };
 
-   useEffect(() => {
-     window.addEventListener('message', handleMessage);
-     return () => window.removeEventListener('message', handleMessage);
-   }, []);
+    useEffect(() => {
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, []);
 
 
-   //const [selectedYear, setSelectedYear] = useState("2025");
+    //const [selectedYear, setSelectedYear] = useState("2025");
     const [selectedYear, setSelectedYear] = useState("9999");
     const [filteredData, setFilteredData] = useState([]);
     const [selectedParty, setSelectedParty] = useState(null);
@@ -46,25 +46,25 @@ const App = () => {
     const [pieChartData, setPieChartData] = useState([]); // Data til Pie Chart
     const [tableData, setTableData] = useState([]); // Data til Tabel
     const [selectedMunicipality, setSelectedMunicipality] = useState(null);
-    const {surveyData, loading} = useSurveyData(selectedYear);
+    const { surveyData, loading } = useSurveyData(selectedYear);
 
     useEffect(() => {
-        
-        if (surveyData.length > 0) {            
+
+        if (surveyData.length > 0) {
             let filter = surveyData.filter(item =>
-                    
-                    (!selectedMunicipality || item.storkreds === selectedMunicipality)
-                     
-                    && (!selectedParty || item.parti === selectedParty)
 
-                    && (!searchQuery || item.fornavn.toLowerCase().includes(searchQuery))
+                (!selectedMunicipality || item.storkreds === selectedMunicipality)
 
-                    && (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase())
+                && (!selectedParty || item.parti === selectedParty)
 
-                    )
-                    .sort((a, b) => a.fornavn.localeCompare(b.fornavn))
-                    ;
-            
+                && (!searchQuery || item.fornavn.toLowerCase().includes(searchQuery))
+
+                && (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase())
+
+            )
+                .sort((a, b) => a.fornavn.localeCompare(b.fornavn))
+                ;
+
             setFilteredData(filter);
             setTableData(filter);
             setPieChartData(filter);
@@ -76,7 +76,7 @@ const App = () => {
         if (selectedFilter === selectedAnswer) {
             // Reset filtering
             setSelectedFilter(null);
-          
+
         } else {
             // Filtrér tabellen (parti + valgt svar2)
             setSelectedFilter(selectedAnswer);
@@ -97,12 +97,11 @@ const App = () => {
     };
 
     const handleMunicipalityChange = (municipality) => {
-        
-        if (municipality.target.value === "Alle")
-        {
+
+        if (municipality.target.value === "Alle") {
             setSelectedMunicipality(null);
         }
-        else{
+        else {
             setSelectedMunicipality(municipality.target.value);
         }
 
@@ -111,7 +110,7 @@ const App = () => {
     const handlePartyFilter = (party) => {
         if (selectedParty === party) {
             setSelectedParty(null);
-        } 
+        }
         else {
             setSelectedParty(party);
         }
@@ -156,13 +155,13 @@ const App = () => {
     };
 
     if (loading) {
-        return <LoadingSpinner/>;
+        return <LoadingSpinner />;
     }
 
     if (selectedFilter) {
         if (selectedParty) {
             return (
-                <div style={{textAlign: "center"}}>
+                <div style={{ textAlign: "center" }}>
 
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
@@ -170,7 +169,7 @@ const App = () => {
 
                     {/* 🔹 Pie chart */
                         !selectedPerson && (
-                            <div style={{marginBottom: "30px"}}>
+                            <div style={{ marginBottom: "30px" }}>
                                 <SurveyPieChartDefault
                                     filteredData={pieChartData}
                                     labels={{
@@ -188,7 +187,7 @@ const App = () => {
                     <SearchInput value={searchQuery} onChange={handleSearchChange} />
 
                     {filteredData.length > 0 && !selectedPerson && (
-                        <div style={{marginTop: "20px"}}>
+                        <div style={{ marginTop: "20px" }}>
                             <h2>
                                 {selectedParty === "?"
                                     ? "Resultater for øvrige"
@@ -206,17 +205,17 @@ const App = () => {
                         <div>
                             {/* Display the selected person's result for the selectedYear */}
                             <PersonResult //title={`Besvarelse for ${selectedYear}`}
-                                          person={selectedPerson}
-                                          year={selectedYear}
-                                          onPartyClick={(party) => {
-                                              handleReset();
-                                              !selectedParty && setSelectedParty(party);
-                                          }}
+                                person={selectedPerson}
+                                year={selectedYear}
+                                onPartyClick={(party) => {
+                                    handleReset();
+                                    !selectedParty && setSelectedParty(party);
+                                }}
                             />
 
                             {/* Andre resultater */}
                             {Object.keys(selectedPersonHistory).length > 0 && (
-                                <div style={{marginTop: "30px"}}>
+                                <div style={{ marginTop: "30px" }}>
                                     <h2>Besvarelser for andre år</h2>
                                     {Object.entries(selectedPersonHistory)
                                         .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
@@ -247,14 +246,14 @@ const App = () => {
             );
         } else {
             return (
-                <div style={{textAlign: "center"}}>
+                <div style={{ textAlign: "center" }}>
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
                     <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
 
                     {/* 🔹 Pie chart */
                         !selectedPerson && (
-                            <div style={{marginBottom: "30px"}}>
+                            <div style={{ marginBottom: "30px" }}>
                                 <SurveyPieChartDefault
                                     filteredData={pieChartData}
                                     labels={{
@@ -272,7 +271,7 @@ const App = () => {
                     <SearchInput value={searchQuery} onChange={handleSearchChange} />
 
                     {filteredData.length > 0 && !selectedPerson && (
-                        <div style={{marginTop: "20px"}}>
+                        <div style={{ marginTop: "20px" }}>
                             <h2>
                                 {selectedParty === "?"
                                     ? "Resultater for øvrige"
@@ -301,7 +300,7 @@ const App = () => {
 
                             {/* Andre resultater */}
                             {Object.keys(selectedPersonHistory).length > 0 && (
-                                <div style={{marginTop: "30px"}}>
+                                <div style={{ marginTop: "30px" }}>
                                     <h2>Besvarelser for andre år</h2>
                                     {Object.entries(selectedPersonHistory)
                                         .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
@@ -335,91 +334,91 @@ const App = () => {
         return (
 
             <div className="relative min-h-screen">
-            
-            <div style={{textAlign: "center"}}>
-                {/* 🔹 Drop-down til at vælge årstal */}
+
+                <div style={{ textAlign: "center" }}>
+                    {/* 🔹 Drop-down til at vælge årstal */}
 
 
-                <YearSelector value={selectedYear} onChange={handleYearChange} />
-                <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
+                    <YearSelector value={selectedYear} onChange={handleYearChange} />
+                    <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
 
-                {/* 🔹 Pie chart */
-                    !selectedPerson && (
-                        <div style={{marginBottom: "30px"}}>
-                            <SurveyPieChartDefault
-                                filteredData={pieChartData}
-                                labels={{
-                                    "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
-                                    "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
-                                }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
-                                onSliceClick={handleSliceClick} // Handle clicks on chart
+                    {/* 🔹 Pie chart */
+                        !selectedPerson && (
+                            <div style={{ marginBottom: "30px" }}>
+                                <SurveyPieChartDefault
+                                    filteredData={pieChartData}
+                                    labels={{
+                                        "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
+                                        "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
+                                    }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
+                                    onSliceClick={handleSliceClick} // Handle clicks on chart
+                                />
+                            </div>
+                        )
+                    }
+
+                    <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
+
+                    <SearchInput value={searchQuery} onChange={handleSearchChange} />
+
+
+                    {filteredData.length > 0 && !selectedPerson && (
+                        <div style={{ marginTop: "20px" }}>
+                            <h2>
+                                {selectedParty === "?"
+                                    ? "Resultater for øvrige"
+                                    : selectedParty
+                                        ? `Resultater for ${getPartiNavn(selectedParty)}`
+                                        : "Alle besvarelser"}
+                            </h2>
+                            <ResultsTable
+                                filteredData={tableData}
+                                handleRowClick={handleRowClick}
                             />
                         </div>
-                    )
-                }
-
-                <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
-
-                <SearchInput value={searchQuery} onChange={handleSearchChange} />
+                    )}
 
 
-                {filteredData.length > 0 && !selectedPerson && (
-                    <div style={{marginTop: "20px"}}>
-                        <h2>
-                            {selectedParty === "?"
-                                ? "Resultater for øvrige"
-                                : selectedParty
-                                    ? `Resultater for ${getPartiNavn(selectedParty)}`
-                                    : "Alle besvarelser"}
-                        </h2>
-                        <ResultsTable
-                            filteredData={tableData}
-                            handleRowClick={handleRowClick}
-                        />
-                    </div>
-                )}
+                    {selectedPerson && (
+                        <div>
+                            <button onClick={handleReset} className="button">Tilbage</button>
+                            {/* Display the selected person's result for the selectedYear */}
+                            <PersonResult //title={`Besvarelse for ${selectedYear}`}
+                                person={selectedPerson}
+                                year={selectedYear}
+                                onPartyClick={(party) => {
+                                    handleReset();
+                                    !selectedParty && setSelectedParty(party);
+                                }}
+                            />
 
+                            {/* Andre resultater */}
+                            {Object.keys(selectedPersonHistory).length > 0 && (
+                                <div style={{ marginTop: "30px" }}>
+                                    <h2>Besvarelser for andre år</h2>
+                                    {Object.entries(selectedPersonHistory)
+                                        .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
+                                        .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA)) // Sort descending (newest first)
+                                        .map(([year, results]) => (
+                                            <div key={year} style={{
+                                                marginTop: "20px",
+                                                textAlign: "left",
+                                                margin: "auto",
+                                                maxWidth: "500px"
+                                            }}>
 
-                {selectedPerson && (
-                    <div>
-                        <button onClick={handleReset} className="button">Tilbage</button>
-                        {/* Display the selected person's result for the selectedYear */}
-                        <PersonResult //title={`Besvarelse for ${selectedYear}`}
-                                      person={selectedPerson}
-                                      year={selectedYear}
-                                      onPartyClick={(party) => {
-                                          handleReset();
-                                          !selectedParty && setSelectedParty(party);
-                                      }}
-                        />
-
-                        {/* Andre resultater */}
-                        {Object.keys(selectedPersonHistory).length > 0 && (
-                            <div style={{marginTop: "30px"}}>
-                                <h2>Besvarelser for andre år</h2>
-                                {Object.entries(selectedPersonHistory)
-                                    .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
-                                    .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA)) // Sort descending (newest first)
-                                    .map(([year, results]) => (
-                                        <div key={year} style={{
-                                            marginTop: "20px",
-                                            textAlign: "left",
-                                            margin: "auto",
-                                            maxWidth: "500px"
-                                        }}>
-
-                                            {results.map((entry, index) => (
-                                                <React.Fragment key={index}>
-                                                    <PersonResult title={`${year}`} person={entry} year={year} />
-                                                </React.Fragment>
-                                            ))}
-                                        </div>
-                                    ))}
-                            </div>
-                        )}
-                    </div>
-                )}
-              </div>
+                                                {results.map((entry, index) => (
+                                                    <React.Fragment key={index}>
+                                                        <PersonResult title={`${year}`} person={entry} year={year} />
+                                                    </React.Fragment>
+                                                ))}
+                                            </div>
+                                        ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
         );
     }
