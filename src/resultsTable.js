@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { getColorScheme } from "./colorScheme";
-import "./styles.css"; // Ensure styles are applied
+import "./styles.css";
 import { getPartyColor } from "./party/partyMapper.js"
 
 const ResultsTable = ({ filteredData, handleRowClick }) => {
     const [colorScheme, setColorScheme] = useState(null);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 10;
+    
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    const currentRows = filteredData.slice(startIndex, endIndex);
+
     useEffect(() => {
         const scheme = getColorScheme();
         setColorScheme(scheme);
     }, []);
+
+    useEffect(() => {
+        setCurrentPage(1);
+
+    }, [filteredData]);
 
     // Vent til farver er klar
     if (!colorScheme) return null;
@@ -25,12 +38,13 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData.map((item, index) => (
+                    {currentRows.map((item, index) => (
                         <tr
                             key={index}
                             style={{ backgroundColor: index % 2 === 0 ? colorScheme.background : "white", cursor: "pointer" }}
                             onClick={() => handleRowClick(item)}
                         >
+
                             <td className="table-cell" style={{ textAlign: "center" }}>
                                 <div
                                     style={{
@@ -53,6 +67,22 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
                     ))}
                 </tbody>
             </table>
+            {/* Pagination knapper */}
+            <div style={{ marginTop: "10px", textAlign: "center" }}>
+                <button className="button"
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                    disabled={currentPage === 1}
+                >
+                    Forrige
+                </button>
+                <button className="button"
+                    onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                >
+                    Næste
+                </button>
+            </div>
+
         </div>
     );
 };
