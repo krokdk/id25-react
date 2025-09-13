@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import SurveyPieChartDefault from "./piechart/pieChartDefault";
 import partyMapper, { getPartiNavn } from "./party/partyMapper";
 import "./styles.css";
@@ -10,6 +10,9 @@ import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
 import YearSelector from "./yearSelector";
 import MunicipalitySelector from "./MunicipalitySelector";
+import QuestionSelector from "./QuestionSelector";
+import Questions2025 from "./Questions2025";
+import QuestionTitle from "./QuestionTitle";
 //import MapAnimation from "./map/MapAnimation";
 
 const App = () => {
@@ -37,6 +40,7 @@ const App = () => {
 
     //const [selectedYear, setSelectedYear] = useState("2025");
     const [selectedYear, setSelectedYear] = useState("9999");
+    const [selectedQuestion, setSelectedQuestion] = useState("spm1");
     const [filteredData, setFilteredData] = useState([]);
     const [selectedParty, setSelectedParty] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
@@ -59,7 +63,7 @@ const App = () => {
 
                 && (!searchQuery || item.fornavn.toLowerCase().includes(searchQuery))
 
-                && (!selectedFilter || item.svar2.toLowerCase() === selectedFilter.toLowerCase())
+                && (!selectedFilter || selectedCondition(item, selectedFilter))
 
             )
                 .sort((a, b) => a.fornavn.localeCompare(b.fornavn))
@@ -71,6 +75,12 @@ const App = () => {
         }
     }, [surveyData, selectedMunicipality, selectedParty, searchQuery, selectedFilter]);
 
+    useEffect(() => { setSelectedQuestion(selectedQuestion); }, [selectedQuestion]);
+
+
+    const handleQuestionSelect = (selectedQuestion) => {
+        setSelectedQuestion(selectedQuestion.target.value);
+    }
 
     const handleSliceClick = (selectedAnswer) => {
         if (selectedFilter === selectedAnswer) {
@@ -82,6 +92,34 @@ const App = () => {
             setSelectedFilter(selectedAnswer);
         }
     };
+
+
+    const selectedCondition = (item, label) => {
+
+        if (selectedQuestion === "spm1") { return item.svar1 && item.svar1.toLowerCase() === label.toLowerCase(); }
+        else if (selectedQuestion === "spm2") { return item.svar2 && item.svar2.toLowerCase() === label.toLowerCase(); }
+        else if (selectedQuestion === "spm3") { return item.svar3 && item.svar3.toLowerCase() === label.toLowerCase(); }
+        else return item.svar1 && item.svar1.toLowerCase() === label.toLowerCase();
+    };
+
+    const selectedLabels = (year, question) => {
+
+        if (question === "spm3" && (year === "9999" || year === "8888" )) {
+            return ["Ja, mit parti er for en 18-års aldersgrænse.",
+                "Ja, mit parti er imod en 18-års aldersgrænse.",
+                "Ja, mit parti har fritstillet partimedlemmerne om en 18-års aldersgrænse.",
+                "Ikke besvaret",
+                "Nej, det ved jeg ikke."  
+            ];
+        }
+
+
+        return {
+            "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
+            "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
+        }[year] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]
+    };
+
 
     const handleYearChange = (event) => {
         setSelectedYear(event.target.value);
@@ -166,17 +204,17 @@ const App = () => {
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
                     <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
+                    <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
+                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
 
                     {/* 🔹 Pie chart */
                         !selectedPerson && (
                             <div style={{ marginBottom: "30px" }}>
                                 <SurveyPieChartDefault
                                     filteredData={pieChartData}
-                                    labels={{
-                                        "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
-                                        "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
-                                    }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
-                                    onSliceClick={handleSliceClick} // Handle clicks on chart
+                                    labels={selectedLabels(selectedYear, selectedQuestion)}
+                                    onSliceClick={handleSliceClick}
+                                    condition={selectedCondition}
                                 />
                             </div>
                         )
@@ -250,17 +288,17 @@ const App = () => {
                     {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
                     <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
+                    <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
+                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
 
                     {/* 🔹 Pie chart */
                         !selectedPerson && (
                             <div style={{ marginBottom: "30px" }}>
                                 <SurveyPieChartDefault
                                     filteredData={pieChartData}
-                                    labels={{
-                                        "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
-                                        "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
-                                    }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
-                                    onSliceClick={handleSliceClick} // Handle clicks on chart
+                                    labels={selectedLabels(selectedYear, selectedYear)}
+                                    onSliceClick={handleSliceClick}
+                                    condition={selectedCondition}
                                 />
                             </div>
                         )
@@ -341,17 +379,17 @@ const App = () => {
 
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
                     <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
+                    <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
+                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
 
                     {/* 🔹 Pie chart */
                         !selectedPerson && (
                             <div style={{ marginBottom: "30px" }}>
                                 <SurveyPieChartDefault
                                     filteredData={pieChartData}
-                                    labels={{
-                                        "2019": ["For", "Imod", "Måske", "Ikke besvaret"],
-                                        "2021": ["For", "Imod", "Hverken for eller imod", "Fraværende"]
-                                    }[selectedYear] || ["Ja", "Nej", "Ved ikke", "Ikke besvaret"]}
-                                    onSliceClick={handleSliceClick} // Handle clicks on chart
+                                    labels={selectedLabels(selectedYear, selectedQuestion)}
+                                    onSliceClick={handleSliceClick}
+                                    condition={selectedCondition}
                                 />
                             </div>
                         )

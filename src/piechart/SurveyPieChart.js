@@ -10,7 +10,7 @@ const SurveyPieChart = ({chartData, labels, onSliceClick}) => {
         if (elements.length > 0) {
             const clickedIndex = elements[0].index;
             const selectedAnswer = labels[clickedIndex];
-            onSliceClick(selectedAnswer); // Pass the selected label to parent component
+            onSliceClick(selectedAnswer);
         }
     };
 
@@ -18,10 +18,10 @@ const SurveyPieChart = ({chartData, labels, onSliceClick}) => {
         <Pie
             data={chartData}
             options={{
-                onClick: handleClick, // Handle slice clicks
+                onClick: handleClick,
                 responsive: true,
                 plugins: {
-                    legend: {position: "top"}
+                    legend: {position: "top", align: "start"}
                 }
             }}
         />

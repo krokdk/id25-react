@@ -1,0 +1,47 @@
+import React from "react";
+
+const QuestionSelector = ({ value, onChange, year }) => {
+    const options2025 = [
+        { value: "spm1", label: "Spørgsmål 1" },
+        { value: "spm2", label: "Spørgsmål 2" },
+        { value: "spm3", label: "Spørgsmål 3" },
+    ];
+
+    const optionsOld = [
+        { value: "spm1", label: "Spørgsmål 1" },
+        { value: "spm2", label: "Spørgsmål 2" },
+        { value: "spm3", label: "Spørgsmål 3" },
+        { value: "spm3", label: "Spørgsmål 4" },
+    ];
+
+
+    const options2019 = [
+        { value: "spm2", label: "Spørgsmålet" }
+    ];
+
+    const options2021 = [
+        { value: "spm2", label: "Borgerforslag" }
+    ];
+
+    let options = year === "9999" || year === "8888" ? options2025 : year === "2019" ? options2019 : year === "2021" ? options2021:  optionsOld;
+
+    return (
+        <div style={{ marginBottom: "20px" }}>
+            <label htmlFor="questionSelect">Vælg spørgsmål:</label>
+            <select
+                id="questionSelect"
+                value={value}
+                onChange={onChange}
+                className="dropdown"
+            >
+                {options.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                    </option>
+                ))}
+            </select>
+        </div>
+    );
+};
+
+export default QuestionSelector;

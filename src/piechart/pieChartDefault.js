@@ -3,7 +3,7 @@ import { getColorScheme } from "../colorScheme";
 import SurveyPieChart from "./SurveyPieChart";
 
 
-const SurveyPieChartDefault = ({ filteredData, labels, onSliceClick }) => {
+const SurveyPieChartDefault = ({ filteredData, labels, onSliceClick, condition }) => {
   const [colors, setColors] = useState(null);
 
   useEffect(() => {
@@ -12,7 +12,8 @@ const SurveyPieChartDefault = ({ filteredData, labels, onSliceClick }) => {
       scheme.secondary,
       scheme.primary,
       scheme.accent,
-      scheme.background
+      scheme.background,
+      scheme.lenasExtra
     ]);
   }, []);
 
@@ -23,7 +24,7 @@ const SurveyPieChartDefault = ({ filteredData, labels, onSliceClick }) => {
     datasets: [{
       data: labels.map(label =>
         filteredData.filter(item =>
-          item.svar2 && item.svar2.toLowerCase() === label.toLowerCase()
+          condition(item, label)
         ).length
       ),
       backgroundColor: colors
