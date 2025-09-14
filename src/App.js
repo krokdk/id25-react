@@ -205,8 +205,6 @@ const App = () => {
         if (selectedParty) {
             return (
                 <div style={{ textAlign: "center" }}>
-
-                    {/* 🔹 Drop-down til at vælge årstal */}
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
                     <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                     <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
@@ -289,8 +287,7 @@ const App = () => {
             );
         } else {
             return (
-                <div style={{ textAlign: "center" }}>
-                    {/* 🔹 Drop-down til at vælge årstal */}
+                <div style={{ textAlign: "center"}}>
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
                     <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                     <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
@@ -378,9 +375,7 @@ const App = () => {
 
             <div className="relative min-h-screen">
 
-                <div style={{ textAlign: "center" }}>
-                    {/* 🔹 Drop-down til at vælge årstal */}
-
+                <div style={{ textAlign: "center"}}>
 
                     <YearSelector value={selectedYear} onChange={handleYearChange} />
                     <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />

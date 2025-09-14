@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles.css";
 
 const MunicipalitySelector = ({ value, year, onChange }) => {
     const kommuner = [
@@ -114,8 +115,8 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
 
     if (year === "9999") {
         return (
-            <div style={{ marginBottom: "20px" }}>
-                <label htmlFor="municipalitySelect">Vælg kommune:</label>
+            <div className="dropdownComponent">
+                <label htmlFor="municipalitySelect">Kommune:</label>
                 <select
                     id="municipalitySelect"
                     value={value}
@@ -133,8 +134,8 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
 
     } else if (year === "8888") {
         return (
-            <div style={{ marginBottom: "20px" }}>
-                <label htmlFor="municipalitySelect">Vælg region:</label>
+            <div className="dropdownComponent">
+                <label htmlFor="municipalitySelect">Region:</label>
                 <select
                     id="municipalitySelect"
                     value={value}

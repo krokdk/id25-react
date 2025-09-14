@@ -9,19 +9,47 @@
 /* 🔹 Pie chart style */
 .pie-chart-container {
     width: 75%;
-    max-width: 500px;
+    max-width: 400px;
     margin: 0 auto;
 }
+
+/* 🔹 dropdown style */
+.dropdown {
+
+    margin-left: 10px;
+    padding: 5px;
+    font-size: 16px;
+    width: 200px;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    
+}
+
+.dropdownComponent {
+    text-align: right;
+    font-weight: bold;
+    padding-bottom: 5px;
+    color: var(--secondary-color);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
 
 /* 🔹 Table Styles */
 .table {
     width: 100%;
-    max-width: 500px; /* Matches Pie-chart width */
-    margin: auto; /* Centers the table */
+    max-width: 500px;
+    /* Matches Pie-chart width */
+    margin: auto;
+    /* Centers the table */
     border-collapse: collapse;
     table-layout: fixed;
-    white-space: pre-wrap; /* Preserves line breaks */
-    word-break: break-word; /* Ensures proper word wrapping */
+    white-space: pre-wrap;
+    /* Preserves line breaks */
+    word-break: break-word;
+    /* Ensures proper word wrapping */
     overflow-wrap: break-word;
     padding: 8px;
     border-bottom: 1px solid #ddd;
@@ -32,9 +60,12 @@
     padding: 10px;
     border-bottom: 2px solid #ddd;
     text-align: left;
-    width: 50%; /* Ensures equal column spacing */
-    white-space: pre-wrap; /* Tillad linjeskift */
-    word-break: break-word; /* Bryd lange ord */
+    width: 50%;
+    /* Ensures equal column spacing */
+    white-space: pre-wrap;
+    /* Tillad linjeskift */
+    word-break: break-word;
+    /* Bryd lange ord */
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -52,30 +83,31 @@
     border-radius: 5px;
     color: var(--white-color);
     cursor: pointer;
-    background-color: var(--secondary-color); /* Will be replaced with JS variable */
+    background-color: var(--secondary-color);
+    /* Will be replaced with JS variable */
 }
 
-/* 🔹 Dropdown */
-.dropdown {
-    margin-left: 10px;
-    padding: 5px;
-    font-size: 16px;
-}
+
 
 .party-buttons {
     display: flex;
-    flex-wrap: wrap; /* Allow multiple rows */
-    justify-content: center; /* Center buttons */
-    gap: 1px; /* Reduce spacing */
+    flex-wrap: wrap;
+    /* Allow multiple rows */
+    justify-content: center;
+    /* Center buttons */
+    gap: 1px;
+    /* Reduce spacing */
     margin-top: 1px;
 }
 
 .party-button {
-    padding: 8px 8px; /* Smaller buttons */
+    padding: 8px 8px;
+    /* Smaller buttons */
     border-radius: 1px;
     font-size: 16px;
     font-weight: bold;
-    color: var(--white-color); /* White text for contrast */
+    color: var(--white-color);
+    /* White text for contrast */
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
     min-width: 40px;
@@ -163,7 +195,14 @@
 }
 
 .spmtitle {
-    font-size: x-small;
+    border: 1px solid var(--secondary-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: var(--background-color);
+    font-style: italic;
 }
-
-

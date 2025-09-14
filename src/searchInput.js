@@ -4,7 +4,7 @@ const SearchInput = ({ value, onChange }) => {
     return (
         <input
             type="text"
-            placeholder="Søg efter navn..."
+            placeholder="Søg på kandidatens navn..."
             value={value}
             onChange={onChange}
             style={{

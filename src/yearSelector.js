@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles.css";
 
 const YearSelector = ({ value, onChange }) => {
     const options = [
@@ -12,8 +13,8 @@ const YearSelector = ({ value, onChange }) => {
     ];
 
     return (
-        <div style={{ marginBottom: "20px" }}>
-            <label htmlFor="yearSelect">Vælg kandidattest:</label>
+        <div className="dropdownComponent">
+            <label htmlFor="yearSelect">Kandidattest:</label>
             <select
                 id="yearSelect"
                 value={value}
