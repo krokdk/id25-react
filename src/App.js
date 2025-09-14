@@ -63,11 +63,16 @@ const App = () => {
 
                 && (!searchQuery || item.fornavn.toLowerCase().includes(searchQuery))
 
-                && (!selectedFilter || selectedCondition(item, selectedFilter))
+                && (!selectedFilter || selectedCondition(item, selectedFilter)
+            )
 
             )
                 .sort((a, b) => a.fornavn.localeCompare(b.fornavn))
                 ;
+
+            if (selectedYear === "2019" ||  selectedYear === "2021"){
+                setSelectedQuestion("spm2")
+            }
 
             setFilteredData(filter);
             setTableData(filter);
