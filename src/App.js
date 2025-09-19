@@ -59,7 +59,7 @@ const App = () => {
 
                 (!selectedMunicipality || item.storkreds === selectedMunicipality)
 
-                && (!selectedParty || getPartiBogstav(getPartiNavn(item.parti)) === selectedParty) //det er her vi skal lave en filtrering på not in partymapper
+                && (!selectedParty || getPartiBogstav(getPartiNavn(item.parti)) === selectedParty)
 
                 && (!searchQuery || item.fornavn.toLowerCase().includes(searchQuery))
 

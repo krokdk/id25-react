@@ -1,5 +1,5 @@
 import React from "react";
-import Questions2025 from "./Questions2025";
+import Questions2025, { Questions2019, Questions2021 } from "./Questions2025";
 import Questions from "./questions";
 import "./styles.css";
 
@@ -26,6 +26,18 @@ const QuestionTitle = ({ value, year }) => {
         return (
             <h3 className="spmtitle"> {options2025.find(p => p.spm === value).text} </h3>
         );
+    }
+    else if (year === "2021") {
+        return (
+            <h3 className="spmtitle"> {Questions2021.SPM2} </h3>
+        );
+
+    }
+    else if (year === "2019") {
+        return (
+            <h3 className="spmtitle"> {Questions2019.SPM2} </h3>
+        );
+
     }
     else {
         return (
