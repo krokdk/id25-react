@@ -1,4 +1,5 @@
 import React from "react";
+
 import partyMapper from "./partyMapper";
 
 const PartySelector = ({ selectedParty, onSelect }) => {
@@ -15,6 +16,15 @@ const PartySelector = ({ selectedParty, onSelect }) => {
                     {party.bogstav}
                 </button>
             ))}
+            <button
+                key={"?"}
+                onClick={() => onSelect("?")}
+                className={`party-button ${selectedParty === "?" ? "selected" : ""}`}
+                style={{ backgroundColor: "#888" }}
+                title={"Øvrige"}
+            >
+                {"?"}
+            </button>
         </div>
     );
 };

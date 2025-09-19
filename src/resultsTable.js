@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getColorScheme } from "./colorScheme";
 import "./styles.css";
-import { getPartyColor } from "./party/partyMapper.js"
+import { getPartyColor, getPartiBogstav, getPartiNavn } from "./party/partyMapper.js"
 
 const ResultsTable = ({ filteredData, handleRowClick }) => {
     const [colorScheme, setColorScheme] = useState(null);
@@ -59,7 +59,7 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
                                         fontWeight: "bolder"
                                     }}
                                 >
-                                    {item.parti}
+                                    {getPartiBogstav(getPartiNavn(item.parti))}
                                 </div>
                             </td>
                             <td className="table-cell" style={{ textAlign: "center" }}>{item.fornavn}</td>
