@@ -131,7 +131,7 @@
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 24px;
-    max-width: 600px;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -203,6 +203,19 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    background-color: var(--background-color);
+    font-style: italic;
+}
+
+.spmdisc {
+    border: 1px solid var(--secondary-color);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
     background-color: var(--background-color);
     font-style: italic;
 }

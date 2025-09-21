@@ -8,7 +8,7 @@ import useSurveyData from "./useSurveyData";
 import PartySelector from "./party/partySelector";
 import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
-import YearSelector, {GetYearLabel} from "./yearSelector";
+import YearSelector, { GetYearLabel } from "./yearSelector";
 import MunicipalitySelector from "./MunicipalitySelector";
 import QuestionSelector from "./QuestionSelector";
 import QuestionTitle from "./QuestionTitle";
@@ -218,7 +218,7 @@ const App = () => {
                 <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                 <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
                 <QuestionTitle value={selectedQuestion} year={selectedYear} />
-
+                <h3>Sådan svarede kandidaterne:</h3>
                 {/* 🔹 Pie chart */
                     !selectedPerson && (
                         <div style={{ marginBottom: "30px" }}>
@@ -231,11 +231,10 @@ const App = () => {
                         </div>
                     )
                 }
-
+                <h3>Filtrér på parti</h3>
                 <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
-
+                <h3>Eller søg på navn:</h3>
                 <SearchInput value={searchQuery} onChange={handleSearchChange} />
-
 
                 {filteredData.length > 0 && !selectedPerson && (
                     <div style={{ marginTop: "20px" }}>
