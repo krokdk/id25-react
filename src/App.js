@@ -8,10 +8,9 @@ import useSurveyData from "./useSurveyData";
 import PartySelector from "./party/partySelector";
 import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
-import YearSelector from "./yearSelector";
+import YearSelector, {GetYearLabel} from "./yearSelector";
 import MunicipalitySelector from "./MunicipalitySelector";
 import QuestionSelector from "./QuestionSelector";
-import Questions2025 from "./Questions2025";
 import QuestionTitle from "./QuestionTitle";
 //import MapAnimation from "./map/MapAnimation";
 
@@ -214,7 +213,7 @@ const App = () => {
         <div className="relative min-h-screen">
 
             <div style={{ textAlign: "center" }}>
-
+                <h1>{GetYearLabel(selectedYear)}</h1>
                 <YearSelector value={selectedYear} onChange={handleYearChange} />
                 <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                 <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />

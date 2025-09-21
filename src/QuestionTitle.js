@@ -1,14 +1,21 @@
 import React from "react";
-import Questions2025, { Questions2019, Questions2021 } from "./Questions2025";
+import Question2025Kommunal, { Questions2019, Questions2021, Questions2025Regional } from "./Questions2025";
 import Questions from "./questions";
 import "./styles.css";
 
 const QuestionTitle = ({ value, year }) => {
     const options2025 = [
         // { value: "2025", label: "Folketingsvalg 2025" },
-        { spm: "spm1", text: Questions2025.SPM1 },
-        { spm: "spm2", text: Questions2025.SPM2 },
-        { spm: "spm3", text: Questions2025.SPM3 },
+        { spm: "spm1", text: Question2025Kommunal.SPM1 },
+        { spm: "spm2", text: Question2025Kommunal.SPM2 },
+        { spm: "spm3", text: Question2025Kommunal.SPM3 },
+    ];
+
+    const options2025reg = [
+        // { value: "2025", label: "Folketingsvalg 2025" },
+        { spm: "spm1", text: Questions2025Regional.SPM1 },
+        { spm: "spm2", text: Questions2025Regional.SPM2 },
+        { spm: "spm3", text: Questions2025Regional.SPM3 },
     ];
 
     const optionsOld = [
@@ -22,9 +29,14 @@ const QuestionTitle = ({ value, year }) => {
 
 
 
-    if (year === "8888" || year === "9999") {
+    if (year === "9999") {
         return (
             <h3 className="spmtitle"> {options2025.find(p => p.spm === value).text} </h3>
+        );
+    }
+    if (year === "8888") {
+        return (
+            <h3 className="spmtitle"> {options2025reg.find(p => p.spm === value).text} </h3>
         );
     }
     else if (year === "2021") {
