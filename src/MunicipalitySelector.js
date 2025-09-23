@@ -1,5 +1,6 @@
 import React from "react";
 import "./styles.css";
+import { label } from "framer-motion/client";
 
 const MunicipalitySelector = ({ value, year, onChange }) => {
     const kommuner = [
@@ -13,6 +14,7 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
         { value: "Egedal Kommune", label: "Egedal" },
         { value: "Esbjerg Kommune", label: "Esbjerg" },
         { value: "Fanø Kommune", label: "Fanø" },
+        { value: "Favrskov Kommune", label: "Favrskov" },
         { value: "Faxe Kommune", label: "Faxe" },
         { value: "Fredensborg Kommune", label: "Fredensborg" },
         { value: "Fredericia Kommune", label: "Fredericia" },
