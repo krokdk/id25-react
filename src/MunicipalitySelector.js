@@ -1,6 +1,5 @@
 import React from "react";
 import "./styles.css";
-import { label } from "framer-motion/client";
 
 const MunicipalitySelector = ({ value, year, onChange }) => {
     const kommuner = [
@@ -10,6 +9,9 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
         { value: "Assens Kommune", label: "Assens" },
         { value: "Ballerup Kommune", label: "Ballerup" },
         { value: "Billund Kommune", label: "Billund" },
+        { value: "Bornholm Kommune", label: "Bornholm" },
+        { value: "Brøndby Kommune", label: "Brøndby" },
+        { value: "Brønderslev Kommune", label: "Brønderslev" },
         { value: "Dragør Kommune", label: "Dragør" },
         { value: "Egedal Kommune", label: "Egedal" },
         { value: "Esbjerg Kommune", label: "Esbjerg" },
@@ -37,6 +39,7 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
         { value: "Herning Kommune", label: "Herning" },
         { value: "Hillerød Kommune", label: "Hillerød" },
         { value: "Hjørring Kommune", label: "Hjørring" },
+        { value: "Holbæk Kommune", label: "Holbæk" },
         { value: "Holstebro Kommune", label: "Holstebro" },
         { value: "Horsens Kommune", label: "Horsens" },
         { value: "Hvidovre Kommune", label: "Hvidovre" },
