@@ -41,6 +41,7 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
         { value: "Høje-Taastrup Kommune", label: "Høje-Taastrup" },
         { value: "Hørsholm Kommune", label: "Hørsholm" },
         { value: "Ikast-Brande Kommune", label: "Ikast-Brande" },
+        { value: "Ishøj Kommune", label: "Ishøj" },
         { value: "Jammerbugt Kommune", label: "Jammerbugt" },
         { value: "Kalundborg Kommune", label: "Kalundborg" },
         { value: "Kerteminde Kommune", label: "Kerteminde" },
