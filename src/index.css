@@ -29,17 +29,3 @@ body {
   background-color: white;
 }
 
-/* Logoet som baggrund */
-body::before {
-  content: "";
-  position: fixed;
-  top: 10;
-  left: 10;
-  width: 200%;
-  height: 200%;
-  background: url("/public/logo512.png") no-repeat center top;
-  background-size: 100% auto; /* fylder hele bredden */
-  opacity: 0.15; /* 20% synlighed */
-  pointer-events: none; /* så det ikke blokerer klik */
-  z-index: -1; /* bag alt andet */
-}

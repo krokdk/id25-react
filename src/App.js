@@ -283,7 +283,7 @@ const App = () => {
                                             marginTop: "20px",
                                             textAlign: "left",
                                             margin: "auto",
-                                            maxWidth: "500px"
+                                            maxWidth: "600px"
                                         }}>
 
                                             {results.map((entry, index) => (

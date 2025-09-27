@@ -22,7 +22,7 @@
     width: 200px;
     color: var(--secondary-color);
     border: 1px solid var(--secondary-color);
-    
+
 }
 
 .dropdownComponent {
@@ -33,7 +33,7 @@
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-    
+
 }
 
 
@@ -128,20 +128,19 @@
 
 .card {
     border: 1px solid var(--secondary-color);
-    border-radius: 12px;
     padding: 16px;
     margin-bottom: 24px;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    background-color: var(--background-color);
+    background-color: var(--white-color);
 }
 
 .missing-response {
     background-color: var(--accent-color);
     padding: 20px;
-    max-width: 400px;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -149,6 +148,7 @@
 
 .person-header {
     margin-bottom: 16px;
+    max-width: 500px;
 }
 
 .party-label {
@@ -166,7 +166,6 @@
 .qa-question {
     background-color: var(--secondary-color);
     padding: 8px 12px;
-    border-radius: 6px 6px 0 0;
     font-weight: bold;
     color: var(--white-color);
 }
@@ -174,7 +173,6 @@
 .qa-answer {
     background-color: var(--background-color);
     padding: 8px 12px;
-    border-radius: 0 0 6px 6px;
     font-weight: bold;
     border-top: 1px solid #ccc;
 }
@@ -196,20 +194,19 @@
 
 .spmtitle {
     border: 1px solid var(--secondary-color);
-    border-radius: 12px;
     padding: 16px;
     margin-bottom: 24px;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    background-color: var(--background-color);
+    background-color: var(--secondary-color);
+    color: var(--white-color);
     font-style: italic;
 }
 
 .spmdisc {
     border: 1px solid var(--secondary-color);
-    border-radius: 12px;
     padding: 16px;
     margin-bottom: 24px;
     max-width: 500px;
