@@ -217,24 +217,29 @@ const App = () => {
                 <YearSelector value={selectedYear} onChange={handleYearChange} />
                 <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                 <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
-                <QuestionTitle value={selectedQuestion} year={selectedYear} />
-                <h3>Sådan svarede kandidaterne:</h3>
+                
                 {/* 🔹 Pie chart */
                     !selectedPerson && (
-                        <div style={{ marginBottom: "30px" }}>
-                            <SurveyPieChartDefault
-                                filteredData={pieChartData}
-                                labels={selectedLabels(selectedYear, selectedQuestion)}
-                                onSliceClick={handleSliceClick}
-                                condition={selectedCondition}
-                            />
+                        <div>
+                            <QuestionTitle value={selectedQuestion} year={selectedYear} />
+                            <h3>Sådan svarede kandidaterne:</h3>
+                            <div style={{ marginBottom: "30px" }}>
+                                <SurveyPieChartDefault
+                                    filteredData={pieChartData}
+                                    labels={selectedLabels(selectedYear, selectedQuestion)}
+                                    onSliceClick={handleSliceClick}
+                                    condition={selectedCondition}
+                                />
+                            </div>
+
+                            <h3>Filtrér på parti</h3>
+                            <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
+                            <h3>Eller søg på navn:</h3>
+                            <SearchInput value={searchQuery} onChange={handleSearchChange} />
                         </div>
                     )
                 }
-                <h3>Filtrér på parti</h3>
-                <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
-                <h3>Eller søg på navn:</h3>
-                <SearchInput value={searchQuery} onChange={handleSearchChange} />
+
 
                 {filteredData.length > 0 && !selectedPerson && (
                     <div style={{ marginTop: "20px" }}>
