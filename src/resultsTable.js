@@ -32,9 +32,10 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
         <div>
             <table className="table">
                 <thead>
-                    <tr style={{ backgroundColor: colorScheme.secondary, color: colorScheme.text }}>
-                        <th className="table-header" style={{ width: "15px" }} >Parti</th>
-                        <th className="table-header" style={{ textAlign: "center" }} >Kandidatens navn</th>
+                    <tr style={{ backgroundColor: colorScheme.secondary, color: colorScheme.white, height: "50px" }}>
+                        <th style={{textAlign: "center", columnWidth: "50px"}}>Parti</th>
+                        <th style={{textAlign: "left"}}>Kandidatens navn</th>
+                        <th style={{textAlign: "center"}}>Besvaret</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,19 +43,20 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
                         <tr
                             key={index}
                             style={{ backgroundColor: index % 2 === 0 ? colorScheme.background : "white", cursor: "pointer" }}
-                            onClick={() => handleRowClick(item)}
+                            onClick={() => handleRowClick(item)
+                            }
                         >
 
-                            <td className="table-cell" style={{ textAlign: "center" }}>
+                            <td className="table-cell" style={{ textAlign: "center", columnWidth: "40px" }}>
                                 <div
                                     style={{
                                         display: "inline-flex",
                                         alignItems: "center",
                                         justifyContent: "center",
-                                        width: "30px",       // bredde på boksen
-                                        height: "30px",      // samme som width → gør den kvadratisk
-                                        backgroundColor: getPartyColor(item.parti), // vælg din farve
-                                        borderRadius: "4px", // kan fjernes eller ændres (fx 50% = cirkel)
+                                        width: "30px",
+                                        height: "30px",
+                                        backgroundColor: getPartyColor(item.parti),
+                                        borderRadius: "4px",
                                         color: "white",
                                         fontWeight: "bolder"
                                     }}
@@ -62,7 +64,8 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
                                     {getPartiBogstav(getPartiNavn(item.parti))}
                                 </div>
                             </td>
-                            <td className="table-cell" style={{ textAlign: "center" }}>{item.fornavn}</td>
+                            <td className="table-cell" style={{ textAlign: "left", }}>{item.fornavn}</td>
+                            <td className="table-cell" style={{ textAlign: "center", }}>{item.svar1 === "Ikke besvaret" ? "Nej" : "Ja"}</td>
                         </tr>
                     ))}
                 </tbody>
