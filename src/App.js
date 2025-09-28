@@ -199,12 +199,17 @@ const App = () => {
     if (loading) {
         return (
             <div style={{ textAlign: "center" }}>
+                <h1>{GetYearLabel(selectedYear)}</h1>
                 <YearSelector value={selectedYear} onChange={handleYearChange} />
                 <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                 <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
                 <QuestionTitle value={selectedQuestion} year={selectedYear} />
+                <h3>Sådan svarede kandidaterne:</h3>
                 <LoadingSpinner />
+                <h3>Filtrér på parti</h3>
                 <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
+                <h3>Eller søg på navn:</h3>
+                <SearchInput value={searchQuery} onChange={handleSearchChange} />
             </div>
         );
     }
@@ -217,7 +222,7 @@ const App = () => {
                 <YearSelector value={selectedYear} onChange={handleYearChange} />
                 <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                 <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
-                
+
                 {/* 🔹 Pie chart */
                     !selectedPerson && (
                         <div>
@@ -231,7 +236,6 @@ const App = () => {
                                     condition={selectedCondition}
                                 />
                             </div>
-
                             <h3>Filtrér på parti</h3>
                             <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
                             <h3>Eller søg på navn:</h3>
