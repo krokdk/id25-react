@@ -5,21 +5,18 @@ import "./styles.css";
 
 const QuestionTitle = ({ value, year }) => {
     const options2025 = [
-        // { value: "2025", label: "Folketingsvalg 2025" },
         { spm: "spm1", text: Question2025Kommunal.SPM1, bread: "Kommuner kan selvstændigt udvikle og gennemføre forebyggende indsatser. Dette gælder også områder, hvor Folketinget ikke har fastsat forbud, f.eks. forebyggelse af rygning eller andre sundhedsmæssige risici. Omskæring af raske drengebørn kan medføre komplikationer både på kort og på langt sigt. Derfor har vi stillet de kommunale kandidater 3 spørgsmål og givet dem mulighed for at supplere med en kommentar." },
         { spm: "spm2", text: Question2025Kommunal.SPM2, bread: "Det kommunale bagland har stor betydning for den politiske udvikling i et parti. De har ofte indflydelse på hvilke kandidater, der opstilles til kommende valg og en del går videre til Folketinget senere." },
         { spm: "spm3", text: Question2025Kommunal.SPM3, bread: "Dette spørgsmål har til formål at vise om kandidaterne er på linje med deres parti, eller om de repræsenterer en anden linje." },
     ];
 
     const options2025reg = [
-        // { value: "2025", label: "Folketingsvalg 2025" },
         { spm: "spm1", text: Questions2025Regional.SPM1, bread: "Der forekommer hvert år et betydeligt antal kort- og langsigtede komplikationer relateret til omskæring uden medicinsk begrundelse. Regionerne bærer den økonomiske byrde ved behandling af disse komplikationer.\r\nRegionerne kan selvstændigt udvikle og gennemføre  forebyggelses- og sundhedsfremmende  indsatser. Dette gælder også områder, hvor Folketinget ikke har fastsat forbud, f.eks. forebyggelse af rygning, alkohol eller andre sundhedsmæssige risici.\r\nRegionale forebyggelsestiltag gennemføres som oftest, hvis det på sigt kan øge borgernes sundhed, samt nedbringe det regionale udgiftsniveau.    " },
         { spm: "spm2", text: Questions2025Regional.SPM2, bread: "Det regionale bagland har stor betydning for den politiske udvikling i et parti. De har ofte indflydelse på hvilke kandidater, der opstilles til kommende valg og en del går videre til Folketinget senere. " },
         { spm: "spm3", text: Questions2025Regional.SPM3, bread: "Dette spørgsmål har til formål at vise om kandidaterne er på linje med deres parti, eller om de repræsenterer en anden linje. " },
     ];
 
     const optionsOld = [
-        // { value: "2025", label: "Folketingsvalg 2025" },
         { spm: "spm1", text: Questions.SPM1, bread: "" },
         { spm: "spm2", text: Questions.SPM2, bread: "" },
         { spm: "spm3", text: Questions.SPM3, bread: "" },
