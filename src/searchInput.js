@@ -11,8 +11,9 @@ const SearchInput = ({ value, onChange }) => {
                 marginTop: "10px",
                 padding: "4px",
                 width: "400px",
+                height: "30px",
                 border: "1px solid #ccc",
-                borderRadius: "5px",
+                font: "24",
             }}
         />
     );
