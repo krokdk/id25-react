@@ -35,7 +35,6 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
                     <tr style={{ backgroundColor: colorScheme.secondary, color: colorScheme.white, height: "50px" }}>
                         <th style={{textAlign: "center", columnWidth: "50px"}}>Parti</th>
                         <th style={{textAlign: "left"}}>Kandidatens navn</th>
-                        <th style={{textAlign: "center"}}>Besvaret</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,7 +64,6 @@ const ResultsTable = ({ filteredData, handleRowClick }) => {
                                 </div>
                             </td>
                             <td className="table-cell" style={{ textAlign: "left", }}>{item.fornavn}</td>
-                            <td className="table-cell" style={{ textAlign: "center", }}>{item.svar1 === "Ikke besvaret" ? "Nej" : "Ja"}</td>
                         </tr>
                     ))}
                 </tbody>
