@@ -12,6 +12,7 @@ import YearSelector, { GetYearLabel } from "./yearSelector";
 import MunicipalitySelector from "./MunicipalitySelector";
 import QuestionSelector from "./QuestionSelector";
 import QuestionTitle from "./QuestionTitle";
+import Modal from "./Modal";
 //import MapAnimation from "./map/MapAnimation";
 
 const App = () => {
@@ -80,6 +81,7 @@ const App = () => {
     }, [surveyData, selectedMunicipality, selectedParty, searchQuery, selectedFilter]);
 
     useEffect(() => { setSelectedQuestion(selectedQuestion); }, [selectedQuestion]);
+
 
 
     const handleQuestionSelect = (selectedQuestion) => {
@@ -224,7 +226,7 @@ const App = () => {
                 <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
 
                 {/* 🔹 Pie chart */
-                    !selectedPerson && (
+                    (
                         <div>
                             <QuestionTitle value={selectedQuestion} year={selectedYear} />
                             <h3>Sådan svarede kandidaterne:</h3>
@@ -245,7 +247,7 @@ const App = () => {
                 }
 
 
-                {filteredData.length > 0 && !selectedPerson && (
+                {filteredData.length > 0 && (
                     <div style={{ marginTop: "20px" }}>
                         <h2>
                             {selectedParty === "?"
@@ -261,46 +263,50 @@ const App = () => {
                     </div>
                 )}
 
-
-                {selectedPerson && (
+                <Modal open={!!selectedPerson} onClose={() => setSelectedPerson(null)}>
                     <div>
-                        <button onClick={handleReset} className="button">Tilbage</button>
-                        {/* Display the selected person's result for the selectedYear */}
-                        <PersonResult //title={`Besvarelse for ${selectedYear}`}
-                            person={selectedPerson}
-                            year={selectedYear}
-                            onPartyClick={(party) => {
-                                handleReset();
-                                !selectedParty && setSelectedParty(party);
-                            }}
-                        />
+                        <div style={{ display: "flex", justifyContent: "space-between", gap: 8, marginBottom: 12 }}>
+                            <h2 id="modal-title" style={{ margin: 0 }}>
+                                {selectedPerson?.name ?? "Detaljer"}
+                            </h2>
+                            <button onClick={() => setSelectedPerson(null)} className="button">Luk</button>
+                        </div>
 
-                        {/* Andre resultater */}
-                        {Object.keys(selectedPersonHistory).length > 0 && (
-                            <div style={{ marginTop: "30px" }}>
-                                <h2>Besvarelser for andre år</h2>
-                                {Object.entries(selectedPersonHistory)
-                                    .filter(([year]) => year !== selectedYear) // Ensure past results exclude current year
-                                    .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA)) // Sort descending (newest first)
-                                    .map(([year, results]) => (
-                                        <div key={year} style={{
-                                            marginTop: "20px",
-                                            textAlign: "left",
-                                            margin: "auto",
-                                            maxWidth: "600px"
-                                        }}>
+                        {/* Primært indhold */}
+                        {selectedPerson && (
+                            <>
+                                <PersonResult
+                                    person={selectedPerson}
+                                    year={selectedYear}
+                                    onPartyClick={(party) => {
+                                        // Hvis du vil lukke modalen når man vælger parti:
+                                        setSelectedPerson(null);
+                                        !selectedParty && setSelectedParty(party);
+                                    }}
+                                />
 
-                                            {results.map((entry, index) => (
-                                                <React.Fragment key={index}>
-                                                    <PersonResult title={`${year}`} person={entry} year={year} />
-                                                </React.Fragment>
+                                {/* Andre resultater */}
+                                {Object.keys(selectedPersonHistory).length > 0 && (
+                                    <div style={{ marginTop: "30px" }}>
+                                        <h3>Besvarelser for andre år</h3>
+                                        {Object.entries(selectedPersonHistory)
+                                            .filter(([year]) => year !== selectedYear)
+                                            .sort(([a], [b]) => Number(b) - Number(a))
+                                            .map(([year, results]) => (
+                                                <div key={year} style={{ marginTop: 20, textAlign: "left", margin: "auto", maxWidth: 600 }}>
+                                                    {results.map((entry, index) => (
+                                                        <React.Fragment key={index}>
+                                                            <PersonResult title={`${year}`} person={entry} year={year} />
+                                                        </React.Fragment>
+                                                    ))}
+                                                </div>
                                             ))}
-                                        </div>
-                                    ))}
-                            </div>
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
-                )}
+                </Modal>
             </div>
         </div>
     );
