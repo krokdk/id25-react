@@ -187,7 +187,7 @@ const App = () => {
 
                 const data = await response.json();
 
-                if (data.length > 0) {
+                if (data.length > 0 && data[0].svar2 != "Ikke besvaret") {
                     history[year] = data; // Only store non-empty responses
                 }
             }
