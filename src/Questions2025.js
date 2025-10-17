@@ -15,7 +15,7 @@ export const Questions2025Regional = Object.freeze({
 });
 
 const Questions2025Kommunal = Object.freeze({
-    SPM1: "Hvis du bliver valgt, vil du arbejde for, at din kommune forebygger omskæring af raske drengebørn, der ikke er medicinsk nødvendige?",
+    SPM1: "Vil du arbejde for, at din kommune forebygger omskæring af drengebørn, hvis det ikke er nødvendigt af medicinsk årsager?",
     SPM2: "Går du ind for, at Folketinget skal vedtage en 18-års aldersgrænse for omskæring af raske drenge, der ikke er medicinsk nødvendige?",
     SPM3: "Ved du, hvilken holdning dit parti har til en 18-års aldersgrænse for omskæring af raske drengebørn?",
     Comment: "Eventuel kommentar",
