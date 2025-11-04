@@ -116,7 +116,6 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
         { value: "Region Syddanmark", label: "Region Syddanmark" },
         { value: "Region Midtjylland", label: "Region Midtjylland", },
         { value: "Region Nordjylland", label: "Region Nordjylland" },
-        { value: "Region Hovedstaden", label: "Region Hovedstaden" }
     ];
 
     if (year === "9999") {
