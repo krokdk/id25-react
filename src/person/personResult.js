@@ -11,7 +11,7 @@ const PersonResult = ({ title, person, year, onPartyClick }) => {
         ? PersonDetailsCard2019
         : year === "2021"
             ? PersonDetailsCard2021
-            :  year === "9999" || year === "8888"
+            :  year === "9999" || year === "8888" || year === "2025" 
                 ? PersonDetailsCard2025
                 : PersonDetailsCard;
 
