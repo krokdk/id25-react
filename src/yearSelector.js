@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 
 const options = [
-    { value: "2025", label: "Folketingsvalg 2025" },
+    { value: "2026", label: "Folketingsvalg 2026" },
     { value: "9999", label: "Kommunalvalg 2025" },
     { value: "8888", label: "Regionalvalg 2025" },
     { value: "2024", label: "Europaparlamentsvalg 2024" },

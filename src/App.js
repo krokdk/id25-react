@@ -37,7 +37,7 @@ const App = () => {
         return () => window.removeEventListener('message', handleMessage);
     }, []);
 
-    const [selectedYear, setSelectedYear] = useState("9999");
+    const [selectedYear, setSelectedYear] = useState("2026");
     const [selectedQuestion, setSelectedQuestion] = useState("spm1");
     const [filteredData, setFilteredData] = useState([]);
     const [selectedParty, setSelectedParty] = useState(null);
@@ -169,7 +169,7 @@ const App = () => {
     };
 
     const fetchPersonHistory = async (fornavn) => {
-        const years = ["2019", "2021", "2022", "2024", "2025", "8888", "9999"]; // Define years to check
+        const years = ["2019", "2021", "2022", "2024", "2026", "8888", "9999"];
         const history = {};
 
         try {

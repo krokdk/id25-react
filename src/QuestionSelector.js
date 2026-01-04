@@ -12,7 +12,7 @@ const QuestionSelector = ({ value, onChange, year }) => {
         { value: "spm1", label: "Spørgsmål 1" },
         { value: "spm2", label: "Spørgsmål 2" },
         { value: "spm3", label: "Spørgsmål 3" },
-        { value: "spm3", label: "Spørgsmål 4" },
+        { value: "spm4", label: "Spørgsmål 4" },
     ];
 
 
@@ -24,7 +24,7 @@ const QuestionSelector = ({ value, onChange, year }) => {
         { value: "spm2", label: "Borgerforslag" }
     ];
 
-    let options = year === "9999" || year === "8888" ? options2025 : year === "2019" ? options2019 : year === "2021" ? options2021:  optionsOld;
+    let options = year === "2026" ? optionsOld :  ( year === "9999" || year === "8888" ) ? options2025 : year === "2019" ? options2019 : year === "2021" ? options2021:  optionsOld;
 
     return (
         <div className="dropdownComponent">
