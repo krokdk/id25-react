@@ -24,13 +24,7 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
                             <strong>{person.fornavn}</strong> har desværre ikke besvaret vores kandidattest.
                         </p>
                         { person.url && person.url.trim() !== "" && (
-                            <p>
-                                Hvorfor ikke skrive og spørge hvorfor?
-
-                                <a href={person.url} target="_blank" rel="noopener noreferrer">
-                                                            kontaktinfo
-                                                        </a>
-                            </p>
+                            <a href={person.url} >Hvorfor ikke skrive og spørge hvorfor?</a>    
                         )}
                     </div>
                 </div>
