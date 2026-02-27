@@ -2,6 +2,126 @@ import React from "react";
 import "./styles.css";
 
 const MunicipalitySelector = ({ value, year, onChange }) => {
+
+    const storKredse = [
+        { value: "Alle", label: "Alle" },
+        { value: "Københavns Storkreds", label: "Københavns Storkreds" },
+        { value: "Københavns Omegns Storkreds", label: "Københavns Omegns Storkreds" },
+        { value: "Nordsjællands Storkreds", label: "Nordsjællands Storkreds" },
+        { value: "Bornholms Storkreds", label: "Bornholms Storkreds" },
+        { value: "Sjællands Storkreds", label: "Sjællands Storkreds" },
+        { value: "Fyns Storkreds", label: "Fyns Storkreds" },
+        { value: "Sydjyllands Storkreds", label: "Sydjyllands Storkreds" },
+        { value: "Østjyllands Storkreds", label: "Østjyllands Storkreds" },
+        { value: "Vestjyllands Storkreds", label: "Vestjyllands Storkreds" },
+        { value: "Nordjyllands Storkreds", label: "Nordjyllands Storkreds" }
+    ];
+
+    const opstillingsKredse = [
+        { value: "Østerbrokredsen", label: "Østerbrokredsen" },
+        { value: "Sundbyvesterkredsen", label: "Sundbyvesterkredsen" },
+        { value: "Indre Bykredsen", label: "Indre Bykredsen" },
+        { value: "Sundbyøsterkredsen", label: "Sundbyøsterkredsen" },
+        { value: "Nørrebrokredsen", label: "Nørrebrokredsen" },
+        { value: "Bispebjergkredsen", label: "Bispebjergkredsen" },
+        { value: "Brønshøjkredsen", label: "Brønshøjkredsen" },
+        { value: "Valbykredsen", label: "Valbykredsen" },
+        { value: "Vesterbrokredsen", label: "Vesterbrokredsen" },
+        { value: "Falkonerkredsen", label: "Falkonerkredsen" },
+        { value: "Slotskredsen", label: "Slotskredsen" },
+        { value: "Tårnbykredsen", label: "Tårnbykredsen" },
+
+        { value: "Gentoftekredsen", label: "Gentoftekredsen" },
+        { value: "Lyngbykredsen", label: "Lyngbykredsen" },
+        { value: "Gladsaxekredsen", label: "Gladsaxekredsen" },
+        { value: "Rødovrekredsen", label: "Rødovrekredsen" },
+        { value: "Hvidovrekredsen", label: "Hvidovrekredsen" },
+        { value: "Brøndbykredsen", label: "Brøndbykredsen" },
+        { value: "Taastrupkredsen", label: "Taastrupkredsen" },
+        { value: "Ballerupkredsen", label: "Ballerupkredsen" },
+
+        { value: "Helsingørkredsen", label: "Helsingørkredsen" },
+        { value: "Fredensborgkredsen", label: "Fredensborgkredsen" },
+        { value: "Hillerødkredsen", label: "Hillerødkredsen" },
+        { value: "Frederikssundkredsen", label: "Frederikssundkredsen" },
+        { value: "Egedalkredsen", label: "Egedalkredsen" },
+        { value: "Rudersdalkredsen", label: "Rudersdalkredsen" },
+
+        { value: "Rønnekredsen", label: "Rønnekredsen" },
+        { value: "Aakirkebykredsen", label: "Aakirkebykredsen" },
+
+        { value: "Lollandkredsen", label: "Lollandkredsen" },
+        { value: "Guldborgsundkredsen", label: "Guldborgsundkredsen" },
+        { value: "Vordingborgkredsen", label: "Vordingborgkredsen" },
+        { value: "Næstvedkredsen", label: "Næstvedkredsen" },
+        { value: "Faxekredsen", label: "Faxekredsen" },
+        { value: "Køgekredsen", label: "Køgekredsen" },
+        { value: "Grevekredsen", label: "Grevekredsen" },
+        { value: "Roskildekredsen", label: "Roskildekredsen" },
+        { value: "Holbækkredsen", label: "Holbækkredsen" },
+        { value: "Kalundborgkredsen", label: "Kalundborgkredsen" },
+        { value: "Ringstedkredsen", label: "Ringstedkredsen" },
+        { value: "Slagelsekredsen", label: "Slagelsekredsen" },
+
+        { value: "Odense Østkredsen", label: "Odense Østkredsen" },
+        { value: "Odense Vestkredsen", label: "Odense Vestkredsen" },
+        { value: "Odense Sydkredsen", label: "Odense Sydkredsen" },
+        { value: "Assenskredsen", label: "Assenskredsen" },
+        { value: "Middelfartkredsen", label: "Middelfartkredsen" },
+        { value: "Nyborgkredsen", label: "Nyborgkredsen" },
+        { value: "Svendborgkredsen", label: "Svendborgkredsen" },
+        { value: "Faaborgkredsen", label: "Faaborgkredsen" },
+
+        { value: "Sønderborgkredsen", label: "Sønderborgkredsen" },
+        { value: "Aabenraakredsen", label: "Aabenraakredsen" },
+        { value: "Tønderkredsen", label: "Tønderkredsen" },
+        { value: "Esbjerg Bykredsen", label: "Esbjerg Bykredsen" },
+        { value: "Esbjerg Omegnskredsen", label: "Esbjerg Omegnskredsen" },
+        { value: "Vardekredsen", label: "Vardekredsen" },
+        { value: "Vejenkredsen", label: "Vejenkredsen" },
+        { value: "Vejle Nordkredsen", label: "Vejle Nordkredsen" },
+        { value: "Vejle Sydkredsen", label: "Vejle Sydkredsen" },
+        { value: "Fredericiakredsen", label: "Fredericiakredsen" },
+        { value: "Kolding Nordkredsen", label: "Kolding Nordkredsen" },
+        { value: "Kolding Sydkredsen", label: "Kolding Sydkredsen" },
+        { value: "Haderslevkredsen", label: "Haderslevkredsen" },
+
+        { value: "Aarhus Sydkredsen", label: "Aarhus Sydkredsen" },
+        { value: "Aarhus Vestkredsen", label: "Aarhus Vestkredsen" },
+        { value: "Aarhus Nordkredsen", label: "Aarhus Nordkredsen" },
+        { value: "Aarhus Østkredsen", label: "Aarhus Østkredsen" },
+        { value: "Djurskredsen", label: "Djurskredsen" },
+        { value: "Randers Nordkredsen", label: "Randers Nordkredsen" },
+        { value: "Randers Sydkredsen", label: "Randers Sydkredsen" },
+        { value: "Favrskovkredsen", label: "Favrskovkredsen" },
+        { value: "Skanderborgkredsen", label: "Skanderborgkredsen" },
+        { value: "Horsenskredsen", label: "Horsenskredsen" },
+        { value: "Hedenstedkredsen", label: "Hedenstedkredsen" },
+
+        { value: "Struerkredsen", label: "Struerkredsen" },
+        { value: "Skivekredsen", label: "Skivekredsen" },
+        { value: "Viborg Vestkredsen", label: "Viborg Vestkredsen" },
+        { value: "Viborg Østkredsen", label: "Viborg Østkredsen" },
+        { value: "Silkeborg Nordkredsen", label: "Silkeborg Nordkredsen" },
+        { value: "Silkeborg Sydkredsen", label: "Silkeborg Sydkredsen" },
+        { value: "Ikastkredsen", label: "Ikastkredsen" },
+        { value: "Herning Sydkredsen", label: "Herning Sydkredsen" },
+        { value: "Herning Nordkredsen", label: "Herning Nordkredsen" },
+        { value: "Holstebrokredsen", label: "Holstebrokredsen" },
+        { value: "Ringkøbingkredsen", label: "Ringkøbingkredsen" },
+
+        { value: "Frederikshavnkredsen", label: "Frederikshavnkredsen" },
+        { value: "Hjørringkredsen", label: "Hjørringkredsen" },
+        { value: "Brønderslevkredsen", label: "Brønderslevkredsen" },
+        { value: "Thistedkredsen", label: "Thistedkredsen" },
+        { value: "Himmerlandkredsen", label: "Himmerlandkredsen" },
+        { value: "Mariagerfjordkredsen", label: "Mariagerfjordkredsen" },
+        { value: "Aalborg Østkredsen", label: "Aalborg Østkredsen" },
+        { value: "Aalborg Vestkredsen", label: "Aalborg Vestkredsen" },
+        { value: "Aalborg Nordkredsen", label: "Aalborg Nordkredsen" }
+    ];
+
+
     const kommuner = [
         { value: "Alle", label: "Alle" },
         { value: "Albertslund Kommune", label: "Albertslund" },
@@ -155,7 +275,30 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
                 </select>
             </div>
         );
-    };
+    }
+    
+    else if (year === "2026") {
+        return (
+            <div className="dropdownComponent">
+                <label htmlFor="municipalitySelect">Storkreds:</label>
+                <select
+                    id="municipalitySelect"
+                    value={value}
+                    onChange={onChange}
+                    className="dropdown"
+                >
+                    {storKredse.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        );
+    }
+    ;
+
+    
 
 }
 

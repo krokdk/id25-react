@@ -3,6 +3,7 @@ const partyMapper = [
     { bogstav: "B", navn: "Radikale Venstre", farve: "#ED24DE" },
     { bogstav: "C", navn: "Konservative Folkeparti", farve: "#008000" },
     { bogstav: "F", navn: "Socialistisk Folkeparti", farve: "#C8102E" },
+    { bogstav: "H", navn: "Borgernes parti", farve: "#87E0D5" },
     { bogstav: "I", navn: "Liberal Alliance", farve: "#FF8000" },
     { bogstav: "M", navn: "Moderaterne", farve: "#772583" },
     { bogstav: "O", navn: "Dansk Folkeparti", farve: "#003399" },
@@ -11,7 +12,6 @@ const partyMapper = [
     { bogstav: "Ø", navn: "Enhedslisten", farve: "#A10022" },
     { bogstav: "Å", navn: "Alternativet", farve: "#00AA00" }
 ];
-
 
 // **Hjælpefunktion til opslag af partinavn givet et bogstav**
 export const getPartiNavn = (bogstav) => {
