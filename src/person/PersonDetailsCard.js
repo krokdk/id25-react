@@ -7,7 +7,7 @@ const PersonDetailsCard = ({ person, onPartyClick }) => {
     if (!person || !person.fornavn) return null;
 
     const hasNoAnswers =
-        !person.svar1 || person.svar1 === "Ikke besvaret";
+        !person.answers[0].answer || person.answers[0].answer  === "Ikke besvaret";
 
     if (hasNoAnswers) {
         return (
@@ -22,13 +22,13 @@ const PersonDetailsCard = ({ person, onPartyClick }) => {
                         <p>
                             <strong>{person.fornavn}</strong> har desværre ikke besvaret vores spørgeskema.
                         </p>
-                        { person.url && person.url.trim() !== "" && (
+                        {person.url && person.url.trim() !== "" && (
                             <p>
                                 Hvorfor ikke skrive og spørge hvorfor?
 
                                 <a href={person.url} target="_blank" rel="noopener noreferrer">
-                                                            kontaktinfo
-                                                        </a>
+                                    kontaktinfo
+                                </a>
                             </p>
                         )}
                     </div>
@@ -56,6 +56,19 @@ const PersonDetailsCard = ({ person, onPartyClick }) => {
         { question: Questions.SPM4, answer: person.svar4 },
     ].filter(qa => qa.answer && qa.answer !== "");
 
+    
+    const questionAnswerPairs2026 = person.answers
+        .map((item, index) => {
+            const questionKey = `SPM${index + 1}`;
+
+            return {
+                question: Questions[questionKey],
+                answer: item.answer,
+                comment: item.comment
+            };
+        })
+        .filter(qa => qa.answer && qa.answer !== "");
+
     return (
         <div className="card person-card">
             <div className="person-header">
@@ -63,10 +76,11 @@ const PersonDetailsCard = ({ person, onPartyClick }) => {
                 <PartyButton party={person.parti} onClick={onPartyClick} />
             </div>
 
-            {questionAnswerPairs.map(({ question, answer }, index) => (
+            {questionAnswerPairs2026.map(({ question, answer, comment }, index) => (
                 <div key={index} className="qa-block">
                     <div className="qa-question">{question}</div>
                     <div className="qa-answer">{answer}</div>
+                    <div className="qa-answer">{comment}</div>
                 </div>
             ))}
         </div>
