@@ -8,7 +8,6 @@ import useSurveyData from "./useSurveyData";
 import PartySelector from "./party/partySelector";
 import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
-import YearSelector, { GetYearLabel } from "./yearSelector";
 import MunicipalitySelector from "./MunicipalitySelector";
 import QuestionSelector from "./QuestionSelector";
 import QuestionTitle from "./QuestionTitle";
@@ -207,7 +206,6 @@ const selectedCondition = (item, label) => {
         return (
             <div style={{ textAlign: "center" }}>
                 <h1>{GetYearLabel(selectedYear)}</h1>
-                <YearSelector value={selectedYear} onChange={handleYearChange} />
                 <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                 <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
                 <QuestionTitle value={selectedQuestion} year={selectedYear} />
@@ -226,7 +224,6 @@ const selectedCondition = (item, label) => {
 
             <div style={{ textAlign: "center" }}>
                 <h1>{GetYearLabel(selectedYear)}</h1>
-                <YearSelector value={selectedYear} onChange={handleYearChange} />
                 <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                 <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
 
