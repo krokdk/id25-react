@@ -8,6 +8,7 @@ import useSurveyData from "./useSurveyData";
 import PartySelector from "./party/partySelector";
 import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
+import YearSelector, { GetYearLabel } from "./yearSelector";
 import MunicipalitySelector from "./MunicipalitySelector";
 import QuestionSelector from "./QuestionSelector";
 import QuestionTitle from "./QuestionTitle";
@@ -286,25 +287,6 @@ const selectedCondition = (item, label) => {
                                         !selectedParty && setSelectedParty(party);
                                     }}
                                 />
-
-                                {/* Andre resultater */}
-                                {Object.keys(selectedPersonHistory).length > 0 && (
-                                    <div style={{ marginTop: "30px" }}>
-                                        <h3>Besvarelser for andre år</h3>
-                                        {Object.entries(selectedPersonHistory)
-                                            .filter(([year]) => year !== selectedYear)
-                                            .sort(([a], [b]) => Number(b) - Number(a))
-                                            .map(([year, results]) => (
-                                                <div key={year} style={{ marginTop: 20, textAlign: "left", margin: "auto", maxWidth: 600 }}>
-                                                    {results.map((entry, index) => (
-                                                        <React.Fragment key={index}>
-                                                            <PersonResult title={`${year}`} person={entry} year={year} />
-                                                        </React.Fragment>
-                                                    ))}
-                                                </div>
-                                            ))}
-                                    </div>
-                                )}
                             </>
                         )}
                     </div>
