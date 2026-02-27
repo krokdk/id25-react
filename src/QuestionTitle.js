@@ -1,9 +1,34 @@
 import React from "react";
-import Question2025Kommunal, { Questions2019, Questions2021, Questions2025Regional } from "./Questions2025";
+import Question2025Kommunal, { Questions2026, Questions2019, Questions2021, Questions2025Regional } from "./Questions2025";
 import Questions from "./questions";
 import "./styles.css";
 
 const QuestionTitle = ({ value, year }) => {
+
+const options2026 = [
+    { spm: "spm1", text: Questions2026.SPM1, bread: "Kommuner kan selvstændigt udvikle og gennemføre forebyggende indsatser. Dette gælder også områder, hvor Folketinget ikke har fastsat forbud, f.eks. forebyggelse af rygning eller andre sundhedsmæssige risici. Omskæring af raske drengebørn kan medføre komplikationer både på kort og på langt sigt. Derfor har vi stillet de kommunale kandidater 3 spørgsmål og givet dem mulighed for at supplere med en kommentar." },
+    { spm: "spm2", text: Questions2026.SPM2, bread: "Det kommunale bagland har stor betydning for den politiske udvikling i et parti. De har ofte indflydelse på hvilke kandidater, der opstilles til kommende valg og en del går videre til Folketinget senere." },
+    { spm: "spm3", text: Questions2026.SPM3, bread: "Dette spørgsmål har til formål at vise om kandidaterne er på linje med deres parti, eller om de repræsenterer en anden linje." },
+    { spm: "spm4", text: Questions2026.SPM4, bread: "spørgsmål 4" },
+    { spm: "spm5", text: Questions2026.SPM5, bread: "spørgsmål 5" },
+    { spm: "spm6", text: Questions2026.SPM6, bread: "spørgsmål 6" },
+    { spm: "spm7", text: Questions2026.SPM7, bread: "spørgsmål 7" },
+    { spm: "spm8", text: Questions2026.SPM8, bread: "spørgsmål 8" },
+    { spm: "spm9", text: Questions2026.SPM9, bread: "spørgsmål 9" },
+    { spm: "spm10", text: Questions2026.SPM10, bread: "spørgsmål 10" },
+    { spm: "spm11", text: Questions2026.SPM11, bread: "spørgsmål 11" },
+    { spm: "spm12", text: Questions2026.SPM12, bread: "spørgsmål 12" },
+    { spm: "spm13", text: Questions2026.SPM13, bread: "spørgsmål 13" },
+    { spm: "spm14", text: Questions2026.SPM14, bread: "spørgsmål 14" },
+    { spm: "spm15", text: Questions2026.SPM15, bread: "spørgsmål 15" },
+    { spm: "spm16", text: Questions2026.SPM16, bread: "spørgsmål 16" },
+    { spm: "spm17", text: Questions2026.SPM17, bread: "spørgsmål 17" },
+    { spm: "spm18", text: Questions2026.SPM18, bread: "spørgsmål 18" },
+    { spm: "spm19", text: Questions2026.SPM19, bread: "spørgsmål 19" },
+    { spm: "spm20", text: Questions2026.SPM20, bread: "spørgsmål 20" },
+];
+
+
     const options2025 = [
         { spm: "spm1", text: Question2025Kommunal.SPM1, bread: "Kommuner kan selvstændigt udvikle og gennemføre forebyggende indsatser. Dette gælder også områder, hvor Folketinget ikke har fastsat forbud, f.eks. forebyggelse af rygning eller andre sundhedsmæssige risici. Omskæring af raske drengebørn kan medføre komplikationer både på kort og på langt sigt. Derfor har vi stillet de kommunale kandidater 3 spørgsmål og givet dem mulighed for at supplere med en kommentar." },
         { spm: "spm2", text: Question2025Kommunal.SPM2, bread: "Det kommunale bagland har stor betydning for den politiske udvikling i et parti. De har ofte indflydelse på hvilke kandidater, der opstilles til kommende valg og en del går videre til Folketinget senere." },
@@ -22,6 +47,16 @@ const QuestionTitle = ({ value, year }) => {
         { spm: "spm3", text: Questions.SPM3, bread: "" },
         { spm: "spm4", text: Questions.SPM4, bread: "" },
     ];
+
+
+    if (year === "2026") {
+        return (
+            <div>
+                <div className="spmdisc">{options2026.find(p => p.spm == value).bread}</div>
+                <h3 className="spmtitle"> {options2026.find(p => p.spm === value).text} </h3>
+            </div>
+        );
+    }
 
     if (year === "9999") {
         return (

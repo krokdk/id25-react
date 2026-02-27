@@ -98,13 +98,20 @@ const App = () => {
     };
 
 
-    const selectedCondition = (item, label) => {
+const selectedCondition = (item, label) => {
+    if (!selectedQuestion) return false;
 
-        if (selectedQuestion === "spm1") { return item.svar1 && item.svar1.toLowerCase() === label.toLowerCase(); }
-        else if (selectedQuestion === "spm2") { return item.svar2 && item.svar2.toLowerCase() === label.toLowerCase(); }
-        else if (selectedQuestion === "spm3") { return item.svar3 && item.svar3.toLowerCase() === label.toLowerCase(); }
-        else return item.svar1 && item.svar1.toLowerCase() === label.toLowerCase();
-    };
+    // Extract the numeric part from strings like "spm1", "spm2", etc.
+    const match = selectedQuestion.match(/\d+$/);
+    const index = match ? parseInt(match[0], 10) - 1 : 0;
+
+    const answerObj = item?.answers?.[index];
+
+    return (
+        answerObj?.answer &&
+        answerObj.answer.toLowerCase() === label.toLowerCase()
+    );
+};
 
     const selectedLabels = (year, question) => {
 
