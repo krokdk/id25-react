@@ -18,12 +18,6 @@ const QuestionSelector = ({ value, onChange, year }) => {
         { value: "spm12", label: "Spørgsmål 12" },
         { value: "spm13", label: "Spørgsmål 13" },
         { value: "spm14", label: "Spørgsmål 14" },
-        { value: "spm15", label: "Spørgsmål 15" },
-        { value: "spm16", label: "Spørgsmål 16" },
-        { value: "spm17", label: "Spørgsmål 17" },
-        { value: "spm18", label: "Spørgsmål 18" },
-        { value: "spm19", label: "Spørgsmål 19" },
-        { value: "spm20", label: "Spørgsmål 20" },
     ];
 
     const options2025 = [

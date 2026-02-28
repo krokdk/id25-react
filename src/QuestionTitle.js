@@ -5,29 +5,22 @@ import "./styles.css";
 
 const QuestionTitle = ({ value, year }) => {
 
-const options2026 = [
-    { spm: "spm1", text: Questions2026.SPM1, bread: "Kommuner kan selvstændigt udvikle og gennemføre forebyggende indsatser. Dette gælder også områder, hvor Folketinget ikke har fastsat forbud, f.eks. forebyggelse af rygning eller andre sundhedsmæssige risici. Omskæring af raske drengebørn kan medføre komplikationer både på kort og på langt sigt. Derfor har vi stillet de kommunale kandidater 3 spørgsmål og givet dem mulighed for at supplere med en kommentar." },
-    { spm: "spm2", text: Questions2026.SPM2, bread: "Det kommunale bagland har stor betydning for den politiske udvikling i et parti. De har ofte indflydelse på hvilke kandidater, der opstilles til kommende valg og en del går videre til Folketinget senere." },
-    { spm: "spm3", text: Questions2026.SPM3, bread: "Dette spørgsmål har til formål at vise om kandidaterne er på linje med deres parti, eller om de repræsenterer en anden linje." },
-    { spm: "spm4", text: Questions2026.SPM4, bread: "spørgsmål 4" },
-    { spm: "spm5", text: Questions2026.SPM5, bread: "spørgsmål 5" },
-    { spm: "spm6", text: Questions2026.SPM6, bread: "spørgsmål 6" },
-    { spm: "spm7", text: Questions2026.SPM7, bread: "spørgsmål 7" },
-    { spm: "spm8", text: Questions2026.SPM8, bread: "spørgsmål 8" },
-    { spm: "spm9", text: Questions2026.SPM9, bread: "spørgsmål 9" },
-    { spm: "spm10", text: Questions2026.SPM10, bread: "spørgsmål 10" },
-    { spm: "spm11", text: Questions2026.SPM11, bread: "spørgsmål 11" },
-    { spm: "spm12", text: Questions2026.SPM12, bread: "spørgsmål 12" },
-    { spm: "spm13", text: Questions2026.SPM13, bread: "spørgsmål 13" },
-    { spm: "spm14", text: Questions2026.SPM14, bread: "spørgsmål 14" },
-    { spm: "spm15", text: Questions2026.SPM15, bread: "spørgsmål 15" },
-    { spm: "spm16", text: Questions2026.SPM16, bread: "spørgsmål 16" },
-    { spm: "spm17", text: Questions2026.SPM17, bread: "spørgsmål 17" },
-    { spm: "spm18", text: Questions2026.SPM18, bread: "spørgsmål 18" },
-    { spm: "spm19", text: Questions2026.SPM19, bread: "spørgsmål 19" },
-    { spm: "spm20", text: Questions2026.SPM20, bread: "spørgsmål 20" },
-];
-
+    const options2026 = [
+        { spm: "spm1", text: Questions2026.SPM1.TEXT, bread: Questions2026.SPM1.BREAD },
+        { spm: "spm2", text: Questions2026.SPM2.TEXT, bread: Questions2026.SPM2.BREAD },
+        { spm: "spm3", text: Questions2026.SPM3.TEXT, bread: Questions2026.SPM3.BREAD },
+        { spm: "spm4", text: Questions2026.SPM4.TEXT, bread: Questions2026.SPM4.BREAD },
+        { spm: "spm5", text: Questions2026.SPM5.TEXT, bread: Questions2026.SPM5.BREAD },
+        { spm: "spm6", text: Questions2026.SPM6.TEXT, bread: Questions2026.SPM6.BREAD },
+        { spm: "spm7", text: Questions2026.SPM7.TEXT, bread: Questions2026.SPM7.BREAD },
+        { spm: "spm8", text: Questions2026.SPM8.TEXT, bread: Questions2026.SPM8.BREAD },
+        { spm: "spm9", text: Questions2026.SPM9.TEXT, bread: Questions2026.SPM9.BREAD },
+        { spm: "spm10", text: Questions2026.SPM10.TEXT, bread: Questions2026.SPM10.BREAD },
+        { spm: "spm11", text: Questions2026.SPM11.TEXT, bread: Questions2026.SPM11.BREAD },
+        { spm: "spm12", text: Questions2026.SPM12.TEXT, bread: Questions2026.SPM12.BREAD },
+        { spm: "spm13", text: Questions2026.SPM13.TEXT, bread: Questions2026.SPM13.BREAD },
+        { spm: "spm14", text: Questions2026.SPM14.TEXT, bread: Questions2026.SPM14.BREAD },
+    ];
 
     const options2025 = [
         { spm: "spm1", text: Question2025Kommunal.SPM1, bread: "Kommuner kan selvstændigt udvikle og gennemføre forebyggende indsatser. Dette gælder også områder, hvor Folketinget ikke har fastsat forbud, f.eks. forebyggelse af rygning eller andre sundhedsmæssige risici. Omskæring af raske drengebørn kan medføre komplikationer både på kort og på langt sigt. Derfor har vi stillet de kommunale kandidater 3 spørgsmål og givet dem mulighed for at supplere med en kommentar." },
@@ -50,10 +43,15 @@ const options2026 = [
 
 
     if (year === "2026") {
+        const selected = options2026.find(p => p.spm === value);
+
         return (
             <div>
-                <div className="spmdisc">{options2026.find(p => p.spm == value).bread}</div>
-                <h3 className="spmtitle"> {options2026.find(p => p.spm === value).text} </h3>
+                <h3 className="spmtitle">{selected?.text}</h3>
+
+                {selected?.bread != null && (
+                    <div className="spmdisc">{selected.bread}</div>
+                )}
             </div>
         );
     }
