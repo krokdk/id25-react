@@ -5,15 +5,6 @@ const Questions = Object.freeze({
     SPM3: "Er dit parti på nuværende tidspunkt fritstillet i spørgsmålet om omskæring?",
     SPM4: "Vil du stemme imod partilinjen, hvis spørgsmålet bliver aktuelt?",
     SPM5: "Eventuel kommentar",
-    SPM6: "Går du personligt ind for omskæring af raske drenge?",
-    SPM7: "Går du ind for en 18 års aldersgrænse for omskæring af raske drenge?",
-    SPM8: "Er dit parti på nuværende tidspunkt fritstillet i spørgsmålet om omskæring?",
-    SPM9: "Vil du stemme imod partilinjen, hvis spørgsmålet bliver aktuelt?",
-    SPM10: "Eventuel kommentar",
-    SPM11: "Går du personligt ind for omskæring af raske drenge?",
-    SPM12: "Går du ind for en 18 års aldersgrænse for omskæring af raske drenge?",
-    SPM13: "Er dit parti på nuværende tidspunkt fritstillet i spørgsmålet om omskæring?",
-    SPM14: "Vil du stemme imod partilinjen, hvis spørgsmålet bliver aktuelt?",
 });
 
 export default Questions;

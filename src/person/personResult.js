@@ -7,8 +7,8 @@ import PersonDetailsCard from "./PersonDetailsCard";
 const PersonResult = ({ title, person, year, onPartyClick }) => {
     if (!person || !person.fornavn) return null;
 
-    const DetailsCardComponent = year === "2019"
-        ? PersonDetailsCard2019
+    const DetailsCardComponent = year === "2026"
+        ? PersonDetailsCard2025
         : year === "2021"
             ? PersonDetailsCard2021
             :  year === "9999" || year === "8888" || year === "2025" 

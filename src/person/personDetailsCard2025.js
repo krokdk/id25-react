@@ -1,5 +1,5 @@
 import React from "react";
-import Questions from "../Questions2025";
+import Questions, { Questions2026 } from "../Questions2025";
 import PartyButton from "../party/PartyButton";
 import "../styles.css";
 
@@ -7,7 +7,7 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
     if (!person || !person.fornavn) return null;
 
     const hasNoAnswers =
-        !person.svar1 || person.svar1 === "Ikke besvaret";
+        !person.answers[0] || person.answers[0].answer === "Ikke besvaret";
 
     if (hasNoAnswers) {
         return (
@@ -23,8 +23,8 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
                         <p>
                             <strong>{person.fornavn}</strong> har desværre ikke besvaret vores kandidattest.
                         </p>
-                        { person.url && person.url.trim() !== "" && (
-                            <a href={person.url} >Hvorfor ikke skrive og spørge hvorfor?</a>    
+                        {person.url && person.url.trim() !== "" && (
+                            <a href={person.url} >Hvorfor ikke skrive og spørge hvorfor?</a>
                         )}
                     </div>
                 </div>
@@ -34,13 +34,16 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
         );
     }
 
-    const questionAnswerPairs = [
-        { question: Questions.SPM1, answer: person.svar1 },
-        { question: Questions.SPM2, answer: person.svar2 },
-        { question: Questions.SPM3, answer: person.svar3 },
-        { question: Questions.Comment, answer: person.svar4 },
-    ].filter(qa => qa.answer && qa.answer !== "");
-
+    const questionAnswerPairs = person.answers
+        .map((ans, i) => {
+            const questionKey = `SPM${i + 1}`;
+            return {
+                question: Questions2026[questionKey]?.TEXT,
+                answer: ans?.answer
+            };
+        })
+        .filter(qa => qa.question && qa.answer);
+        
     return (
         <div className="card person-card">
             <div className="person-header">
