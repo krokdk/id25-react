@@ -239,6 +239,7 @@ const selectedCondition = (item, label) => {
                                     labels={selectedLabels(selectedYear, selectedQuestion)}
                                     onSliceClick={handleSliceClick}
                                     condition={selectedCondition}
+                                    
                                 />
                             </div>
                             <h3>Filtrér på parti</h3>
