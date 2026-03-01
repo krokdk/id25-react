@@ -1,6 +1,5 @@
-import React from "react";
-import "./loadingSpinner.css"; // Import CSS for animations
-import logo from "../assets/logo512.png"; // Replace with your actual logo path
+import "./loadingSpinner.css";
+import logo from "../assets/secular-logo-4585dd-4585dd.png";
 
 const LoadingSpinner = () => {
     return (
