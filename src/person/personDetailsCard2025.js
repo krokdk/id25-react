@@ -43,7 +43,7 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
             };
         })
         .filter(qa => qa.question && qa.answer);
-        
+
     return (
         <div className="card person-card">
             <div className="person-header">
@@ -58,6 +58,12 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
                     <div className="qa-answer">{answer}</div>
                 </div>
             ))}
+
+
+            <div className="qa-block">
+                <div className="qa-question">Kommentar</div>
+                <div className="qa-answer">{person.comment}</div>
+            </div>
         </div>
     );
 };
