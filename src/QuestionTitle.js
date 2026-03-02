@@ -19,7 +19,6 @@ const QuestionTitle = ({ value, year }) => {
         { spm: "spm11", text: Questions2026.SPM11.TEXT, bread: Questions2026.SPM11.BREAD },
         { spm: "spm12", text: Questions2026.SPM12.TEXT, bread: Questions2026.SPM12.BREAD },
         { spm: "spm13", text: Questions2026.SPM13.TEXT, bread: Questions2026.SPM13.BREAD },
-        { spm: "spm14", text: Questions2026.SPM14.TEXT, bread: Questions2026.SPM14.BREAD },
     ];
 
     const options2025 = [
