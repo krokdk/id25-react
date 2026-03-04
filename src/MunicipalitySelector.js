@@ -5,16 +5,16 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
 
     const storKredse = [
         { value: "Alle", label: "Alle" },
-        { value: "Københavns Storkreds", label: "Københavns Storkreds" },
-        { value: "Københavns Omegns Storkreds", label: "Københavns Omegns Storkreds" },
-        { value: "Nordsjællands Storkreds", label: "Nordsjællands Storkreds" },
-        { value: "Bornholms Storkreds", label: "Bornholms Storkreds" },
-        { value: "Sjællands Storkreds", label: "Sjællands Storkreds" },
-        { value: "Fyns Storkreds", label: "Fyns Storkreds" },
-        { value: "Sydjyllands Storkreds", label: "Sydjyllands Storkreds" },
-        { value: "Østjyllands Storkreds", label: "Østjyllands Storkreds" },
-        { value: "Vestjyllands Storkreds", label: "Vestjyllands Storkreds" },
-        { value: "Nordjyllands Storkreds", label: "Nordjyllands Storkreds" }
+        { value: "København", label: "Københavns Storkreds" },
+        { value: "Københavns Omegn", label: "Københavns Omegns Storkreds" },
+        { value: "Nordsjælland", label: "Nordsjællands Storkreds" },
+        { value: "Bornholm", label: "Bornholms Storkreds" },
+        { value: "Sjælland", label: "Sjællands Storkreds" },
+        { value: "Fyn", label: "Fyns Storkreds" },
+        { value: "Sydjylland", label: "Sydjyllands Storkreds" },
+        { value: "Østjylland", label: "Østjyllands Storkreds" },
+        { value: "Vestjylland", label: "Vestjyllands Storkreds" },
+        { value: "Nordjylland", label: "Nordjyllands Storkreds" }
     ];
 
     const opstillingsKredse = [
