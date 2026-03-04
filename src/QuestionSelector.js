@@ -1,7 +1,6 @@
 import React from "react";
 import "./styles.css";
 
-const QuestionSelector = ({ value, onChange, year }) => {
 
     const options2026 = [
         { value: "spm1", label: "Spørgsmål 1" },
@@ -18,6 +17,24 @@ const QuestionSelector = ({ value, onChange, year }) => {
         { value: "spm12", label: "Spørgsmål 12" },
         { value: "spm13", label: "Spørgsmål 13" },
     ];
+
+export const GetNextQuestion = ({current}) => {
+
+    const index = options2026.findIndex(option => option.value === current);
+
+    return options2026[index+1].value;
+}
+
+export const GetPreviousQuestion = ({current}) => {
+
+    const index = options2026.findIndex(option => option.value === current);
+
+    return options2026[index-1].value;
+}
+
+const QuestionSelector = ({ value, onChange, year }) => {
+
+
 
     const options2025 = [
         { value: "spm1", label: "Spørgsmål 1" },
@@ -41,7 +58,7 @@ const QuestionSelector = ({ value, onChange, year }) => {
         { value: "spm2", label: "Borgerforslag" }
     ];
 
-    let options = year === "2026" ? options2026 :  ( year === "9999" || year === "8888" ) ? options2025 : year === "2019" ? options2019 : year === "2021" ? options2021:  optionsOld;
+    let options = year === "2026" ? options2026 : (year === "9999" || year === "8888") ? options2025 : year === "2019" ? options2019 : year === "2021" ? options2021 : optionsOld;
 
     return (
         <div className="dropdownComponent">

@@ -10,7 +10,7 @@ import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
 import YearSelector, { GetYearLabel } from "./yearSelector";
 import MunicipalitySelector from "./MunicipalitySelector";
-import QuestionSelector from "./QuestionSelector";
+import QuestionSelector, { GetNextQuestion, GetPreviousQuestion } from "./QuestionSelector";
 import QuestionTitle from "./QuestionTitle";
 import Modal from "./Modal";
 //import MapAnimation from "./map/MapAnimation";
@@ -269,17 +269,39 @@ const App = () => {
                     </div>
                 </div>
 
-                {
-                    <div>
-                        <QuestionTitle value={selectedQuestion} year={selectedYear} />
-                        <h3>Sådan svarede kandidaterne:</h3>
-                        <SpinnerOrData />
-                        <h3>Filtrér på parti</h3>
-                        <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
-                        <h3>Eller søg på navn:</h3>
-                        <SearchInput value={searchQuery} onChange={handleSearchChange} />
-                    </div>
-                }
+                <div style={{ marginTop: "10px", textAlign: "center" }}>
+                    <button className="button"
+                        onClick={() => {
+
+                            setSelectedQuestion(GetPreviousQuestion({ current: selectedQuestion }))
+                        }
+                        }
+                        disabled={selectedQuestion === "spm1"}
+
+                    >
+                        Forrige
+                    </button>
+                    <button className="button"
+                        onClick={() => {
+                            setSelectedQuestion(GetNextQuestion({ current: selectedQuestion }))
+                        }}
+                        disabled={selectedQuestion === "spm13"}
+
+                    >
+                        Næste
+                    </button>
+                </div>
+
+                <div>
+                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
+                    <h3>Sådan svarede kandidaterne:</h3>
+                    <SpinnerOrData />
+                    <h3>Filtrér på parti</h3>
+                    <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
+                    <h3>Eller søg på navn:</h3>
+                    <SearchInput value={searchQuery} onChange={handleSearchChange} />
+                </div>
+
 
                 {filteredData.length > 0 && (
                     <div style={{ marginTop: "20px" }}>
