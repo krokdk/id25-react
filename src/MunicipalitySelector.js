@@ -4,7 +4,7 @@ import "./styles.css";
 const MunicipalitySelector = ({ value, year, onChange }) => {
 
     const storKredse = [
-        { value: "Alle", label: "Alle" },
+        { value: "Alle", label: "Alle Storkredse" },
         { value: "København", label: "Københavns Storkreds" },
         { value: "Københavns Omegn", label: "Københavns Omegns Storkreds" },
         { value: "Nordsjælland", label: "Nordsjællands Storkreds" },
@@ -280,7 +280,7 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
     else if (year === "2026") {
         return (
             <div className="dropdownComponent">
-                <label htmlFor="municipalitySelect">Storkreds:</label>
+                
                 <select
                     id="municipalitySelect"
                     value={value}

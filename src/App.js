@@ -227,13 +227,47 @@ const App = () => {
         <div className="relative min-h-screen">
             <div style={{ textAlign: "center" }}>
                 <div className="appTitle">
-                    <h1>Den Sekulære Kandidattest</h1>
-                    Hvor går grænsen mellem religion, stat og menneske?
-                    
+                    <h1>DEN SEKULÆRE KANDIDATTEST</h1>
+                    HVOR GÅR GRÆNSEN MELLEM RELIGION, STAT OG MENNESKE?
+
                 </div>
                 <div>...</div>
-                <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
-                <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
+
+                <div style={{ display: "flex", width: "100%" }}>
+                    {/* Venstre side */}
+                    <div
+                        style={{
+                            flex: 1,
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            paddingRight: "6px", // halvdelen af 12px
+                            paddingTop: "12px"
+                        }}
+                    >
+                        <MunicipalitySelector
+                            value={selectedMunicipality}
+                            year={selectedYear}
+                            onChange={handleMunicipalityChange}
+                        />
+                    </div>
+
+                    {/* Højre side */}
+                    <div
+                        style={{
+                            flex: 1,
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            paddingLeft: "6px",
+                            paddingTop: "12px"
+                        }}
+                    >
+                        <QuestionSelector
+                            value={selectedQuestion}
+                            onChange={handleQuestionSelect}
+                            year={selectedYear}
+                        />
+                    </div>
+                </div>
 
                 {
                     <div>

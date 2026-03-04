@@ -45,7 +45,6 @@ const QuestionSelector = ({ value, onChange, year }) => {
 
     return (
         <div className="dropdownComponent">
-            <label htmlFor="questionSelect">Spørgsmål:</label>
             <select
                 id="questionSelect"
                 value={value}
