@@ -98,20 +98,20 @@ const App = () => {
     };
 
 
-const selectedCondition = (item, label) => {
-    if (!selectedQuestion) return false;
+    const selectedCondition = (item, label) => {
+        if (!selectedQuestion) return false;
 
-    // Extract the numeric part from strings like "spm1", "spm2", etc.
-    const match = selectedQuestion.match(/\d+$/);
-    const index = match ? parseInt(match[0], 10) - 1 : 0;
+        // Extract the numeric part from strings like "spm1", "spm2", etc.
+        const match = selectedQuestion.match(/\d+$/);
+        const index = match ? parseInt(match[0], 10) - 1 : 0;
 
-    const answerObj = item?.answers?.[index];
+        const answerObj = item?.answers?.[index];
 
-    return (
-        answerObj?.answer &&
-        answerObj.answer.toLowerCase() === label.toLowerCase()
-    );
-};
+        return (
+            answerObj?.answer &&
+            answerObj.answer.toLowerCase() === label.toLowerCase()
+        );
+    };
 
     const selectedLabels = (year, question) => {
 
@@ -168,7 +168,7 @@ const selectedCondition = (item, label) => {
 
     const handleRowClick = (person) => {
         setSelectedPerson(person);
-        fetchPersonHistory(person.fornavn);
+        //fetchPersonHistory(person.fornavn);
     };
 
     const handleReset = () => {
@@ -187,69 +187,65 @@ const selectedCondition = (item, label) => {
 
                 if (!response.ok) {
                     console.error(`Fejl ved hentning af ${year}:`, response.statusText);
-                    continue; // Skip this year if fetch fails
+                    continue;
                 }
 
                 const data = await response.json();
 
                 if (data.length > 0 && data[0].svar2 != "Ikke besvaret") {
-                    history[year] = data; // Only store non-empty responses
+                    history[year] = data;
                 }
             }
 
-            setSelectedPersonHistory(history); // Update only with valid data
+            setSelectedPersonHistory(history);
         } catch (error) {
             console.error("Fejl ved hentning af historiske data:", error);
         }
     };
 
-    if (loading) {
-        return (
-            <div style={{ textAlign: "center" }}>
-                <h1>{GetYearLabel(selectedYear)}</h1>
-                <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
-                <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
-                <QuestionTitle value={selectedQuestion} year={selectedYear} />
-                <h3>Sådan svarede kandidaterne:</h3>
+
+
+    const SpinnerOrData = () => {
+
+        if (loading) {
+            return (
                 <LoadingSpinner />
-                <h3>Filtrér på parti</h3>
-                <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
-                <h3>Eller søg på navn:</h3>
-                <SearchInput value={searchQuery} onChange={handleSearchChange} />
-            </div>
-        );
+            );
+        }
+        return (<div style={{ marginBottom: "30px" }}>
+            <SurveyPieChartDefault
+                filteredData={pieChartData}
+                labels={selectedLabels(selectedYear, selectedQuestion)}
+                onSliceClick={handleSliceClick}
+                condition={selectedCondition}
+
+            />
+        </div>);
     }
+
     return (
-
         <div className="relative min-h-screen">
-
             <div style={{ textAlign: "center" }}>
-                <h1>{GetYearLabel(selectedYear)}</h1>
+                <div className="appTitle">
+                    <h1>Den Sekulære Kandidattest</h1>
+                    Hvor går grænsen mellem religion, stat og menneske?
+                    
+                </div>
+                <div>...</div>
                 <MunicipalitySelector value={selectedMunicipality} year={selectedYear} onChange={handleMunicipalityChange} />
                 <QuestionSelector value={selectedQuestion} onChange={handleQuestionSelect} year={selectedYear} />
 
-                {/* 🔹 Pie chart */
-                    (
-                        <div>
-                            <QuestionTitle value={selectedQuestion} year={selectedYear} />
-                            <h3>Sådan svarede kandidaterne:</h3>
-                            <div style={{ marginBottom: "30px" }}>
-                                <SurveyPieChartDefault
-                                    filteredData={pieChartData}
-                                    labels={selectedLabels(selectedYear, selectedQuestion)}
-                                    onSliceClick={handleSliceClick}
-                                    condition={selectedCondition}
-                                    
-                                />
-                            </div>
-                            <h3>Filtrér på parti</h3>
-                            <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
-                            <h3>Eller søg på navn:</h3>
-                            <SearchInput value={searchQuery} onChange={handleSearchChange} />
-                        </div>
-                    )
+                {
+                    <div>
+                        <QuestionTitle value={selectedQuestion} year={selectedYear} />
+                        <h3>Sådan svarede kandidaterne:</h3>
+                        <SpinnerOrData />
+                        <h3>Filtrér på parti</h3>
+                        <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
+                        <h3>Eller søg på navn:</h3>
+                        <SearchInput value={searchQuery} onChange={handleSearchChange} />
+                    </div>
                 }
-
 
                 {filteredData.length > 0 && (
                     <div style={{ marginTop: "20px" }}>
@@ -276,14 +272,12 @@ const selectedCondition = (item, label) => {
                             <button onClick={() => setSelectedPerson(null)} className="button">Luk</button>
                         </div>
 
-                        {/* Primært indhold */}
                         {selectedPerson && (
                             <>
                                 <PersonResult
                                     person={selectedPerson}
                                     year={selectedYear}
                                     onPartyClick={(party) => {
-                                        // Hvis du vil lukke modalen når man vælger parti:
                                         setSelectedPerson(null);
                                         !selectedParty && setSelectedParty(party);
                                     }}
