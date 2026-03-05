@@ -252,9 +252,10 @@ const App = () => {
                         year={selectedYear}
                     />
 
-                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
 
                     <NavigationButton setSelectedQuestion={setSelectedQuestion} selectedQuestion={selectedQuestion} />
+
+                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
 
                     <SpinnerOrData />ˇ
                 </div>
