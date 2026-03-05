@@ -14,14 +14,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--primary-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--white-color);
 }
 
 .App-link {
@@ -45,5 +45,5 @@
 .app-title {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #333; /* Mørkere farve for bedre læsbarhed */
+  color: var(--primary-color); /* Mørkere farve for bedre læsbarhed */
 }

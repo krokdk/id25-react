@@ -96,6 +96,7 @@
     gap: 1px;
     /* Reduce spacing */
     margin-top: 1px;
+    padding: 8px 8px;
 }
 
 .party-button {
@@ -126,8 +127,9 @@
 }
 
 .card {
-    border: 1px solid var(--secondary-color);
+    border: 1px solid var(--primary-color);
     padding: 16px;
+    border-radius: 5px;
     margin-bottom: 24px;
     max-width: 500px;
     margin-left: auto;
@@ -137,7 +139,9 @@
 }
 
 .missing-response {
-    background-color: var(--accent-color);
+    background-color: var(--white-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
     padding: 20px;
     max-width: 500px;
     margin-left: auto;
@@ -160,13 +164,15 @@
 
 .qa-block {
     margin-bottom: 12px;
+    border-radius: 5px;
 }
 
 .qa-question {
-    background-color: var(--secondary-color);
+    background-color: var(--white-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
     padding: 8px 12px;
     font-weight: bold;
-    color: var(--white-color);
 }
 
 .qa-answer {
@@ -178,7 +184,7 @@
 
 .party-button-link {
     border: none;
-    color: white;
+    color: var(--white-color);
     padding: 4px 10px;
     border-radius: 5px;
     cursor: pointer;

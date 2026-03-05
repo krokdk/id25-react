@@ -19,6 +19,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   background-color: white;
+  color: var(--primary-color);
 }
 
 code {
