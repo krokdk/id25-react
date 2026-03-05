@@ -223,18 +223,27 @@ const App = () => {
         </div>);
     }
 
+    const rowsPerPage = searchQuery ? 10 : 0;
     return (
+        
         <div className="relative min-h-screen">
             <div style={{ textAlign: "center" }}>
                 <div>
-                    <SearchInput value={searchQuery} onChange={handleSearchChange} />
-
-                    <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
-
                     <MunicipalitySelector
                         value={selectedMunicipality}
                         year={selectedYear}
                         onChange={handleMunicipalityChange}
+                    />
+
+                    <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
+
+                    <SearchInput value={searchQuery} onChange={handleSearchChange} />
+
+                
+                    <ResultsTable
+                        filteredData={tableData}
+                        handleRowClick={handleRowClick}
+                        rowsPerPage={rowsPerPage}
                     />
 
                     <QuestionSelector
@@ -244,9 +253,9 @@ const App = () => {
                     />
 
                     <QuestionTitle value={selectedQuestion} year={selectedYear} />
-                    
+
                     <NavigationButton setSelectedQuestion={setSelectedQuestion} selectedQuestion={selectedQuestion} />
-                    
+
                     <SpinnerOrData />ˇ
                 </div>
 
@@ -263,6 +272,7 @@ const App = () => {
                         <ResultsTable
                             filteredData={tableData}
                             handleRowClick={handleRowClick}
+                            rowsPerPage={10}
                         />
                     </div>
                 )}

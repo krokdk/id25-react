@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import "./styles.css";
 
-function Modal({ open, onClose, children, titleId = "modal-title" }) {
+export function Modal({ open, onClose, children, titleId = "modal-title" }) {
     // Lås body-scroll når åben
     useEffect(() => {
         if (!open) return;

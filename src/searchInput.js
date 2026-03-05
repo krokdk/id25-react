@@ -11,7 +11,7 @@ const SearchInput = ({ value, onChange }) => {
                 marginTop: "10px",
                 marginBottom: "15px",
                 padding: "4px",
-                width: "400px",
+                width: "500px",
                 height: "30px",
                 border: "1px solid #ccc",
                 font: "24",
