@@ -223,7 +223,7 @@ const App = () => {
         </div>);
     }
 
-    const rowsPerPage = searchQuery ? 10 : 0;
+    const rowsPerPage = searchQuery ? 100 : 0;
     return (
         
         <div className="relative min-h-screen">
@@ -239,7 +239,6 @@ const App = () => {
 
                     <SearchInput value={searchQuery} onChange={handleSearchChange} />
 
-                
                     <ResultsTable
                         filteredData={tableData}
                         handleRowClick={handleRowClick}
