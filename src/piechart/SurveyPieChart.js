@@ -28,15 +28,14 @@ const SurveyPieChart = ({ chartData, labels, onSliceClick }) => {
                 responsive: true,
                 plugins: {
                     legend: {
-                        position: "top",
+                        position: "bottom",
                         align: "center",
                         onClick: handleLegendClick,
                         labels: {
                             usePointStyle: true,
                             pointStyle: 'rect',   // ← giver kvadrat
-                            boxWidth: 12,
-                            boxHeight: 12,
-                            
+                            boxWidth: 30,
+                            boxHeight: 30,   
                         }
                     }
                 }

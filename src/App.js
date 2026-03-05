@@ -278,7 +278,7 @@ const App = () => {
                         <ResultsTable
                             filteredData={tableData}
                             handleRowClick={handleRowClick}
-                            rowsPerPage={10}
+                            rowsPerPage={1000}
                         />
                     </div>
                 )}
