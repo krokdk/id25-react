@@ -10,7 +10,7 @@ import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
 import YearSelector, { GetYearLabel } from "./yearSelector";
 import MunicipalitySelector from "./MunicipalitySelector";
-import QuestionSelector, { GetNextQuestion, GetPreviousQuestion } from "./QuestionSelector";
+import QuestionSelector, { NavigationButton } from "./QuestionSelector";
 import QuestionTitle from "./QuestionTitle";
 import Modal from "./Modal";
 //import MapAnimation from "./map/MapAnimation";
@@ -226,80 +226,28 @@ const App = () => {
     return (
         <div className="relative min-h-screen">
             <div style={{ textAlign: "center" }}>
-                <div className="appTitle">
-                    <h1>DEN SEKULÆRE KANDIDATTEST</h1>
-                    HVOR GÅR GRÆNSEN MELLEM RELIGION, STAT OG MENNESKE?
-
-                </div>
-                <div>...</div>
-
-                <div style={{ display: "flex", width: "100%" }}>
-                    {/* Venstre side */}
-                    <div
-                        style={{
-                            flex: 1,
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            paddingRight: "6px", // halvdelen af 12px
-                            paddingTop: "12px"
-                        }}
-                    >
-                        <MunicipalitySelector
-                            value={selectedMunicipality}
-                            year={selectedYear}
-                            onChange={handleMunicipalityChange}
-                        />
-                    </div>
-
-                    {/* Højre side */}
-                    <div
-                        style={{
-                            flex: 1,
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            paddingLeft: "6px",
-                            paddingTop: "12px"
-                        }}
-                    >
-                        <QuestionSelector
-                            value={selectedQuestion}
-                            onChange={handleQuestionSelect}
-                            year={selectedYear}
-                        />
-                    </div>
-                </div>
-
-                <div style={{ marginTop: "10px", textAlign: "center" }}>
-                    <button className="button"
-                        onClick={() => {
-
-                            setSelectedQuestion(GetPreviousQuestion({ current: selectedQuestion }))
-                        }
-                        }
-                        disabled={selectedQuestion === "spm1"}
-
-                    >
-                        Forrige
-                    </button>
-                    <button className="button"
-                        onClick={() => {
-                            setSelectedQuestion(GetNextQuestion({ current: selectedQuestion }))
-                        }}
-                        disabled={selectedQuestion === "spm13"}
-
-                    >
-                        Næste
-                    </button>
-                </div>
-
                 <div>
-                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
-                    <h3>Sådan svarede kandidaterne:</h3>
-                    <SpinnerOrData />
-                    <h3>Filtrér på parti</h3>
-                    <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
-                    <h3>Eller søg på navn:</h3>
                     <SearchInput value={searchQuery} onChange={handleSearchChange} />
+
+                    <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
+
+                    <MunicipalitySelector
+                        value={selectedMunicipality}
+                        year={selectedYear}
+                        onChange={handleMunicipalityChange}
+                    />
+
+                    <QuestionSelector
+                        value={selectedQuestion}
+                        onChange={handleQuestionSelect}
+                        year={selectedYear}
+                    />
+
+                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
+                    
+                    <NavigationButton setSelectedQuestion={setSelectedQuestion} selectedQuestion={selectedQuestion} />
+                    
+                    <SpinnerOrData />ˇ
                 </div>
 
 

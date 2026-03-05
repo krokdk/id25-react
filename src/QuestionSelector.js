@@ -18,6 +18,31 @@ import "./styles.css";
         { value: "spm13", label: "Spørgsmål 13" },
     ];
 
+export const NavigationButton = ({ setSelectedQuestion, selectedQuestion }) => {
+    return (<div style={{ marginTop: "10px", textAlign: "center" }}>
+        <button className="button"
+            onClick={() => {
+
+                setSelectedQuestion(GetPreviousQuestion({ current: selectedQuestion }))
+            }
+            }
+            disabled={selectedQuestion === "spm1"}
+
+        >
+            Forrige
+        </button>
+        <button className="button"
+            onClick={() => {
+                setSelectedQuestion(GetNextQuestion({ current: selectedQuestion }))
+            }}
+            disabled={selectedQuestion === "spm13"}
+
+        >
+            Næste
+        </button>
+    </div>);
+}
+
 export const GetNextQuestion = ({current}) => {
 
     const index = options2026.findIndex(option => option.value === current);

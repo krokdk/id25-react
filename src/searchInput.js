@@ -9,6 +9,7 @@ const SearchInput = ({ value, onChange }) => {
             onChange={onChange}
             style={{
                 marginTop: "10px",
+                marginBottom: "15px",
                 padding: "4px",
                 width: "400px",
                 height: "30px",
