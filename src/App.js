@@ -9,7 +9,7 @@ import PartySelector from "./party/partySelector";
 import SearchInput from "./searchInput";
 import PersonResult from "./person/personResult";
 import YearSelector, { GetYearLabel } from "./yearSelector";
-import MunicipalitySelector from "./MunicipalitySelector";
+import MunicipalitySelector, { GetMunicipalities } from "./MunicipalitySelector";
 import QuestionSelector, { NavigationButton } from "./QuestionSelector";
 import QuestionTitle from "./QuestionTitle";
 import Modal from "./Modal";
@@ -37,6 +37,7 @@ const App = () => {
         return () => window.removeEventListener('message', handleMessage);
     }, []);
 
+    const allMunicipalities = GetMunicipalities();
     const [selectedYear, setSelectedYear] = useState("2026");
     const [selectedQuestion, setSelectedQuestion] = useState("spm1");
     const [filteredData, setFilteredData] = useState([]);
@@ -147,7 +148,7 @@ const App = () => {
 
     const handleMunicipalityChange = (municipality) => {
 
-        if (municipality.target.value === "Alle") {
+        if (municipality.target.value === allMunicipalities[0].value) {
             setSelectedMunicipality(null);
         }
         else {
@@ -225,7 +226,7 @@ const App = () => {
 
     const rowsPerPage = searchQuery ? 100 : 0;
     return (
-        
+
         <div className="relative min-h-screen">
             <div style={{ textAlign: "center" }}>
                 <div>
@@ -252,9 +253,20 @@ const App = () => {
                     />
 
 
+                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
+
+
                     <NavigationButton setSelectedQuestion={setSelectedQuestion} selectedQuestion={selectedQuestion} />
 
-                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
+
+                    <h2>
+                        {
+                            selectedParty && selectedMunicipality
+                                ? `Fordeling af besvarelser for ${getPartiNavn(selectedParty)} for ${selectedMunicipality}`
+                                : selectedParty && !selectedMunicipality ? `Fordeling af alle besvarelser for ${getPartiNavn(selectedParty)}` :
+                                    !selectedParty && selectedMunicipality ? `Fordeling af alle besvarelser for ${selectedMunicipality}` :
+                                        "Fordeling af alle besvarelser"}
+                    </h2>
 
                     <SpinnerOrData />ˇ
                 </div>
@@ -262,13 +274,7 @@ const App = () => {
 
                 {filteredData.length > 0 && (
                     <div style={{ marginTop: "20px" }}>
-                        <h2>
-                            {selectedParty === "?"
-                                ? "Resultater for øvrige"
-                                : selectedParty
-                                    ? `Resultater for ${getPartiNavn(selectedParty)}`
-                                    : "Alle besvarelser"}
-                        </h2>
+
                         <ResultsTable
                             filteredData={tableData}
                             handleRowClick={handleRowClick}

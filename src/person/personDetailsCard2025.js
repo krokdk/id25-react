@@ -21,7 +21,7 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
                 <div className="qa-block">
                     <div className="qa-question">
                         <p>
-                            <strong>{person.fornavn}</strong> har desværre ikke besvaret vores kandidattest.
+                            <strong>{person.fornavn}</strong> har endnu ikke besvaret vores kandidattest.
                         </p>
                         {person.url && person.url.trim() !== "" && (
                             <a href={person.url} >Hvorfor ikke skrive og spørge hvorfor?</a>

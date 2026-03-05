@@ -1,9 +1,8 @@
 import React from "react";
 import "./styles.css";
 
-const MunicipalitySelector = ({ value, year, onChange }) => {
-
-    const storKredse = [
+export const GetMunicipalities = () => {
+    const StorKredse = [
         { value: "Alle", label: "Alle Storkredse" },
         { value: "København", label: "Københavns Storkreds" },
         { value: "Københavns Omegn", label: "Københavns Omegns Storkreds" },
@@ -16,7 +15,11 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
         { value: "Vestjylland", label: "Vestjyllands Storkreds" },
         { value: "Nordjylland", label: "Nordjyllands Storkreds" }
     ];
+    
+    return StorKredse;
+}
 
+const MunicipalitySelector = ({ value, year, onChange }) => {
     const opstillingsKredse = [
         { value: "Østerbrokredsen", label: "Østerbrokredsen" },
         { value: "Sundbyvesterkredsen", label: "Sundbyvesterkredsen" },
@@ -287,7 +290,7 @@ const MunicipalitySelector = ({ value, year, onChange }) => {
                     onChange={onChange}
                     className="dropdown"
                 >
-                    {storKredse.map((opt) => (
+                    {GetMunicipalities().map((opt) => (
                         <option key={opt.value} value={opt.value}>
                             {opt.label}
                         </option>

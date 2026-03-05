@@ -10,7 +10,8 @@ const partyMapper = [
     { bogstav: "V", navn: "Venstre", farve: "#1E90FF" },
     { bogstav: "Æ", navn: "Danmarksdemokraterne", farve: "#9A76F8" },
     { bogstav: "Ø", navn: "Enhedslisten", farve: "#A10022" },
-    { bogstav: "Å", navn: "Alternativet", farve: "#00AA00" }
+    { bogstav: "Å", navn: "Alternativet", farve: "#00AA00" },
+    { bogstav: "?", navn: "Løsgænger", farve: "#888888" }
 ];
 
 // **Hjælpefunktion til opslag af partinavn givet et bogstav**
