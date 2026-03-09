@@ -8,5 +8,7 @@ export function getColorScheme() {
     background: getCssColor('background-color'),
     lenasExtra: getCssColor('lenas-color'),
     white: getCssColor('white-color'),
+    vedIkke: getCssColor('vedikke-color'),
+    ikkeBesvaret: getCssColor('ikkebesvaret-color')
   };
 }

@@ -11,7 +11,7 @@ const SurveyPieChartDefault = ({ filteredData, labels, onSliceClick, condition }
     setColors([
       scheme.secondary,
       scheme.primary,
-      scheme.accent,
+      scheme.vedIkke,
       scheme.background,
       scheme.lenasExtra
     ]);
