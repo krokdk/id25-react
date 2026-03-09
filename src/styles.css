@@ -17,14 +17,12 @@
 .dropdown {
     padding: 5px;
     font-size: 16px;
-    width: 500px;
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
-
 }
 
 .dropdownComponent {
-    text-align: right;
+    text-align: center;
     font-weight: bold;
     padding-bottom: 5px;
     color: var(--primary-color);
