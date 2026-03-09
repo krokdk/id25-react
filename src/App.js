@@ -83,8 +83,10 @@ const App = () => {
 
 
 
-    const handleQuestionSelect = (selectedQuestion) => {
-        setSelectedQuestion(selectedQuestion.target.value);
+    const handleQuestionSelect = (value) => {
+        
+        setSelectedFilter(null);
+        setSelectedQuestion(value);
     }
 
     const handleSliceClick = (selectedAnswer) => {
@@ -248,16 +250,16 @@ const App = () => {
 
                     <QuestionSelector
                         value={selectedQuestion}
-                        onChange={handleQuestionSelect}
+                        handleQuestionSelect={handleQuestionSelect}
                         year={selectedYear}
                     />
 
-
                     <QuestionTitle value={selectedQuestion} year={selectedYear} />
 
-
-                    <NavigationButton setSelectedQuestion={setSelectedQuestion} selectedQuestion={selectedQuestion} />
-
+                    <NavigationButton
+                        selectedQuestion={selectedQuestion}
+                        handleQuestionSelect={handleQuestionSelect}
+                    />
 
                     <h2>
                         {

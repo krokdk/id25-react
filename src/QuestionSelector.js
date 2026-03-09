@@ -2,28 +2,28 @@ import React from "react";
 import "./styles.css";
 
 
-    const options2026 = [
-        { value: "spm1", label: "Spørgsmål 1" },
-        { value: "spm2", label: "Spørgsmål 2" },
-        { value: "spm3", label: "Spørgsmål 3" },
-        { value: "spm4", label: "Spørgsmål 4" },
-        { value: "spm5", label: "Spørgsmål 5" },
-        { value: "spm6", label: "Spørgsmål 6" },
-        { value: "spm7", label: "Spørgsmål 7" },
-        { value: "spm8", label: "Spørgsmål 8" },
-        { value: "spm9", label: "Spørgsmål 9" },
-        { value: "spm10", label: "Spørgsmål 10" },
-        { value: "spm11", label: "Spørgsmål 11" },
-        { value: "spm12", label: "Spørgsmål 12" },
-        { value: "spm13", label: "Spørgsmål 13" },
-    ];
+const options2026 = [
+    { value: "spm1", label: "Spørgsmål 1" },
+    { value: "spm2", label: "Spørgsmål 2" },
+    { value: "spm3", label: "Spørgsmål 3" },
+    { value: "spm4", label: "Spørgsmål 4" },
+    { value: "spm5", label: "Spørgsmål 5" },
+    { value: "spm6", label: "Spørgsmål 6" },
+    { value: "spm7", label: "Spørgsmål 7" },
+    { value: "spm8", label: "Spørgsmål 8" },
+    { value: "spm9", label: "Spørgsmål 9" },
+    { value: "spm10", label: "Spørgsmål 10" },
+    { value: "spm11", label: "Spørgsmål 11" },
+    { value: "spm12", label: "Spørgsmål 12" },
+    { value: "spm13", label: "Spørgsmål 13" },
+];
 
-export const NavigationButton = ({ setSelectedQuestion, selectedQuestion }) => {
+export const NavigationButton = ({selectedQuestion, handleQuestionSelect }) => {
     return (<div style={{ marginTop: "10px", textAlign: "center" }}>
         <button className="button"
             onClick={() => {
-
-                setSelectedQuestion(GetPreviousQuestion({ current: selectedQuestion }))
+                const prevQuestion = GetPreviousQuestion({ current: selectedQuestion });
+                handleQuestionSelect(prevQuestion.value);
             }
             }
             disabled={selectedQuestion === "spm1"}
@@ -33,9 +33,12 @@ export const NavigationButton = ({ setSelectedQuestion, selectedQuestion }) => {
         </button>
         <button className="button"
             onClick={() => {
-                setSelectedQuestion(GetNextQuestion({ current: selectedQuestion }))
+                const nextQuestion = GetNextQuestion({ current: selectedQuestion });
+                handleQuestionSelect(nextQuestion.value)
+
             }}
             disabled={selectedQuestion === "spm13"}
+
 
         >
             Næste
@@ -43,21 +46,21 @@ export const NavigationButton = ({ setSelectedQuestion, selectedQuestion }) => {
     </div>);
 }
 
-export const GetNextQuestion = ({current}) => {
+export const GetNextQuestion = ({ current }) => {
 
     const index = options2026.findIndex(option => option.value === current);
 
-    return options2026[index+1].value;
+    return options2026[index + 1];
 }
 
-export const GetPreviousQuestion = ({current}) => {
+export const GetPreviousQuestion = ({ current }) => {
 
     const index = options2026.findIndex(option => option.value === current);
 
-    return options2026[index-1].value;
+    return options2026[index - 1];
 }
 
-const QuestionSelector = ({ value, onChange, year }) => {
+const QuestionSelector = ({ value, handleQuestionSelect, year }) => {
 
 
 
@@ -90,7 +93,7 @@ const QuestionSelector = ({ value, onChange, year }) => {
             <select
                 id="questionSelect"
                 value={value}
-                onChange={onChange}
+                onChange={(e) => handleQuestionSelect(e.target.value)}
                 className="dropdown"
             >
                 {options.map((opt) => (

@@ -155,7 +155,7 @@
 }
 
 .party-label {
-    color: white;
+    color: var(--white-color);
     padding: 4px 8px;
     border-radius: 5px;
     display: inline-block;
@@ -179,7 +179,7 @@
     background-color: var(--background-color);
     padding: 8px 12px;
     font-weight: bold;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--white-color);
 }
 
 .party-button-link {
