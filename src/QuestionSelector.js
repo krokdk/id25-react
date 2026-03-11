@@ -3,19 +3,19 @@ import "./styles.css";
 
 
 const options2026 = [
-    { value: "spm1", label: "Spørgsmål 1" },
-    { value: "spm2", label: "Spørgsmål 2" },
-    { value: "spm3", label: "Spørgsmål 3" },
-    { value: "spm4", label: "Spørgsmål 4" },
-    { value: "spm5", label: "Spørgsmål 5" },
-    { value: "spm6", label: "Spørgsmål 6" },
-    { value: "spm7", label: "Spørgsmål 7" },
-    { value: "spm8", label: "Spørgsmål 8" },
-    { value: "spm9", label: "Spørgsmål 9" },
-    { value: "spm10", label: "Spørgsmål 10" },
-    { value: "spm11", label: "Spørgsmål 11" },
-    { value: "spm12", label: "Spørgsmål 12" },
-    { value: "spm13", label: "Spørgsmål 13" },
+    { value: "spm1", label: "1: Bør kirke og stat adskilles?" },
+    { value: "spm2", label: "2: Støtte til trossamfund" },
+    { value: "spm3", label: "3: Bør kongen have religionsfrihed?" },
+    { value: "spm4", label: "4: Civil registrering" },
+    { value: "spm5", label: "5: Bør Koranloven afskaffes?" },
+    { value: "spm6", label: "6: Kristendomskundskab i folkeskolen" },
+    { value: "spm7", label: "7: Forbud mod iøjnefaldende religiøse symboler i skoler" },
+    { value: "spm8", label: "8: Offentlige lokaler til religionsudøvelse" },
+    { value: "spm9", label: "9: Statstilskud til religiøse friskoler" },
+    { value: "spm10", label: "10: Forbud mod omvendelsesterapi til LGBT+" },
+    { value: "spm11", label: "11: Forbud mod religiøse ægteskabskontrakter" },
+    { value: "spm12", label: "12: Personlig holdning til omskæring af raske drengebørn" },
+    { value: "spm13", label: "13: 18 års mindstealder for omskæring af raske børn" },
 ];
 
 export const NavigationButton = ({selectedQuestion, handleQuestionSelect }) => {
