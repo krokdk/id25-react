@@ -174,7 +174,6 @@
 }
 
 .qa-answer {
-    background-color: var(--background-color);
     padding: 8px 12px;
     font-weight: bold;
     border-top: 1px solid var(--white-color);
