@@ -17,6 +17,7 @@ const SurveyPieChart = ({ chartData, labels, onSliceClick }) => {
     const handleLegendClick = (event, legendItem, legend) => {
         const index = legendItem.index;
         const selectedAnswer = labels[index];
+
         onSliceClick(selectedAnswer);
     };
 
@@ -35,7 +36,7 @@ const SurveyPieChart = ({ chartData, labels, onSliceClick }) => {
                             usePointStyle: true,
                             pointStyle: 'rect',   // ← giver kvadrat
                             boxWidth: 30,
-                            boxHeight: 30,   
+                            boxHeight: 30,
                         }
                     }
                 }

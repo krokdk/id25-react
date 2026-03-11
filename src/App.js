@@ -50,10 +50,13 @@ const App = () => {
     const [tableData, setTableData] = useState([]); // Data til Tabel
     const [selectedMunicipality, setSelectedMunicipality] = useState(null);
     const { surveyData, loading } = useSurveyData(selectedYear);
+    const [hideUnanswered, setHideUnanswered] = useState(true);
 
     useEffect(() => {
 
         if (surveyData.length > 0) {
+
+
             let filter = surveyData.filter(item =>
 
                 (!selectedMunicipality || item.storkreds === selectedMunicipality)
@@ -63,34 +66,45 @@ const App = () => {
                 && (!searchQuery || item.fornavn.toLowerCase().includes(searchQuery))
 
                 && (!selectedFilter || selectedCondition(item, selectedFilter)
-                )
+                ))
+                .sort((a, b) => a.fornavn.localeCompare(b.fornavn));
 
-            )
-                .sort((a, b) => a.fornavn.localeCompare(b.fornavn))
-                ;
+            if (hideUnanswered) {
+                let filter2 = filter.filter(item =>
+                    !(item.answers[0].answer === 'Ikke besvaret')
+                );
 
-            if (selectedYear === "2019" || selectedYear === "2021") {
-                setSelectedQuestion("spm2")
+                setFilteredData(filter2);
+                setTableData(filter2);
+                setPieChartData(filter2);
+
+            }
+            else {
+                setFilteredData(filter);
+                setTableData(filter);
+                setPieChartData(filter);
             }
 
-            setFilteredData(filter);
-            setTableData(filter);
-            setPieChartData(filter);
         }
-    }, [surveyData, selectedMunicipality, selectedParty, searchQuery, selectedFilter]);
+    }, [surveyData, selectedMunicipality, selectedParty, searchQuery, selectedFilter, hideUnanswered]);
 
     useEffect(() => { setSelectedQuestion(selectedQuestion); }, [selectedQuestion]);
 
 
 
     const handleQuestionSelect = (value) => {
-        
+
         setSelectedFilter(null);
         setSelectedQuestion(value);
     }
 
     const handleSliceClick = (selectedAnswer) => {
-        if (selectedFilter === selectedAnswer) {
+
+        if (selectedAnswer === "Ikke besvaret") {
+            setHideUnanswered(!hideUnanswered);
+
+        }
+        else if (selectedFilter === selectedAnswer) {
             // Reset filtering
             setSelectedFilter(null);
 
@@ -144,8 +158,14 @@ const App = () => {
     };
 
     const handleSearchChange = (event) => {
+        setHideUnanswered(false);
         const query = event.target.value.toLowerCase();
         setSearchQuery(query);
+
+        if (!query)
+        {   
+            setHideUnanswered(true);
+        }
     };
 
     const handleMunicipalityChange = (municipality) => {

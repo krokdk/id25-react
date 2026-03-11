@@ -12,6 +12,7 @@ const ResultsTable = ({ filteredData, handleRowClick, rowsPerPage }) => {
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
     const currentRows = filteredData.slice(startIndex, endIndex);
+    
 
     useEffect(() => {
         const scheme = getColorScheme();
