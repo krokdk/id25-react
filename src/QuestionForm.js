@@ -107,11 +107,13 @@ const QuestionForm = () => {
 
                 <div className="qa-block">
                     <div className="qa-question">
-                        <p>Besvar kandidattesten:</p>
+                        <p>Besvar testen og find de opstillede kandidater som matcher dine svar bedst</p>
                     </div>
                 </div>
 
-
+                <div className="spmdisc">
+                    Vælg den storkreds du må stemme i
+                </div>
 
                 <MunicipalitySelector
                     value={selectedMunicipality}
@@ -126,12 +128,14 @@ const QuestionForm = () => {
                     return (
                         <div key={index} className="qa-block">
 
-                            <div className="qa-question">
-                                <p>{q.TEXT}</p>
-                            </div>
                             <div className="spmdisc">
                                 <p>{q.BREAD}</p>
                             </div>
+
+                            <div className="qa-question">
+                                <p>{q.TEXT}</p>
+                            </div>
+
 
                             <div className="qa-answers">
 
