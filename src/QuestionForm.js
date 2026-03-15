@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { question2026 } from "./QuestionSelector";
+import { Questions2026 } from "./Questions2025";
 import MunicipalitySelector, { GetMunicipalities } from "./MunicipalitySelector";
 import "./styles.css";
+import ResultsTableMatch from "./resultsTableMatch";
+import PersonResult from "./person/personResult";
+import PersonDetailsCard2025 from "./person/personDetailsCard2025"
 
 const QuestionForm = () => {
 
@@ -12,6 +15,22 @@ const QuestionForm = () => {
     const [result, setResult] = useState([]);
     const [loading, setLoading] = useState(false);
     const [besvaret, setBesvaret] = useState(false);
+    const [selectedPerson, setSelectedPerson] = useState(null);
+
+    const question2026 = Object.values(Questions2026).map(q => q.TEXT);
+
+
+    const handleRowClick = (person) => {
+        setSelectedPerson(person);
+    };
+
+    const handleBackClick = () => {
+        setSelectedPerson(null);
+    };
+
+    const handleSeDineSvarClick = () => {
+        setBesvaret(false);
+    };
 
     const handleMunicipalityChange = (municipality) => {
 
@@ -38,7 +57,7 @@ const QuestionForm = () => {
         }
 
         const answersArray = Object.entries(answers).map(([i, answer]) => ({
-            question: question2026[i].label,
+            question: question2026[i],
             answer,
             comment: ""
         }));
@@ -107,7 +126,7 @@ const QuestionForm = () => {
                         <div key={index} className="qa-block">
 
                             <div className="qa-question">
-                                <p>{q.label}</p>
+                                <p>{q}</p>
                             </div>
 
                             <div className="qa-answers">
@@ -159,19 +178,36 @@ const QuestionForm = () => {
             </div>
         );
     }
-    if (besvaret) {
+    if (besvaret && !selectedPerson) {
         return (
             result.length > 0 && (
-                <div className="result-block">
-                    <h3>Bedste match</h3>
 
-                    {result.slice(0, 5).map((r, i) => (
-                        <div key={i}>
-                            {r.candidate.fornavn} ({r.candidate.parti}) – score: {r.score.toFixed(2)}
-                        </div>
-                    ))}
+
+                <div className="result-block">
+                    <button className="button" onClick={handleSeDineSvarClick}>
+                        Se dine svar
+                    </button>
+                    <h3>Bedste match</h3>
+                    <ResultsTableMatch
+                        filteredData={result}
+                        handleRowClick={handleRowClick}
+                        rowsPerPage={5}
+                    />
                 </div>
             )
+        );
+    }
+    if (selectedPerson) {
+        return (
+            <>
+                <button className="button" onClick={handleBackClick}>
+                    Tilbage
+                </button>
+                <PersonDetailsCard2025
+                    person={selectedPerson}
+                    onPartyClick={null}
+                />
+            </>
         );
     }
 };
