@@ -5,6 +5,7 @@ import "./styles.css";
 import ResultsTableMatch from "./resultsTableMatch";
 import PersonResult from "./person/personResult";
 import PersonDetailsCard2025 from "./person/personDetailsCard2025"
+import LoadingSpinner from "./spinner/loadingSpinner";
 
 const QuestionForm = () => {
 
@@ -17,7 +18,7 @@ const QuestionForm = () => {
     const [besvaret, setBesvaret] = useState(false);
     const [selectedPerson, setSelectedPerson] = useState(null);
 
-    const question2026 = Object.values(Questions2026).map(q => q.TEXT);
+    const question2026 = Object.values(Questions2026);
 
 
     const handleRowClick = (person) => {
@@ -57,7 +58,7 @@ const QuestionForm = () => {
         }
 
         const answersArray = Object.entries(answers).map(([i, answer]) => ({
-            question: question2026[i],
+            question: question2026[i].TEXT,
             answer,
             comment: ""
         }));
@@ -73,7 +74,7 @@ const QuestionForm = () => {
             setLoading(true);
 
             const response = await fetch(
-                "http://localhost:8080/api/survey/results/matches",
+                "https://id25-backend-docker.onrender.com/api/survey/results/matches",
                 {
                     method: "POST",
                     headers: {
@@ -126,7 +127,10 @@ const QuestionForm = () => {
                         <div key={index} className="qa-block">
 
                             <div className="qa-question">
-                                <p>{q}</p>
+                                <p>{q.TEXT}</p>
+                            </div>
+                            <div className="spmdisc">
+                                <p>{q.BREAD}</p>
                             </div>
 
                             <div className="qa-answers">
@@ -171,13 +175,17 @@ const QuestionForm = () => {
                     Besvar
                 </button>
 
-                {loading && <p>Henter kandidater...</p>}
-
-
-
             </div>
+
+
         );
     }
+    if (loading) {
+        return (
+            <LoadingSpinner />
+        );
+    }
+
     if (besvaret && !selectedPerson) {
         return (
             result.length > 0 && (

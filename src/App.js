@@ -288,7 +288,7 @@ const App = () => {
                         }
                         }
                     >
-                        Besvar
+                        Tag kandidattesten
                     </button>
 
                     <h2>

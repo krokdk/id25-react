@@ -52,18 +52,19 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
                 <h2>{person.valg}, {person.storkreds}</h2>
             </div>
 
+            {person.comment && (
+                <div className="qa-block">
+                    <div className="qa-question">Kandidatens holdning</div>
+                    <div className="qa-answer">{person.comment}</div>
+                </div>
+            )}
+
             {questionAnswerPairs.map(({ question, answer }, index) => (
                 <div key={index} className="qa-block">
                     <div className="qa-question">{question}</div>
                     <div className="qa-answer">{answer}</div>
                 </div>
             ))}
-
-
-            <div className="qa-block">
-                <div className="qa-question">Kommentar</div>
-                <div className="qa-answer">{person.comment}</div>
-            </div>
         </div>
     );
 };
