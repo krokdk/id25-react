@@ -12,6 +12,7 @@ import YearSelector, { GetYearLabel } from "./yearSelector";
 import MunicipalitySelector, { GetMunicipalities } from "./MunicipalitySelector";
 import QuestionSelector, { NavigationButton } from "./QuestionSelector";
 import QuestionTitle from "./QuestionTitle";
+import QuestionForm from "./QuestionForm";
 import Modal from "./Modal";
 //import MapAnimation from "./map/MapAnimation";
 
@@ -51,6 +52,7 @@ const App = () => {
     const [selectedMunicipality, setSelectedMunicipality] = useState(null);
     const { surveyData, loading } = useSurveyData(selectedYear);
     const [hideUnanswered, setHideUnanswered] = useState(true);
+    const [besvar, setBesvar] = useState();
 
     useEffect(() => {
 
@@ -162,8 +164,7 @@ const App = () => {
         const query = event.target.value.toLowerCase();
         setSearchQuery(query);
 
-        if (!query)
-        {   
+        if (!query) {
             setHideUnanswered(true);
         }
     };
@@ -281,6 +282,15 @@ const App = () => {
                         handleQuestionSelect={handleQuestionSelect}
                     />
 
+                    <button className="button"
+                        onClick={() => {
+                            setBesvar(true);
+                        }
+                        }
+                    >
+                        Besvar
+                    </button>
+
                     <h2>
                         {
                             selectedParty && selectedMunicipality
@@ -304,6 +314,25 @@ const App = () => {
                         />
                     </div>
                 )}
+
+                <Modal open={!!besvar} onClose={() => setBesvar(null)}>
+                    <div>
+                        <div style={{ display: "flex", justifyContent: "space-between", gap: 8, marginBottom: 12 }}>
+                            <h2 id="modal-title" style={{ margin: 0 }}>
+                                {selectedPerson?.name ?? "Detaljer"}
+                            </h2>
+                            <button onClick={() => setBesvar(null)} className="button">Luk</button>
+                        </div>
+
+                        {besvar && (
+                            <>
+                                <QuestionForm
+                                />
+                            </>
+                        )}
+                    </div>
+                </Modal>
+
 
                 <Modal open={!!selectedPerson} onClose={() => setSelectedPerson(null)}>
                     <div>

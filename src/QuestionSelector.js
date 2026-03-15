@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.css";
 
 
-const options2026 = [
+export const question2026 = [
     { value: "spm1", label: "1: Bør kirke og stat adskilles?" },
     { value: "spm2", label: "2: Støtte til trossamfund" },
     { value: "spm3", label: "3: Bør kongen have religionsfrihed?" },
@@ -48,16 +48,16 @@ export const NavigationButton = ({selectedQuestion, handleQuestionSelect }) => {
 
 export const GetNextQuestion = ({ current }) => {
 
-    const index = options2026.findIndex(option => option.value === current);
+    const index = question2026.findIndex(option => option.value === current);
 
-    return options2026[index + 1];
+    return question2026[index + 1];
 }
 
 export const GetPreviousQuestion = ({ current }) => {
 
-    const index = options2026.findIndex(option => option.value === current);
+    const index = question2026.findIndex(option => option.value === current);
 
-    return options2026[index - 1];
+    return question2026[index - 1];
 }
 
 const QuestionSelector = ({ value, handleQuestionSelect, year }) => {
@@ -86,7 +86,7 @@ const QuestionSelector = ({ value, handleQuestionSelect, year }) => {
         { value: "spm2", label: "Borgerforslag" }
     ];
 
-    let options = year === "2026" ? options2026 : (year === "9999" || year === "8888") ? options2025 : year === "2019" ? options2019 : year === "2021" ? options2021 : optionsOld;
+    let options = year === "2026" ? question2026 : (year === "9999" || year === "8888") ? options2025 : year === "2019" ? options2019 : year === "2021" ? options2021 : optionsOld;
 
     return (
         <div className="dropdownComponent">
