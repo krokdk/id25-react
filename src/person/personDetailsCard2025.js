@@ -55,7 +55,7 @@ const PersonDetailsCard2025 = ({ person, onPartyClick }) => {
             {person.comment && (
                 <div className="qa-block">
                     <div className="qa-question">Kandidatens holdning</div>
-                    <div className="qa-answer">{person.comment}</div>
+                    <div className="qa-answer-comment">{person.comment}</div>
                 </div>
             )}
 
