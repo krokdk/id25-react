@@ -65,7 +65,7 @@ const ResultsTable = ({ filteredData, handleRowClick, rowsPerPage }) => {
             </table>
 
                         {/* Pagination knapper */}
-            { (rowsPerPage === 10) &&(<div style={{ marginTop: "10px", textAlign: "center" }}>
+            { (rowsPerPage === 50) &&(<div style={{ marginTop: "10px", textAlign: "center" }}>
                 <button className="button"
                     onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                     disabled={currentPage === 1}
