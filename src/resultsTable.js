@@ -63,6 +63,22 @@ const ResultsTable = ({ filteredData, handleRowClick, rowsPerPage }) => {
                     ))}
                 </tbody>
             </table>
+
+                        {/* Pagination knapper */}
+            { (rowsPerPage === 10) &&(<div style={{ marginTop: "10px", textAlign: "center" }}>
+                <button className="button"
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                    disabled={currentPage === 1}
+                >
+                    Forrige
+                </button>
+                <button className="button"
+                    onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                >
+                    Næste
+                </button>
+            </div>)}
         </div>
 
 

@@ -128,10 +128,6 @@ const QuestionForm = () => {
                     return (
                         <div key={index} className="qa-block">
 
-                            <div className="spmdisc">
-                                <p>{q.BREAD}</p>
-                            </div>
-
                             <div className="qa-question">
                                 <p>{q.TEXT}</p>
                             </div>
@@ -139,7 +135,7 @@ const QuestionForm = () => {
 
                             <div className="qa-answers">
 
-                                <label>
+                                <label className="radio-option">
                                     <input
                                         type="radio"
                                         name={groupName}
@@ -149,7 +145,7 @@ const QuestionForm = () => {
                                     Ja
                                 </label>
 
-                                <label>
+                                <label className="radio-option">
                                     <input
                                         type="radio"
                                         name={groupName}
@@ -159,7 +155,7 @@ const QuestionForm = () => {
                                     Nej
                                 </label>
 
-                                <label>
+                                <label className="radio-option">
                                     <input
                                         type="radio"
                                         name={groupName}
@@ -168,6 +164,10 @@ const QuestionForm = () => {
                                     />
                                     Ved ikke
                                 </label>
+
+                                <div className="spmdisc">
+                                    <p>{q.BREAD}</p>
+                                </div>
 
                             </div>
 

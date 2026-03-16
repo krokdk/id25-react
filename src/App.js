@@ -261,13 +261,13 @@ const App = () => {
 
                     <PartySelector selectedParty={selectedParty} onSelect={handlePartyFilter} />
 
-                    <SearchInput value={searchQuery} onChange={handleSearchChange} />
-
                     <ResultsTable
                         filteredData={tableData}
                         handleRowClick={handleRowClick}
                         rowsPerPage={rowsPerPage}
                     />
+
+                    <SearchInput value={searchQuery} onChange={handleSearchChange} />
 
                     <QuestionSelector
                         value={selectedQuestion}
@@ -275,12 +275,14 @@ const App = () => {
                         year={selectedYear}
                     />
 
-                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
 
                     <NavigationButton
                         selectedQuestion={selectedQuestion}
                         handleQuestionSelect={handleQuestionSelect}
                     />
+
+                    <QuestionTitle value={selectedQuestion} year={selectedYear} />
+
 
                     <button className="button"
                         onClick={() => {
@@ -310,7 +312,7 @@ const App = () => {
                         <ResultsTable
                             filteredData={tableData}
                             handleRowClick={handleRowClick}
-                            rowsPerPage={1000}
+                            rowsPerPage={10}
                         />
                     </div>
                 )}
