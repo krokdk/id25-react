@@ -82,10 +82,12 @@
     cursor: pointer;
     background-color: var(--primary-color);
     border-color: var(--white-color);
-    /* Will be replaced with JS variable */
 }
 
-
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
 .party-buttons {
     display: flex;
@@ -259,4 +261,11 @@
 
 .radio-option input {
     margin-right: 6px;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* afstand mellem knapper */
 }

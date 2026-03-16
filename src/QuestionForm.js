@@ -48,6 +48,9 @@ const QuestionForm = () => {
             ...answers,
             [index]: value
         });
+        if (selectedMunicipality && currentQuestion < question2026.length - 1) {
+            setCurrentQuestion(currentQuestion + 1);
+        }
     };
 
     const handleSubmit = async () => {
@@ -99,88 +102,127 @@ const QuestionForm = () => {
         }
     };
 
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+
+    const nextQuestion = () => {
+        if (!selectedMunicipality) {
+            alert("Vælg kommune først");
+            return;
+        }
+
+        if (currentQuestion < question2026.length - 1) {
+            setCurrentQuestion(currentQuestion + 1);
+        }
+    };
+
+    const prevQuestion = () => {
+        if (currentQuestion > 0) {
+            setCurrentQuestion(currentQuestion - 1);
+        }
+    };
+
+    const q = question2026[currentQuestion];
+    const groupName = `question-${currentQuestion}/${question2026.length}`;
 
     if (!besvaret) {
         return (
 
-            <div className="card person-card">
+            <div className="qa-block">
 
-                <div className="qa-block">
-                    <div className="qa-question">
-                        <p>Besvar testen og find de opstillede kandidater som matcher dine svar bedst</p>
-                    </div>
-                </div>
+                {(currentQuestion === 0) && (
 
-                <div className="spmdisc">
-                    Vælg den storkreds du må stemme i
-                </div>
+                    <div className="card person-card">
 
-                <MunicipalitySelector
-                    value={selectedMunicipality}
-                    year="2026"
-                    onChange={handleMunicipalityChange}
-                />
-
-                {question2026.map((q, index) => {
-
-                    const groupName = `question-${index}`;
-
-                    return (
-                        <div key={index} className="qa-block">
-
+                        <div className="qa-block">
                             <div className="qa-question">
-                                <p>{q.TEXT}</p>
+                                <p>Besvar testen og find de opstillede kandidater som matcher dine svar bedst</p>
                             </div>
-
-
-                            <div className="qa-answers">
-
-                                <label className="radio-option">
-                                    <input
-                                        type="radio"
-                                        name={groupName}
-                                        checked={answers[index] === "Ja"}
-                                        onChange={() => handleAnswerChange(index, "Ja")}
-                                    />
-                                    Ja
-                                </label>
-
-                                <label className="radio-option">
-                                    <input
-                                        type="radio"
-                                        name={groupName}
-                                        checked={answers[index] === "Nej"}
-                                        onChange={() => handleAnswerChange(index, "Nej")}
-                                    />
-                                    Nej
-                                </label>
-
-                                <label className="radio-option">
-                                    <input
-                                        type="radio"
-                                        name={groupName}
-                                        checked={answers[index] === "Ved ikke"}
-                                        onChange={() => handleAnswerChange(index, "Ved ikke")}
-                                    />
-                                    Ved ikke
-                                </label>
-
-                                <div className="spmdisc">
-                                    <p>{q.BREAD}</p>
-                                </div>
-
-                            </div>
-
                         </div>
-                    );
-                })}
 
-                <button className="button" onClick={handleSubmit}>
-                    Besvar
-                </button>
+                        <div className="spmdisc">
+                            Vælg den storkreds du må stemme i
+                        </div>
+
+                        <MunicipalitySelector
+                            value={selectedMunicipality}
+                            year="2026"
+                            onChange={handleMunicipalityChange}
+                        />
+
+                    </div>
+
+
+                )};
+
+                {(
+                    <div className="card person-card">
+
+                        <div className="qa-question">
+                            <p>{q.TEXT}</p>
+                        </div>
+
+                        <div className="qa-answers">
+
+                            <label className="radio-option">
+                                <input
+                                    type="radio"
+                                    name={groupName}
+                                    checked={answers[currentQuestion] === "Ja"}
+                                    onChange={() => handleAnswerChange(currentQuestion, "Ja")}
+                                />
+                                Ja
+                            </label>
+
+                            <label className="radio-option">
+                                <input
+                                    type="radio"
+                                    name={groupName}
+                                    checked={answers[currentQuestion] === "Nej"}
+                                    onChange={() => handleAnswerChange(currentQuestion, "Nej")}
+                                />
+                                Nej
+                            </label>
+
+                            <label className="radio-option">
+                                <input
+                                    type="radio"
+                                    name={groupName}
+                                    checked={answers[currentQuestion] === "Ved ikke"}
+                                    onChange={() => handleAnswerChange(currentQuestion, "Ved ikke")}
+                                />
+                                Ved ikke
+                            </label>
+
+                            <div className="spmdisc">
+                                <p>{q.BREAD}</p>
+                            </div>
+                        </div>
+                    </div>
+                )};
+
+                <div className="navigation" >
+
+                    {currentQuestion > -1 && (
+                        <button className="button" onClick={prevQuestion}>
+                            Forrige
+                        </button>
+                    )}
+
+                    {currentQuestion < question2026.length - 1 ? (
+                        <button className="button"
+                            disabled={!selectedMunicipality}
+                            onClick={nextQuestion}>
+                            Næste
+                        </button>
+                    ) : (
+                        <button className="button" onClick={handleSubmit}>
+                            Besvar
+                        </button>
+                    )}
+
+                </div>
 
             </div>
-
 
         );
     }
@@ -199,11 +241,11 @@ const QuestionForm = () => {
                     <button className="button" onClick={handleSeDineSvarClick}>
                         Se dine svar
                     </button>
-                    <h3>Bedste match</h3>
+                    <h3>Top 10 bedste matches</h3>
                     <ResultsTableMatch
                         filteredData={result}
                         handleRowClick={handleRowClick}
-                        rowsPerPage={5}
+                        rowsPerPage={10}
                     />
                 </div>
             )
