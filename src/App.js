@@ -283,7 +283,7 @@ const App = () => {
                     <QuestionTitle value={selectedQuestion} year={selectedYear} />
 
 
-                    <button className="button"
+                    <button className="button-big"
                         onClick={() => {
                             setBesvar(true);
                         }

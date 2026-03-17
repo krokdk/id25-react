@@ -84,6 +84,18 @@
     border-color: var(--white-color);
 }
 
+.button-big {
+    font-size: larger;
+    font-weight: bolder;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    color: var(--white-color);
+    cursor: pointer;
+    background-color: var(--primary-color);
+    border-color: var(--white-color);
+}
+
 .button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -274,5 +286,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* afstand mellem knapper */
+    gap: 10px;
+    /* afstand mellem knapper */
 }
