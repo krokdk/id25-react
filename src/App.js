@@ -253,6 +253,15 @@ const App = () => {
         <div className="relative min-h-screen">
             <div style={{ textAlign: "center" }}>
                 <div>
+                    <button className="button-big"
+                        onClick={() => {
+                            setBesvar(true);
+                        }
+                        }
+                    >
+                        Tag kandidattesten
+                    </button>
+
                     <MunicipalitySelector
                         value={selectedMunicipality}
                         year={selectedYear}
@@ -281,16 +290,6 @@ const App = () => {
                     />
 
                     <QuestionTitle value={selectedQuestion} year={selectedYear} />
-
-
-                    <button className="button-big"
-                        onClick={() => {
-                            setBesvar(true);
-                        }
-                        }
-                    >
-                        Tag kandidattesten
-                    </button>
 
                     <h2>
                         {
